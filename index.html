@@ -1,58 +1,151 @@
 <!DOCTYPE html>
-<html >
-  <head>
-    <meta charset="UTF-8">
-    <title>A Pen by  Captain Anonymous</title>
-    
-    
-    
-    
-        <link rel="stylesheet" href="css/style.css">
+<html>
 
-    
-    
-    
-  </head>
+<head>
 
-  <body>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
 
-    <link href='https://fonts.googleapis.com/css?family=Roboto:300' rel='stylesheet' type='text/css'>
+  <title>LiamP</title>
 
-<div id="topBar">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,600" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Merriweather:300,700' rel='stylesheet' type='text/css'>
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <link rel="shortcut icon" type="image/png" href="favicon.png"/>
 
-  <div id="topBarTitle"><img src="http://i.imgur.com/pvr9OV2.png" id="tLogo"></div>
-  <div id="topBarUnderDev"><img src="http://i.imgur.com/gJe6Kcs.png" id="tUnderDev"></div>
+</head>
 
-</div>
-<div>
-  <div id="midPhone">
-    <img src="http://i.imgur.com/VBeUcG4.png" id="iPhone">
-  </div>
+<body>
 
-  <div id="midText">
-    <div id="midTextInnerContainer">
-      <div id="textLarge">
-        Shopr
+  <header>
+    <div class="container">
+      <h1 class="logo"><img id="tinylogo" src="http://i.imgur.com/e1dt2aF.png"/>LiamP</h1>
+      <i class="fa fa-bars toggle-menu"></i>
+      <nav>
+        <ul>
+          <li><a href="#" data-scrollto="splash">Home</a></li>
+          <li><a href="#" data-scrollto="overview">About</a></li>
+          <li><a href="#" data-scrollto="feature">Apps</a></li>
+          <li><a href="#" data-scrollto="photography">Photography</a></li>
+          <li><a href="#" data-scrollto="contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="splash">
+    <div class="container">
+      <h1>Hi, I'm Liam</h1>
+      <h2>Android developer, photographer and student.</h2>
+      <a class="btn" href="#" data-scrollto="overview">Find out more<i class="fa fa-angle-down"></i></a>
+    </div>
+  </section>
+
+  <section class="overview">
+    <div class="container">
+      <div>
+        <i class="fa fa-mobile"></i>
+        <h2>Developer</h2>
+        <p>I program simple android apps in my spare time, and released my first app to google play recently, which you can read more about below.</p>
       </div>
-      <div id="textSmall">
-        <div id="textSmallText">
-
-          Find out more on the Google Play Store:<br><br>
-        </div>
-        <div id="textSmallIcon">
-          <a href="https://play.google.com/store">
-          <img src="http://i.imgur.com/tGRdcOl.png" id="iIcon">
-          </a>
-        </div>
+      <div>
+        <i class="fa fa-camera"></i>
+        <h2>Photographer</h2>
+        <p>I love analog and digital photography, and frequently post pictures to my instagram account <a href="https://www.instagram.com/liampiesley/" target="_blank">@liampiesley</a>.</p>
+      </div>
+      <div>
+        <i class="fa fa-book"></i>
+        <h2>Student</h2>
+        <p>I am working towards my <br>A-level exams in may, to take computer science at university<br> this year.</p>
       </div>
     </div>
-  </div>
+  </section>
 
+  <section class="feature greybg">
+    <div class="container">
+      <img src="http://i.imgur.com/VBeUcG4.png" alt="Laptop">
+      <div>
+        <h1>Shopr</h1>
+        <p>An app for converting between your time and money, to find the true value of your purchases.</p>
+        <ul>
+          <li>
+            <span>1</span>
+            <h3>Income</h3>
+            <p>Enter the net income on your payslip, how often you get a payslip, and how many hours a week you work.</p>
+          </li>
+          <li>
+            <span>2</span>
+            <h3>Item Price</h3>
+            <p>Choose the item type, and enter its price.</p>
+          </li>
+          <li>
+            <span>3</span>
+            <h3>Results</h3>
+            <p>The app shows how much time it costs to buy the item, and how that compares to how much you will use it.</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="container">
+      <h1>Get The App</h1>
+      <h2>Click the link below to go to the Google Play Store</h2>
+      <a class="btn" href="https://play.google.com/store/apps/details?id=uk.liamp.shopr&hl=en_GB" target="_blank">Install Shopr<i class="fa fa-download"></i></a>
+    </div>
+  </section>
+
+  <section class="photography">
+    <p>See more:  <a href="https://www.instagram.com/liampiesley/" target="_blank">@liampiesley</a></p>
+    <div id="slideshow">
+   <div>
+     <img src="http://imgur.com/SESNGCD.jpg">
+   </div>
+   <div>
+     <img src="http://imgur.com/RlcerA2.jpg">
+   </div>
+   <div>
+     <img src="http://imgur.com/rhurrmg.jpg">
+   </div>
+   <div>
+     <img src="http://imgur.com/3Pl5pmZ.jpg">
+   </div>
+   <div>
+     <img src="http://imgur.com/IbC8LvT.jpg">
+   </div>
+   <div>
+     <img src="http://imgur.com/LFQsldI.jpg">
+   </div>
+   <div>
+     <img src="http://imgur.com/rSQYaIT.jpg">
+   </div>
 </div>
     
-    
-    
-    
-    
-  </body>
+  </section>
+
+  <section class="contact">
+    <div class="container">
+      <h1>Contact</h1>
+      <h2>Please send any messages to <a href="mailto:liamp.uk@gmail.com">liamp.uk@gmail.com</a>. Thanks :)</h2>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="copyright">
+        <p>Based on a template by <a href="http://boag.online" target="_blank">Fraser Boag</a>.</p>
+      </div>
+      <div class="social">
+        2016. 
+        <a href="https://www.instagram.com/liampiesley/" target="_blank"><i class="fa fa-instagram" style="
+    text-indent: 2em;"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+  <script src="js/index.js"></script>
+</body>
 </html>
