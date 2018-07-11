@@ -1,37 +1,241 @@
-jQuery.extend(jQuery.easing,{
-    easeInOutExpo: function(x, t, b, c, d){
-        if (t==0) return b;
-        if (t==d) return b+c;
-        if ((t/=d/2) < 1) return c/2 * Math.pow(2, 10 * (t - 1)) + b;
-        return c/2 * (-Math.pow(2, -10 * --t) + 2) + b;
+/*
+var cells =    [0,0,0,0,
+                0,2,2,0,
+                0,0,2,0,
+                2,0,0,2];
+                */
+
+var cells =    setupGame();
+                
+                
+/*
+var cells =    [0,2,4,8,
+                16,32,64,128,
+                256,512,1024,2048,
+                4096,8192,0,0];
+                */
+
+var cells;
+
+var currCell;
+
+function setupGame(){
+    if(localStorage.getItem("game") == null){
+        var cells =    [0,0,0,0,
+                        0,0,0,0,
+                        0,2,0,0,
+                        0,0,0,0];
+    }else{
+        cells = localStorage.getItem("game").split(",").map(Number);
     }
-});
+    return cells;
+}
 
-$(document).ready(function(){
-
-    $('a[href=#]').click(function(e){
-        e.preventDefault();
-        $('nav').removeClass('visible');
-        $('html,body').stop().animate({scrollTop: $('.'+$(this).data('scrollto')).offset().top-65 }, 700, 'easeInOutExpo', function(){});
-    });
-
-    $('.toggle-menu').click(function(){
-        $('nav').toggleClass('visible');
-    });
-
-    if($(window).width() < 800){
-        $('.pricing > div > div:nth-of-type(3)').insertAfter($('.pricing > div > div:nth-of-type(1)'));
+function refreshScreen(){
+    for(var i=0; i<16; i++){
+        currCell = document.getElementsByClassName('c'+(i%4+1))[Math.floor(i/4)];
+        currCell.innerHTML = cells[i] !== 0 ? cells[i] : "";
+        if(cells[i] == 0){
+            currCell.setAttribute("style", "background-color: #1d3134;");
+        } else if(cells[i] == 2){
+            currCell.setAttribute("style", "background-color: #E0F2F1;color: black;");
+        } else if(cells[i] == 4){
+            currCell.setAttribute("style", "background-color: #d0e8e6;color: black;");
+        } else if(cells[i] == 8){
+            currCell.setAttribute("style", "background-color: #23726b;");
+        } else if(cells[i] == 16){
+            currCell.setAttribute("style", "background-color: #258e85;");
+        } else if(cells[i] == 32){
+            currCell.setAttribute("style", "background-color: #18baac;");
+        } else if(cells[i] == 64){
+            currCell.setAttribute("style", "background-color: #0ad1c0;");
+        } else if(cells[i] == 128){
+            currCell.setAttribute("style", "background-color: #417552;");
+        } else if(cells[i] == 256){
+            currCell.setAttribute("style", "background-color: #49a366;");
+        } else if(cells[i] == 512){
+            currCell.setAttribute("style", "background-color: #39ce6a;");
+        } else if(cells[i] == 1024){
+            currCell.setAttribute("style", "background-color: #FF8A3D;");
+        } else if(cells[i] == 2048){
+            currCell.setAttribute("style", "background-color: #C94A07;");
+        } else if(cells[i] == 4096){
+            currCell.setAttribute("style", "background-color: #7F2E0F;");
+        } else if(cells[i] == 8192){
+            currCell.setAttribute("style", "background-color: #401708;");
+        }
     }
+    localStorage.setItem("game", cells);
+}
 
-});
+document.onkeydown = function(evt) {
+    evt = evt || window.event;
+    if (evt.keyCode == 37) {
+        moveLeft();
+    }else if (evt.keyCode == 38) {
+        moveUp();
+    }else if (evt.keyCode == 39) {
+        moveRight();
+    }else if (evt.keyCode == 40) {
+        moveDown();
+    }else if (evt.keyCode == 78) {
+        restart();
+    }
+};
 
-$("#slideshow > div:gt(0)").hide();
+function restart(){
+    cells =    [0,0,0,0,
+                0,0,0,0,
+                0,0,0,0,
+                0,0,0,0];
+    addCell();
 
-setInterval(function() {
-  $('#slideshow > div:first')
-    .fadeOut(1000)
-    .next()
-    .fadeIn(1000)
-    .end()
-    .appendTo('#slideshow');
-}, 5000);
+}
+
+function addCell(){
+    newCell = Math.floor(Math.random()*17);
+    if(cells[newCell] == 0){
+        cells[newCell] = Math.random() < 0.9 ? 2 : 4;;
+        refreshScreen();
+    }else{
+        addCell();
+    }
+}
+
+
+
+
+
+function shiftRight(){
+    var i = 15;
+    while(i>=0){
+        if(cells[i] == 0){
+            if(cells[i-1] !== 0){
+                cells[i] = cells[i-1];
+                cells[i-1] = 0;
+            }
+        }
+        i-=4;
+        if(i<1 && (i>-3)){
+            i+=15;
+        }
+    }
+}
+
+function moveRight(){
+    shiftRight();
+    var i = 15;
+    while(i>=0){
+        if(cells[i] == cells[i-1]){
+            cells[i] = cells[i]*2;
+            cells[i-1] = 0;
+            shiftRight();
+        }
+        i-=4;
+        if(i<1 && (i>-3)){
+            i+=15;
+        }
+    }
+    addCell();
+}
+
+
+
+
+
+
+function shiftLeft(){
+    var i = 0;
+    while(i<=14){
+        if(cells[i] == 0){
+            if(cells[i+1] !== 0){
+                cells[i] = cells[i+1];
+                cells[i+1] = 0;
+            }
+        }
+        i+=4;
+        if(i>14 && (i<18)){
+            i-=15;
+        }
+    }
+}
+
+function moveLeft(){
+    shiftLeft();
+    var i = 0;
+    while(i<=14){
+        if(cells[i] == cells[i+1]){
+            cells[i] = cells[i]*2;
+            cells[i+1] = 0;
+            shiftLeft();
+        }
+
+        i+=4;
+        if(i>14 && (i<18)){
+            i-=15;
+        }
+    }
+    addCell();
+}
+
+
+
+
+function shiftDown(){
+    for(var i=15;i>3;i--){
+        if(cells[i] == 0){
+            if(cells[i-4] !==0){
+                cells[i] = cells[i-4];
+                cells[i-4] = 0;
+            }
+        }
+    }
+}
+
+function moveDown(){
+    shiftDown();
+    for(var i=15;i>3;i--){
+        if(cells[i] == cells[i-4]){
+            cells[i] = cells[i]*2;
+            cells[i-4] = 0;
+            shiftDown();
+        }
+    }
+    addCell();
+}
+
+function shiftUp(){
+    for(var i=0;i<12;i++){
+        if(cells[i] == 0){
+            if(cells[i+4] !==0){
+                cells[i] = cells[i+4];
+                cells[i+4] = 0;
+            }
+        }
+    }
+}
+
+function moveUp(){
+    shiftUp();
+    for(var i=0;i<12;i++){
+        if(cells[i] == cells[i+4]){
+            cells[i] = cells[i]*2;
+            cells[i+4] = 0;
+            shiftUp();
+        }
+    }
+    addCell();
+}
+
+function checkEnd(){
+    for(var i=0; i<16; i++){
+        if(cells[i] == 0){
+            return;
+        }
+    }
+    alert("end");
+}
+
+
+
+window.onload = refreshScreen();
