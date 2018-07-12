@@ -323,6 +323,7 @@ function handleTouchMove(evt) {
             moveDown();
         }                                                                 
     }
+    checkEnd();
     /* reset values */
     xDown = null;
     yDown = null;                                             
