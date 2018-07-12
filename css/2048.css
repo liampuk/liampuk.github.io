@@ -43,6 +43,14 @@ body {
     font-family: 'Courier New', Courier, monospace;
 }
 
+#gameOver {
+    display: none;
+    color: red;
+    font-size: 2vmax;
+    font-family: 'Courier New', Courier, monospace;
+    transition: all .2s cubic-bezier(.01,.95,.58,.93);
+}
+
 #credits p{
     text-align: right;
 }
@@ -70,6 +78,10 @@ a:hover{
 @media only screen and (max-width: 1080px) {
     #credits {
         font-size: 1.2vmax;
+    }
+
+    #gameOver {
+        font-size: 4vmax;
     }
 
     .container {
