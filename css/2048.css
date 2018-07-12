@@ -60,7 +60,7 @@ body {
 }
 
 .arrows, #reset {
-    transition: color .2s ease
+    transition: color .2s ease;
     user-select: none;
 }
 
