@@ -86,14 +86,16 @@ document.onkeydown = function(evt) {
 };
 
 function restart() {
-
     document.getElementById("reset").style.color = "red";
     setTimeout(function() {
         document.getElementById("reset").style.color = "#0ad1c0";
     }, 100);
-
-    cells = cells0;
+    cells = [0,0,0,0,
+            0,0,0,0,
+            0,0,0,0,
+            0,0,0,0,];;
     addCell();
+    refreshScreen();
 
 }
 
@@ -101,14 +103,13 @@ function addCell() {
     if (!equalArr(cells, localStorage.getItem("game").split(",").map(Number))) {
         newCell = Math.floor(Math.random() * 17);
         if (cells[newCell] == 0) {
-            cells[newCell] = Math.random() < 0.9 ? 2 : 4;;
+            cells[newCell] = Math.random() < 0.9 ? 2 : 4;
             refreshScreen();
         } else {
             addCell();
         }
-        localStorage.setItem("game", cells); // HERE
+        localStorage.setItem("game", cells);
     }
-
 }
 
 function equalArr(arr1, arr2) {
