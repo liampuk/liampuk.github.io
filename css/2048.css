@@ -55,12 +55,12 @@ body {
     text-align: right;
 }
 
-span {
+.arrows, #reset {
     
     transition: color .2s ease
 }
 
-span:hover { 
+.arrows:hover, #reset:hover { 
     color: red !important;
     cursor: pointer;
     user-select: none;
@@ -76,18 +76,20 @@ a:hover{
 }
 
 @media only screen and (max-width: 1080px) {
+    #hideOnMobile {
+        display: none;
+    }
 
     #credits {
         font-size: 1.2vmax;
     }
 
-    #gameOver {
-        font-size: 4vmax;
+    #reset {
+        font-size: 3vmax;
     }
 
-    #mobileRestart{
-        font-size: 3vmax;
-
+    #gameOver {
+        font-size: 4vmax;
     }
 
     .container {
