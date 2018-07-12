@@ -11,6 +11,8 @@ var cellsn =   [1,0,0,0,
 
 var cells = setupGame();
 
+var ended = false;
+
 
 /*
 var cells =    [0,2,4,8,
@@ -31,6 +33,9 @@ function setupGame() {
         cells = localStorage.getItem("game").split(",").map(Number);
         refreshScreen();
     }
+
+
+
     return cells;
 }
 
@@ -83,6 +88,7 @@ document.onkeydown = function(evt) {
     } else if (evt.keyCode == 78) {
         restart();
     }
+    checkEnd();
 };
 
 function restart() {
@@ -96,7 +102,9 @@ function restart() {
             0,0,0,0,];;
     addCell();
     refreshScreen();
-
+    var gO = document.getElementById("gameOver");
+    gO.style.display = "none";
+    ended = false;
 }
 
 function addCell() {
@@ -243,13 +251,83 @@ function moveUp() {
 }
 
 function checkEnd() {
-    for (var i = 0; i < 15; i++) {
-        if (cells[i] == 0 || cells[i] == cells[i + 1]) {
-            return false;
+    var end = true;
+    for (var i = 0; i < 16; i++) {
+        if (cells[i] == 0) {
+            end = false;
         }
+    }
+
+    var i = 15;
+    while (i >= 0) {
+        if (cells[i] == cells[i - 1]) {
+            end = false;
+        }
+        i -= 4;
+        if (i < 1 && (i > -3)) {
+            i += 15;
+        }
+    }
+
+    for (var i = 0; i < 12; i++) {
+        if (cells[i] == cells[i + 4]) {
+            end = false;
+        }
+    }
+
+    if(end && !ended){
+        ended = true;
+        gameOver();
     }
 }
 
+function gameOver() {
+    var gO = document.getElementById("gameOver");
+    gO.style.display = "block";
+}
 
+//  stackoverflow code
+
+document.addEventListener('touchstart', handleTouchStart, false);        
+document.addEventListener('touchmove', handleTouchMove, false);
+
+var xDown = null;                                                        
+var yDown = null;                                                        
+
+function handleTouchStart(evt) {                                         
+    xDown = evt.touches[0].clientX;                                      
+    yDown = evt.touches[0].clientY;                                      
+};                                                
+
+function handleTouchMove(evt) {
+    if ( ! xDown || ! yDown ) {
+        return;
+    }
+
+    var xUp = evt.touches[0].clientX;                                    
+    var yUp = evt.touches[0].clientY;
+
+    var xDiff = xDown - xUp;
+    var yDiff = yDown - yUp;
+
+    if ( Math.abs( xDiff ) > Math.abs( yDiff ) ) {/*most significant*/
+        if ( xDiff > 0 ) {
+            moveLeft(); 
+        } else {
+            moveRight();
+        }                       
+    } else {
+        if ( yDiff > 0 ) {
+            moveUp();
+        } else { 
+            moveDown();
+        }                                                                 
+    }
+    /* reset values */
+    xDown = null;
+    yDown = null;                                             
+};
+
+// stack overflow code end
 
 window.onload = setupGame();
