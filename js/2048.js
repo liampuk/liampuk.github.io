@@ -1,9 +1,9 @@
-/*
-var cells =    [0,0,0,0,
-                0,2,2,0,
-                0,0,2,0,
-                2,0,0,2];
-                */
+
+var cells0 =    [0,0,0,0,
+                0,0,0,0,
+                0,0,0,0,
+                0,0,0,0];
+                
 
 var cells =    setupGame();
                 
@@ -20,11 +20,9 @@ var cells;
 var currCell;
 
 function setupGame(){
-    if(localStorage.getItem("game") == null){
-        var cells =    [0,0,0,0,
-                        0,0,0,0,
-                        0,2,0,0,
-                        0,0,0,0];
+    if(localStorage.getItem("game") === null){
+        localStorage.setItem("game", cells0);
+        restart();
     }else{
         cells = localStorage.getItem("game").split(",").map(Number);
     }
@@ -65,7 +63,6 @@ function refreshScreen(){
             currCell.setAttribute("style", "background-color: #401708;");
         }
     }
-    localStorage.setItem("game", cells);
 }
 
 document.onkeydown = function(evt) {
@@ -93,16 +90,27 @@ function restart(){
 }
 
 function addCell(){
-    newCell = Math.floor(Math.random()*17);
-    if(cells[newCell] == 0){
-        cells[newCell] = Math.random() < 0.9 ? 2 : 4;;
-        refreshScreen();
-    }else{
-        addCell();
+    if(!equalArr(cells, localStorage.getItem("game").split(",").map(Number))){
+        newCell = Math.floor(Math.random()*17);
+        if(cells[newCell] == 0){
+            cells[newCell] = Math.random() < 0.9 ? 2 : 4;;
+            refreshScreen();
+        }else{
+            addCell();
+        }
+        localStorage.setItem("game", cells);    // HERE
     }
+
 }
 
-
+function equalArr(arr1, arr2){
+    for(var i=0;i<16;i++){
+        if(arr1[i] !== arr2[i]){
+            return false;
+        }
+    }
+    return true;
+}
 
 
 
@@ -228,12 +236,13 @@ function moveUp(){
 }
 
 function checkEnd(){
-    for(var i=0; i<16; i++){
-        if(cells[i] == 0){
-            return;
+    for(var i=0;i<15;i++){
+        if(cells[i] == 0 || cells[i] == cells[i+1]){
+            return false;
         }
     }
-    alert("end");
 }
+
+
 
 window.onload = refreshScreen();
