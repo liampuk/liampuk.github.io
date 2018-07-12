@@ -2,6 +2,7 @@ body {
     background-color: #0e181a;
     overflow: hidden;
     font-family: 'Roboto', sans-serif;
+    user-select: none;
 }
 
 .container {
@@ -41,6 +42,7 @@ body {
     margin-right: 1vmax;
     font-size: .8vmax;
     font-family: 'Courier New', Courier, monospace;
+    user-select: none;
 }
 
 #gameOver {
@@ -49,15 +51,17 @@ body {
     font-size: 2vmax;
     font-family: 'Courier New', Courier, monospace;
     transition: all .2s cubic-bezier(.01,.95,.58,.93);
+    user-select: none;
 }
 
 #credits p{
     text-align: right;
+    user-select: none;
 }
 
 .arrows, #reset {
-    
     transition: color .2s ease
+    user-select: none;
 }
 
 .arrows:hover, #reset:hover { 
