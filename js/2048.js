@@ -73,6 +73,7 @@ function refreshScreen() {
             currCell.setAttribute("style", "background-color: #401708;");
         }
     }
+    calculateHighScore();
 }
 
 document.onkeydown = function(evt) {
@@ -284,6 +285,30 @@ function checkEnd() {
 function gameOver() {
     var gO = document.getElementById("gameOver");
     gO.style.display = "block";
+}
+
+function calculateHighScore(){
+
+    var higherScore = 0;
+
+    if (localStorage.getItem("highScore") === null) {
+        localStorage.setItem("highScore", 0);
+    } else {
+        higherScore = localStorage.getItem("highScore");
+    }
+
+    var highScore = 0;
+
+    for(var i=0;i<16;i++){
+        highScore += cells[i];
+    }
+
+    if(highScore > higherScore){
+        higherScore = highScore;
+        localStorage.setItem("highScore", higherScore);
+    }
+
+    document.getElementById("highScore").innerHTML = "High Score: " + higherScore;
 }
 
 //  stackoverflow code
