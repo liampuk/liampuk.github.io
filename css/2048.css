@@ -53,7 +53,7 @@ span {
 }
 
 span:hover { 
-    color: red;
+    color: red !important;
     cursor: pointer;
     user-select: none;;
 }
