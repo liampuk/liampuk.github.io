@@ -81,6 +81,12 @@ document.onkeydown = function(evt) {
 };
 
 function restart(){
+
+    document.getElementById("reset").style.color = "red";
+    setTimeout(function() {
+        document.getElementById("reset").style.color = "#0ad1c0";
+      }, 100);
+
     cells =    [0,0,0,0,
                 0,0,0,0,
                 0,0,0,0,
