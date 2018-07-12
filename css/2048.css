@@ -47,11 +47,15 @@ body {
     text-align: right;
 }
 
+span {
+    
+    transition: color .2s ease
+}
+
 span:hover { 
     color: red;
     cursor: pointer;
-    user-select: none;
-    transition: color .2s ease;
+    user-select: none;;
 }
 
 a {
