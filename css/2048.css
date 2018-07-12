@@ -76,12 +76,18 @@ a:hover{
 }
 
 @media only screen and (max-width: 1080px) {
+
     #credits {
         font-size: 1.2vmax;
     }
 
     #gameOver {
         font-size: 4vmax;
+    }
+
+    #mobileRestart{
+        font-size: 3vmax;
+
     }
 
     .container {
