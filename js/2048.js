@@ -149,9 +149,10 @@ function shiftRight() {
 }
 
 function moveRight() {
-    shiftRight();
     var i = 15;
     while (i >= 0) {
+        shiftRight();
+        shiftRight();
         if (cells[i] == cells[i - 1]) {
             cells[i] = cells[i] * 2;
             cells[i - 1] = 0;
@@ -185,9 +186,10 @@ function shiftLeft() {
 }
 
 function moveLeft() {
-    shiftLeft();
     var i = 0;
     while (i <= 14) {
+        shiftLeft();
+        shiftLeft();
         if (cells[i] == cells[i + 1]) {
             cells[i] = cells[i] * 2;
             cells[i + 1] = 0;
@@ -217,8 +219,9 @@ function shiftDown() {
 }
 
 function moveDown() {
-    shiftDown();
     for (var i = 15; i > 3; i--) {
+        shiftDown();
+        shiftDown();
         if (cells[i] == cells[i - 4]) {
             cells[i] = cells[i] * 2;
             cells[i - 4] = 0;
@@ -240,6 +243,7 @@ function shiftUp() {
 }
 
 function moveUp() {
+    shiftUp();
     shiftUp();
     for (var i = 0; i < 12; i++) {
         if (cells[i] == cells[i + 4]) {
