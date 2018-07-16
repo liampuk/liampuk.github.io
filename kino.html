@@ -1,0 +1,94 @@
+<!Doctype html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="kino.css">
+        <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="kino.js"></script>
+        
+    </head>
+    <body>
+        <div id="container">
+            <div id="nav">
+                <div class="title navItem">
+                    <a href ="#container">KINO</a>
+                </div>
+                <div id="search" class="navItem" onmouseout="hideSearch()" onmouseover="showSearch()">
+                        <div id="searchBox" class="navItem">
+                                <form action="/action_page.php">
+                                    <input type="text" name="fname">
+                                  </form>
+                            </div>
+                    <i class="fas fa-search"></i>
+                </div>
+                <div class="navItem">
+                    PRICES
+                </div>
+                <div class="navItem">
+                    ABOUT
+                </div>
+                <div class=" dropdown navItem">
+                    GENRES
+                    <div class="dropdown-content">                    
+                        <a href="#action">Action</a>
+                        <a href="#comedy">Comedy</a>
+                        <a href="#horror">Horror</a>
+                        <a href="#drama">Drama</a>
+                    </div>
+                </div>
+
+            </div>
+            <div id="heroBanner">
+                <div id="hero"></div>
+                <div id="hero2"></div>
+            </div>
+            <div id="genreContainer">
+            <div id="action" class="genreList">
+                <h1 id="action">ACTION</h1>
+                <div class="flexFilms">
+                    <div class="film"><img src="http://www.indesignskills.com/wp-content/uploads/2017/02/Arrival.jpg"><h2>Arrival</h2></div>
+                    <div class="film"><img src="https://m.media-amazon.com/images/M/MV5BZjdkOTU3MDktN2IxOS00OGEyLWFmMjktY2FiMmZkNWIyODZiXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_UX182_CR0,0,182,268_AL_.jpg"><h2>Interstellar</h2></div>
+                    <div class="film"><img src="https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SY1000_CR0,0,675,1000_AL_.jpg"><h2>Inception</h2></div>
+                    <div class="film"><img src="https://images-na.ssl-images-amazon.com/images/I/61-qa0yz6-L._SY679_.jpg"><h2>Dunkirk</h2></div>
+                    <div class="film"><img src="https://images-na.ssl-images-amazon.com/images/I/51G-6nEIH8L.jpg"><h2>Grand Budapest Hotel</h2></div>
+                    <div class="film"><img src="https://images-na.ssl-images-amazon.com/images/I/51GXgsoSPaL.jpg"><h2>Whiplash</h2></div>
+                </div>
+            </div>
+            <div id="comedy" class="genreList">
+                <h1>COMEDY</h1>
+                <div class="flexFilms">
+                    <div class="film"><img src="http://www.indesignskills.com/wp-content/uploads/2017/02/Arrival.jpg"><h2>Arrival</h2></div>
+                    <div class="film"><img src="https://m.media-amazon.com/images/M/MV5BZjdkOTU3MDktN2IxOS00OGEyLWFmMjktY2FiMmZkNWIyODZiXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_UX182_CR0,0,182,268_AL_.jpg"><h2>Interstellar</h2></div>
+                    <div class="film"><img src="https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SY1000_CR0,0,675,1000_AL_.jpg"><h2>Inception</h2></div>
+                    <div class="film"><img src="https://images-na.ssl-images-amazon.com/images/I/61-qa0yz6-L._SY679_.jpg"><h2>Dunkirk</h2></div>
+                    <div class="film"><img src="https://images-na.ssl-images-amazon.com/images/I/51G-6nEIH8L.jpg"><h2>Grand Budapest Hotel</h2></div>
+                    <div class="film"><img src="https://images-na.ssl-images-amazon.com/images/I/51GXgsoSPaL.jpg"><h2>Whiplash</h2></div>
+                </div>
+            </div>
+            <div id="horror" class="genreList">
+                <h1>HORROR</h1>
+                <div class="flexFilms">
+                    <div class="film"><img src="http://www.indesignskills.com/wp-content/uploads/2017/02/Arrival.jpg"><h2>Arrival</h2></div>
+                    <div class="film"><img src="https://m.media-amazon.com/images/M/MV5BZjdkOTU3MDktN2IxOS00OGEyLWFmMjktY2FiMmZkNWIyODZiXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_UX182_CR0,0,182,268_AL_.jpg"><h2>Interstellar</h2></div>
+                    <div class="film"><img src="https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SY1000_CR0,0,675,1000_AL_.jpg"><h2>Inception</h2></div>
+                    <div class="film"><img src="https://images-na.ssl-images-amazon.com/images/I/61-qa0yz6-L._SY679_.jpg"><h2>Dunkirk</h2></div>
+                    <div class="film"><img src="https://images-na.ssl-images-amazon.com/images/I/51G-6nEIH8L.jpg"><h2>Grand Budapest Hotel</h2></div>
+                    <div class="film"><img src="https://images-na.ssl-images-amazon.com/images/I/51GXgsoSPaL.jpg"><h2>Whiplash</h2></div>
+                </div>
+            </div>
+            <div id="drama" class="genreList">
+                    <h1>DRAMA</h1>
+                    <div class="flexFilms">
+                        <div class="film"><img src="http://www.indesignskills.com/wp-content/uploads/2017/02/Arrival.jpg"><h2>Arrival</h2></div>
+                        <div class="film"><img src="https://m.media-amazon.com/images/M/MV5BZjdkOTU3MDktN2IxOS00OGEyLWFmMjktY2FiMmZkNWIyODZiXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_UX182_CR0,0,182,268_AL_.jpg"><h2>Interstellar</h2></div>
+                        <div class="film"><img src="https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SY1000_CR0,0,675,1000_AL_.jpg"><h2>Inception</h2></div>
+                        <div class="film"><img src="https://images-na.ssl-images-amazon.com/images/I/61-qa0yz6-L._SY679_.jpg"><h2>Dunkirk</h2></div>
+                        <div class="film"><img src="https://images-na.ssl-images-amazon.com/images/I/51G-6nEIH8L.jpg"><h2>Grand Budapest Hotel</h2></div>
+                        <div class="film"><img src="https://images-na.ssl-images-amazon.com/images/I/51GXgsoSPaL.jpg"><h2>Whiplash</h2></div>
+                    </div>
+                </div>
+        </div>
+        </div>
+    </body>
+</html>
