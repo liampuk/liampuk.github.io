@@ -27,6 +27,12 @@ body {
     transition: all .2s ease-in-out;
 }
 
+.navItem a{
+    text-decoration: none;
+    color: black;
+}
+
+
 #search {
     width: 100px;
     transition: all .2s cubic-bezier(.01,.95,.58,.93);
