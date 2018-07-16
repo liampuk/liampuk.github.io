@@ -1,0 +1,213 @@
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    overflow-x: hidden;
+    background-color: black;
+}
+
+#nav{
+    height: 60px;
+    background-color: white;
+    position: fixed;
+    top: 0;
+    z-index: 2;
+    width: 100%;
+}
+
+.navItem {
+    float: right;
+    height: 60px;
+    width: 200px;
+    text-align: center;
+    line-height: 60px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    letter-spacing: 5px;
+    font-size: 15px;
+    transition: all .2s ease-in-out;
+    
+}
+
+#search {
+    width: 100px;
+    transition: all .2s cubic-bezier(.01,.95,.58,.93);
+}
+
+#searchBox{
+    display: none;
+    float: left;
+    border: 0;
+    transition: all .2s cubic-bezier(.01,.95,.58,.93);
+}
+
+input {
+    height: 40px;
+    font-size: 40px;
+    background-color: lightgrey;
+    color: white;
+    line-height: 60px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    letter-spacing: 2px;
+    font-size: 15px;
+    outline: none;
+    border: 0;
+    box-shadow: 0px 3px 0px 0px white;
+    box-sizing: border-box;
+    text-transform: uppercase;
+    margin-left: 10px;
+}
+
+input:focus {
+    outline: none;
+}
+
+.navItem:hover{
+    background-color: lightgrey;
+    cursor: pointer;
+    color: white;
+}
+
+.title{
+    float: left;
+    font-size: 40px;
+    font-weight: 700;
+    letter-spacing: 10px;
+}
+
+.title a{
+    
+    color: black;
+    text-decoration: none;
+}
+
+.title:hover{
+    background-color: white;
+    color: black;
+}
+
+#heroBanner {
+    position: absolute;
+    top: 60px;
+    width: 100vw;
+    height: 700px;
+}
+
+#hero {
+    position: absolute;
+    transition: opacity 1s ease-in-out;
+    min-height: 700px;
+    min-width: 100vw;
+    display:block;
+    margin:auto;
+    background:linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0) 75%,rgba(0,0,0,1) 100%), url("https://onelineviews.files.wordpress.com/2015/03/o-old-cinema-facebook.jpg?w%5Cx3d1200");
+    background-size:cover;
+    background-position:center top;
+    
+  margin-left: auto; 
+  margin-right: auto; 
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    color: black;
+    width: 200px;
+    z-index: 2;
+    text-transform: uppercase;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+a{
+    text-decoration: none;
+    color: black;
+}
+
+.dropdown-content #anchor {
+    display: block;
+    height: 60px;
+}
+
+.dropdown-content  #anchor:hover {
+    background-color: lightgrey;
+    color: white;
+    transition: all .2s ease-in-out;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+#hero span{
+    position: absolute;
+    line-height: 500px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    color: black;
+    font-size: 120px;
+    font-weight:700;
+    letter-spacing: 15px;
+    user-select: none;
+}
+
+#hero2{
+    position: absolute;
+    min-height: 700px;
+    min-width: 100vw;
+    background-color: black;
+    z-index: 1;
+    transition: all .2s ease-in-out;
+}
+
+#desc{
+    height: auto;
+    min-height: 100% !important;
+    position: absolute;
+    width: 100vw;
+    top: 760px;
+    color: white;
+}
+
+h3{
+    width: 85vw;
+    position: relative;
+    left: 50%;
+    transform: translate(-50%, 0);
+    font-size: 45px;
+    top: 50px;
+    font-family: 'Roboto Slab', serif;
+    letter-spacing: 1px;
+}
+
+p, li{
+    width: 55vw;
+    position: relative;
+    left: 50%;
+    transform: translate(-50%, 0);
+    font-size: 20px;
+    top: 100px;
+    font-weight: 300;
+    text-align: justify;
+    text-align-last: center;
+}
+
+p span{
+    font-weight: 500;
+}
+
+li {
+    margin-left: 20px;
+}
+
+sub{
+    padding-bottom: 40px;
+}
