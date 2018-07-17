@@ -38,7 +38,7 @@ $(document).ready(function(){
     $("a").on('click', function(event) {
   
       // Make sure this.hash has a value before overriding default behavior
-      if (this.hash !== "" && this.hash !="#action" && this.hash !="#comedy" && this.hash !="#horror" && this.hash !="#drama") {
+      if (this.hash !== "" && this.hash !="#action" && this.hash !="#comedy" && this.hash !="#thriller" && this.hash !="#drama") {
         // Prevent default anchor click behavior
         event.preventDefault();
   
@@ -57,3 +57,4 @@ $(document).ready(function(){
       } // End if
     });
   });
+
