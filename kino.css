@@ -27,9 +27,10 @@ body {
     transition: all .2s ease-in-out;
 }
 
-.navItem a{
+a{
     text-decoration: none;
     color: black;
+    display: block;
 }
 
 
@@ -105,7 +106,7 @@ input:focus {
     min-width: 100vw;
     display:block;
     margin:auto;
-    background:url(hero.png) center center no-repeat;
+    background:url(budapestLarge.png) center center no-repeat;
     background-size:cover;
 }
 
@@ -115,7 +116,7 @@ input:focus {
     min-width: 100vw;
     opacity: 0;
     transition: opacity 1s ease-in-out;
-    background:url(hero2.png) center center no-repeat;
+    background:url(rogueLarge.jpg) center center no-repeat;
     background-size:cover;
 }
 
@@ -165,7 +166,7 @@ h1 {
 }
 
 .film:hover {
-    background-color: white;
+    background-color: #333333;
     cursor: pointer;
 }
 
@@ -216,17 +217,28 @@ h2{
 }
 
 #action {
-    background-color: #FF6D00;
+    background-color: #0c0c0c;
+    color: white;
 }
 
 #comedy {
-    background-color: #FF9100;
+    background-color: #141414;
+    color: white;
 }
 
 #horror {
-    background-color: #FFAB40;
+    background-color: #191919;
+    color: white;
 }
 
 #drama {
-    background-color: #FFD180;
+    background-color: #212121;
+    color: white;
+}
+
+
+.anchor{
+	position: relative;
+	top: -60px;
+	height: 0;
 }
