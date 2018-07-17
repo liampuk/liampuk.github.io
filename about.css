@@ -166,7 +166,7 @@ a{
     transform: translate(-50%, 0);
     color: black;
     font-size: 120px;
-    font-weight:700;
+    font-weight: 300;
     letter-spacing: 15px;
     user-select: none;
 }
