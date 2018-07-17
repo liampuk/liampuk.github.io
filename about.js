@@ -11,7 +11,7 @@ function flicker(){
         var fli = document.getElementById("hero2");
         fli.style.backgroundColor = "rgba(0, 0, 0, "+ brightness +")";
         flicker();
-        console.log(brightness);
+        //console.log(brightness);
     }, (Math.random()*101)+1);
 
 }
@@ -19,15 +19,27 @@ function flicker(){
 window.onload = flicker();
 
 
-
-/*
-
-
-    setTimeout(function(){ 
-        flicker;
-    }, (Math.random()*301)+1);
-
-
-
-
-*/
+$(document).ready(function(){
+    // Add smooth scrolling to all links
+    $("a").on('click', function(event) {
+  
+      // Make sure this.hash has a value before overriding default behavior
+      if (this.hash !== "" && this.hash !="#action" && this.hash !="#comedy" && this.hash !="#horror" && this.hash !="#drama") {
+        // Prevent default anchor click behavior
+        event.preventDefault();
+  
+        // Store hash
+        var hash = this.hash;
+  
+        // Using jQuery's animate() method to add smooth page scroll
+        // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
+        $('html, body').animate({
+          scrollTop: $(hash).offset().top
+        }, 600, function(){
+     
+          // Add hash (#) to URL when done scrolling (default click behavior)
+          window.location.hash = hash;
+        });
+      } // End if
+    });
+  });
