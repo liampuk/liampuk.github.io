@@ -282,13 +282,7 @@ footer p{
     line-height: 40px;
 }
 
-footer span{
-    float: right;
-    margin-right: 20px;
-}
-
 .fab{
-    margin-right: 20px;
     font-size: 20px;
     line-height: 45px;
 }
@@ -304,4 +298,10 @@ footer a{
     float: right;
     color: grey;
     margin-right: 20px;
+}
+
+footer span{
+    float: right;
+    margin-right: 20px;
+    padding-right: 20px;
 }
