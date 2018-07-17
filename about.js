@@ -1,3 +1,17 @@
+function showSearch(){
+    var searchBox = document.getElementById("searchBox");
+    var search = document.getElementById("search");
+    search.style.width = "300px"
+    searchBox.style.display = "block";
+}
+
+function hideSearch(){
+    var searchBox = document.getElementById("searchBox");
+    var search = document.getElementById("search");
+    search.style.width = "100px"
+    searchBox.style.display = "none";
+}
+
 var brightness = 0.3;
 
 function flicker(){
