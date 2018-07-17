@@ -243,3 +243,43 @@ h2{
 	top: -60px;
 	height: 0;
 }
+
+footer{
+    position: relative;
+    padding-left: 20px;
+    background-color: #0c0c0c;
+    color: grey;
+    height: 45px;
+    line-height: 40px;
+}
+
+footer p{
+    padding: 0;
+    margin: 0;
+    font-size: 15px;
+    height: 40px;
+    line-height: 40px;
+}
+
+footer span{
+    float: right;
+    margin-right: 20px;
+}
+
+.fab{
+    margin-right: 20px;
+    font-size: 20px;
+    line-height: 45px;
+}
+
+.fab:hover{
+    cursor: pointer;
+    color: white;
+}
+
+footer a{
+    text-decoration: none;
+    display: default;
+    float: right;
+    color: grey;
+}
