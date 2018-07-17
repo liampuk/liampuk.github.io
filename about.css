@@ -130,6 +130,7 @@ input:focus {
 a{
     text-decoration: none;
     color: black;
+    display: block;
 }
 
 .dropdown-content #anchor {
@@ -188,20 +189,32 @@ h3{
     letter-spacing: 1px;
 }
 
-p, li{
-    width: 55vw;
+.centered, li{
+    display: inline-block;
+    width: 70vw;
     position: relative;
     left: 50%;
     transform: translate(-50%, 0);
-    font-size: 20px;
+    font-size: 1.5vmax;
     top: 100px;
     font-weight: 300;
     text-align: justify;
     text-align-last: center;
 }
 
-p span{
-    font-weight: 500;
+.left{
+    display: inline-block;
+    width: 70vw;
+    position: relative;
+    left: 50%;
+    transform: translate(-50%, 0);
+    font-size: 1.5vmax;
+    top: 150px;
+    font-weight: 300;
+    display: inline-block;
+    color: #FF7043;
+    text-align: left !important;
+    text-align-last: left !important;
 }
 
 li {
@@ -210,4 +223,11 @@ li {
 
 sub{
     padding-bottom: 40px;
+    font-size: medium;
+}
+
+@media only screen and (min-width: 1385px) {
+    #hero span{
+        line-height: 36vw;
+    }
 }
