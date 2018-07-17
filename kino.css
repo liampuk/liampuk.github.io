@@ -214,6 +214,7 @@ h2{
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    font-weight: 300;
 }
 
 #action {
