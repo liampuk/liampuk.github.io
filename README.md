@@ -1,5 +1,3 @@
-# Personal Website & Projects
-
 ## liamp.uk
 
 My Portfolio site, [liamp.uk](http://liamp.uk)
