@@ -1,10 +1,10 @@
 # Personal Website & Projects
 
-##liamp.uk
+## liamp.uk
 
 My Portfolio site, [liamp.uk](http://liamp.uk)
 
-##Projects
+## Projects
 
 ***
 
@@ -16,6 +16,6 @@ My Portfolio site, [liamp.uk](http://liamp.uk)
 
 ***
 
-##Contact
+## Contact
 
 liamp.uk@gmail.com
