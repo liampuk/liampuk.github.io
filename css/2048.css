@@ -27,7 +27,7 @@ body {
     background-color: #1d3134;
     border-radius: .5vmax;
     float: left;
-    color: #c2ffff;
+    color: white;
     font-size: 3vmax;
     transition: all .2s cubic-bezier(.01,.95,.58,.93);
     user-select: none;
