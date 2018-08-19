@@ -1,6 +1,6 @@
 ## liamp.uk
 
-My Portfolio site, [liamp.uk](http://liamp.uk)
+My personal site, [liamp.uk](http://liamp.uk)
 
 ## Projects
 
