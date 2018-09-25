@@ -11,6 +11,7 @@ body {
     justify-content: center;
     align-items: center;
     transition: all .3s ease;
+    user-select: none;
 }
 
 .content {
@@ -32,7 +33,7 @@ body {
 }
 
 .em-block:hover {
-    background-color: #EEEEEE;
+    background-color: rgba(192, 192, 192, 0.2);
 }
 
 .em-block:active { 
@@ -40,7 +41,7 @@ body {
 }
 
 .bottom-toast{
-    background-color: #EEEEEE;
+    background-color: rgba(192, 192, 192, 0.2);
     position: absolute;
     left: 50%;
     bottom: 20px;
