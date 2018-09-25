@@ -1,4 +1,5 @@
-var emojis = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
+// var emojis = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
+var emojis = ["\uD83D\uDE02","\uD83D\uDE05","\uD83D\uDE0B","\uD83D\uDE0E","\uD83D\uDE0D","\uD83E\uDD14","\uD83D\uDE36","\uD83D\uDE34","\uD83D\uDE2D","\uD83D\uDE2C","\uD83D\uDE31","\uD83D\uDE35","\uD83D\uDE20","\uD83D\uDC4C","\uD83D\uDD25","\u2764"];
 
 function renderPad(){
     var width = Math.ceil(Math.sqrt(emojis.length));
