@@ -1,0 +1,50 @@
+html {
+    font-family: consolas;
+}
+
+body {
+    margin: 0px;
+    padding: 0px;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.content {
+    text-align: left !important;
+}
+
+.em-block {
+    display: inline-block;
+    user-select: none;
+    width: 80px;
+    height: 80px;
+    line-height: 80px;
+    font-size: 30px;
+    text-align: center;
+    transition: all .2s ease;
+    margin: 5px 0;
+    border-radius: 10%;
+}
+
+.em-block:hover {
+    background-color: #EEEEEE;
+}
+
+.em-block:active { 
+    background-color: #FFDC00;
+}
+
+.bottom-toast{
+    background-color: lightgrey;
+    position: absolute;
+    left: 50%;
+    bottom: 20px;
+    border-radius: 5%/10%;
+    transform: translateX(-50%);
+    padding: 10px;
+    transition: all .3s ease;
+    opacity: 0;
+}

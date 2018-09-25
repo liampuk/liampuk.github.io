@@ -1,0 +1,40 @@
+var emojis = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
+
+function renderPad(){
+    var width = Math.ceil(Math.sqrt(emojis.length));
+    for(var i=0; i<emojis.length; i++){
+        var elem = document.createElement('div');
+        elem.className = "em-block";
+        elem.onclick = function(){copy(this)};
+        elem.textContent = emojis[i];
+        document.getElementsByClassName("container")[0].appendChild(elem);
+        if((i+1)%width == 0){
+            document.getElementsByClassName("container")[0].appendChild(document.createElement('br'));
+        }
+    }
+}
+
+function copy(elem) {
+    var copyElem = document.createElement("input");
+    document.body.appendChild(copyElem);
+    copyElem.setAttribute("id", "copyElem"); 
+    document.getElementById("copyElem").value=elem.textContent;
+    copyElem.select();
+    document.execCommand("copy");
+    document.body.removeChild(copyElem);
+    flashToast(elem.textContent);
+}
+
+function flashToast(emoji){
+    var toast = document.getElementsByClassName("bottom-toast")[0];
+    toast.style.opacity = 1;
+    toast.innerHTML = "Copied "+emoji;
+
+    setTimeout(function(){
+        toast.style.opacity = 0;
+    }, 1500);
+}
+
+window.onload = function(){
+    renderPad();
+}
