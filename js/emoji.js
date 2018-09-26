@@ -1,6 +1,8 @@
-// var emojis = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
+// var emojis = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y"];
 var emojis = ["\uD83D\uDE02","\uD83D\uDE05","\uD83D\uDE0B","\uD83D\uDE0E","\uD83D\uDE0D","\uD83E\uDD14","\uD83D\uDE36","\uD83D\uDE34","\uD83D\uDE2D","\uD83D\uDE2C","\uD83D\uDE31","\uD83D\uDE35","\uD83D\uDE20","\uD83D\uDC4C","\uD83D\uDD25","\u2764\uFE0F"];
+
 var waitForAnim = 0;
+var panelOpen = false;
 
 function renderPad(){
     var width = Math.ceil(Math.sqrt(emojis.length));
@@ -9,9 +11,9 @@ function renderPad(){
         elem.className = "em-block";
         elem.onclick = function(){copy(this)};
         elem.textContent = emojis[i];
-        document.getElementsByClassName("container")[0].appendChild(elem);
+        document.getElementsByClassName("grid")[0].appendChild(elem);
         if((i+1)%width == 0){
-            document.getElementsByClassName("container")[0].appendChild(document.createElement('br'));
+            document.getElementsByClassName("grid")[0].appendChild(document.createElement('br'));
         }
     }
 }
@@ -53,6 +55,23 @@ function toggleTheme(day){
         document.getElementById("moon").innerHTML = '<i class="fas fa-moon"></i>';
     }
 
+}
+
+function togglePanel(){
+    if(panelOpen){
+        document.getElementsByClassName("content")[0].style.width="100vw";
+        document.getElementsByClassName("panel")[0].style.width="3vw";
+        document.getElementsByClassName("panel")[0].style.backgroundColor="rgba(192, 192, 192, 0)";
+        document.getElementById("toggle-panel").innerHTML = '<i class="fas fa-chevron-right"></i>';
+        panelOpen = !panelOpen;
+
+    }else{
+        document.getElementsByClassName("content")[0].style.width="50vw";
+        document.getElementsByClassName("panel")[0].style.width="50vw";
+        document.getElementsByClassName("panel")[0].style.backgroundColor="rgba(192, 192, 192, 0.2)";
+        document.getElementById("toggle-panel").innerHTML = '<i class="fas fa-chevron-left"></i>';
+        panelOpen = !panelOpen;
+    }
 }
 
 window.onload = function(){
