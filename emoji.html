@@ -1,21 +1,44 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+        crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="css/emoji.css">
     <script src='js/emoji.js'></script>
 </head>
+
 <body>
     <div class="panel">
-        <div id="toggle-panel" onclick="togglePanel()"><i class="fas fa-chevron-right"></i></div>
+        <div id="toggle-panel" onclick="togglePanel()">
+            <i class="fas fa-chevron-right"></i>
+        </div>
+        <div class="panel-content">
+            <div class="flex-balance">
+                <div class="add">add</div>
+            </div>
+            <div class="large-grid"></div>
+        </div>
     </div>
-    <div class="content">
-        <div class="grid"></div>
+    <div class="main">
+        <div class="content">
+            <div class="flex-balance">
+                <div class="remove">remove</div>
+            </div>
+            <div class="grid"></div>
+            <div class="flex-balance">
+                <div class="bottom-toast">-</div>
+            </div>
+        </div>
     </div>
     <div class="footer">
-        <div id="sun" class="theme" onclick="toggleTheme(true)"><i class="fas fa-circle"></i></div>
-        <div id="moon" class="theme" onclick="toggleTheme(false)"><i class="far fa-moon"></i></div>
-        <div class="bottom-toast">-</div>
+        <div id="sun" class="theme" onclick="toggleTheme(true)">
+            <i class="fas fa-circle"></i>
+        </div>
+        <div id="moon" class="theme" onclick="toggleTheme(false)">
+            <i class="far fa-moon"></i>
+        </div>
     </div>
 </body>
+
 </html>
