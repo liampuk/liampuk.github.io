@@ -1,5 +1,6 @@
 html {
     font-family: consolas;
+    font-family: Segoe UI Emoji
 }
 
 body {
@@ -66,14 +67,15 @@ body {
 
 .large-grid {
     flex: 3;
-    padding: 1vw;
     width: 0vw;
     overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 
 ::-webkit-scrollbar {
-    width: 5px;
+    width: 8px;
+    transition: all .3s ease;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -81,11 +83,21 @@ body {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: rgba(192, 192, 192, 0.7); 
+    background: rgba(192, 192, 192, 0.7);
 }
 
-
-
+.em-title {
+    display: inline-block;
+    user-select: none;
+    width: 100%;
+    height: 80px;
+    line-height: 80px;
+    font-size: 30px;
+    text-align: left;
+    padding-left: 18px;
+    margin: 5px 0;
+    border-radius: 10%;
+}
 
 .em-block {
     display: inline-block;
