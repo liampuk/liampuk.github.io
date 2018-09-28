@@ -225,4 +225,9 @@ body {
     i {
         font-size: 30px;
     }
+
+    .bottom-toast{
+        padding: 20px;
+        font-size: 40px;
+    }
 }
