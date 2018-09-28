@@ -16,6 +16,7 @@ var theme = "light";
 
 var waitForAnim = 0;
 var panelOpen = false;
+var width;
 
 function storage() {
     if (localStorage.emojis) {
@@ -48,7 +49,7 @@ function renderPad(remove) {
     }
     document.getElementsByClassName("grid")[0].innerHTML = "";
     storage();
-    var width = Math.ceil(Math.sqrt(emojiMap.length));
+    width = Math.ceil(Math.sqrt(emojiMap.length));
     for (var i = 0; i < emojiMap.length; i++) {
         var elem = document.createElement('div');
         elem.className = extraClass + "em-block";
@@ -66,15 +67,20 @@ function renderPad(remove) {
 }
 
 function addEmoji(elem) {
-    emojiMap.push(emojis.indexOf(elem.textContent));
-    console.log(emojiMap);
-    localStorage.emojis = JSON.stringify(emojiMap);
-    renderPad(true);
+    if(emojiMap.includes(emojis.indexOf(elem.textContent))){
+        flashToast("already added " + elem.textContent);
+    }else if(document.getElementsByClassName("grid")[0].clientHeight+180 > document.getElementsByClassName("main")[0].clientHeight && emojiMap.length%width == 0){
+        flashToast("no space " + emojis[Math.floor(Math.random() * 102)]);
+    }
+    if(!emojiMap.includes(emojis.indexOf(elem.textContent)) && !(document.getElementsByClassName("grid")[0].clientHeight+180 > document.getElementsByClassName("main")[0].clientHeight && emojiMap.length%width == 0)){
+        emojiMap.push(emojis.indexOf(elem.textContent));
+        localStorage.emojis = JSON.stringify(emojiMap);
+        renderPad(true);
+    }
 }
 
 function removeEmoji(elem) {
     emojiMap.splice(emojiMap.indexOf(emojis.indexOf(elem.textContent)), 1);
-    console.log(emojiMap);
     localStorage.emojis = JSON.stringify(emojiMap);
     renderPad(true);
 }
@@ -106,13 +112,13 @@ function copy(elem) {
     copyElem.select();
     document.execCommand("copy");
     document.body.removeChild(copyElem);
-    flashToast(elem.textContent);
+    flashToast("Copied "+elem.textContent);
 }
 
-function flashToast(emoji) {
+function flashToast(message) {
     var toast = document.getElementsByClassName("bottom-toast")[0];
     toast.style.opacity = 1;
-    toast.innerHTML = "Copied " + emoji;
+    toast.innerHTML = message;
     waitForAnim += 1;
     setTimeout(function () {
         waitForAnim -= 1;
