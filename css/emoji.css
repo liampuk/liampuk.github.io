@@ -195,3 +195,34 @@ body {
 .remove:active { 
     background-color: rgba(202, 67, 49, 1) !important;
 }
+
+@media only screen and (orientation:portrait) {
+    .panel{
+        display:none;
+    }
+
+    .em-block {
+        width: 160px;
+        height: 160px;
+        line-height: 160px;
+        font-size: 60px;
+        margin: 10px 0;
+    }
+
+    .theme {
+        bottom: 40px;
+        padding: 20px;
+    }
+    
+    #sun {
+        right: 40px;
+    }
+    
+    #moon {
+        right: 140px;
+    }
+
+    i {
+        font-size: 30px;
+    }
+}
