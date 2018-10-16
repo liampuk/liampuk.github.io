@@ -26,11 +26,14 @@
             <div class="flex-balance">
                 <div class="remove-header">remove</div>
                 <div class="search-box">
-                    <input id="search-input" type="text" placeholder="search">
+                    <input id="search-input" type="text" placeholder="search" oninput="search(this.value)">
                 </div>
             </div>
             <div class="grid"></div>
-            <div class="search-display flex-balance">
+            <div class="search-display">
+                    <div class="search-results"></div>
+            </div>
+            <div class="flex-balance">
                 <div class="bottom-toast">Copied 🔥</div>
             </div>
         </div>
