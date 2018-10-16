@@ -31,6 +31,8 @@ var width;
 
 var foundArr;
 
+var searchErr = false;
+
 function test(){
     console.log("test");
 }
@@ -51,11 +53,14 @@ function search(value){
     foundArr = found.substring(0,found.length-1).split(",");
     console.log(found.substring(0,found.length-1));
     if(found.length == 0){
+        searchErr = true;
         document.getElementById("search-input").style.color = "rgba(202, 67, 49, 0.7)";
     }else if(theme == "light"){
         document.getElementById("search-input").style.color = "black";
+        searchErr = false;
     }else{
         document.getElementById("search-input").style.color = "white";
+        searchErr = false;
     }
     renderSearch();
 }
@@ -91,7 +96,6 @@ function storage() {
             toggleMode(true);
         } else {
             toggleMode(false);
-            search();
         }
     }else{
         toggleMode(true);
@@ -225,7 +229,9 @@ function toggleTheme(day) {
         document.body.style.backgroundColor = "white";
         document.getElementById("sun").style.display = 'none';
         document.getElementById("moon").style.display = 'block';
-        document.getElementById("search-input").style.color = 'black';
+        if(!searchErr){
+            document.getElementById("search-input").style.color = 'black';
+        }
         localStorage.setItem("emojiTheme", "light")
     } else {
         theme = "dark";
@@ -233,7 +239,9 @@ function toggleTheme(day) {
         document.body.style.backgroundColor = "black";
         document.getElementById("sun").style.display = 'block';
         document.getElementById("moon").style.display = 'none';
-        document.getElementById("search-input").style.color = 'white';
+        if(!searchErr){
+            document.getElementById("search-input").style.color = 'white';
+        }
         localStorage.setItem("emojiTheme", "dark")
     }
     if (localStorage.emojiMode) {
@@ -280,13 +288,14 @@ function toggleMode(grid) {
             padHidden = true;
             document.getElementsByClassName("grid")[0].style.opacity = 1;
             document.getElementsByClassName("panel")[0].style.display = 'none';
-            document.getElementsByClassName("search-display")[0].style.flexGrow = '1.5';
+            document.getElementsByClassName("search-display")[0].style.flexGrow = '3';
             document.getElementsByClassName("remove-header")[0].style.display = 'none';
             document.getElementsByClassName("search-box")[0].style.display = 'block';
             document.getElementsByClassName("search-results")[0].style.display = 'block';
             document.getElementById("search-input").focus();
         }, 300);
         localStorage.setItem("emojiMode", "search")
+        search();
     }
 }
 
