@@ -33,10 +33,6 @@ var foundArr;
 
 var searchErr = false;
 
-function test(){
-    console.log("test");
-}
-
 function search(value){
     len = searchArray.length;
       if(value == null){
@@ -51,7 +47,6 @@ function search(value){
         }
     }
     foundArr = found.substring(0,found.length-1).split(",");
-    console.log(found.substring(0,found.length-1));
     if(found.length == 0){
         searchErr = true;
         document.getElementById("search-input").style.color = "rgba(202, 67, 49, 0.7)";
