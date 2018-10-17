@@ -106,9 +106,6 @@ function renderSearch() {
         elem.onclick = function () { copy(this) };
         elem.textContent = emojis[foundArr[i]];
         document.getElementsByClassName("search-results")[0].appendChild(elem);
-        // if ((i + 1) % width == 0) {
-        //     document.getElementsByClassName("search-results")[0].appendChild(document.createElement('br'));
-        // }
     }
 }
 
@@ -159,6 +156,7 @@ function removeEmoji(elem) {
     }else{
         emojiMap = [];
         emojiMap = emojiSample.slice(0);
+        localStorage.emojis = JSON.stringify(emojiMap);
         document.getElementsByClassName("grid")[0].style.transition = "";
         document.getElementsByClassName("grid")[0].style.opacity = 0;
         setTimeout(function () {
