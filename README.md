@@ -14,7 +14,7 @@ My personal site, [liamp.uk](http://liamp.uk)
 
 ***
 
-[emojiPad](http://liamp.uk/emoji) - A minimal emoji keyboard for non mobile devices.
+[emojiPad](http://liamp.uk/emoji) - A minimal emoji keyboard.
 
 ***
 
