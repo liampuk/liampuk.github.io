@@ -1,7 +1,17 @@
+/*
+Colours:
+red: #FF7043
+green: #388E3C 
+*/
+
 body {
     background-color: #263238;
     font-family: 'Consolas', sans-serif;
     overflow: hidden;
+    background-image: url("https://66.media.tumblr.com/0425c49c3a7408a1b29dace4b04f2f79/tumblr_inline_n2590137jN1qhwjx8.gif");
+    background-image: url("https://66.media.tumblr.com/e5da3cb3fbe9af8f2198f3459e72424a/tumblr_inline_n258tklDt11qhwjx8.png");
+    background-image: url("https://66.media.tumblr.com/043638a13d33aa74f175aa54439f4382/tumblr_inline_n25dj8mB5T1qhwjx8.gif");
+    background-size: cover;
 }
 
 h1, h2, h3, p {
@@ -34,6 +44,10 @@ p {
     padding-top: .5vw;
 }
 
+a {
+    color: #388E3C 
+}
+
 #page {
     user-select: none;
     background-color: #EFEBE9;
@@ -47,18 +61,25 @@ p {
     left: 0;
     transform: scale(1);
     transition: all .1s ease;
-    color: #FF7043;
+    color: #00796B;
     overflow-wrap: break-word;
     z-index: 999;
+    overflow: scroll;
 }
 
 hr {
 	height: 6px;
-	background: url(../res/line.svg);
+	background: url(../res/line-green.svg);
 	/* background: url(../res/line.png) repeat-x 0 0; */
     border: 0;
 }
 
 .project {
     padding-left: 3.5em;
+}
+
+#const {
+    text-align: center;
+    line-height: 15vh;
+    margin-left: 7vw;
 }
