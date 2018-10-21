@@ -4,18 +4,34 @@ body {
     overflow: hidden;
 }
 
-#page h1 {
+h1, h2, h3, p {
+    padding-left: 1.5vw;
+    padding-right: 1.5vw;
+    margin: 0;
+}
+
+h1 {
     font-family: 'Roboto Slab', serif;
     font-size: 6em;
     font-weight: normal;
-    margin: 0;
-    padding-left: 1.5vw;
     padding-top: .5vw;
 }
 
-#page p {
+h2 {
+    font-weight: normal;
+    font-size: 1.8em;
+    padding-top: .5vw;
+}
+
+h3 {
+    font-weight: normal;
     font-size: 1em;
-    padding-left: 1.5vw;
+    color: #EFEBE9;
+}
+
+p {
+    font-size: 1em;
+    padding-top: .5vw;
 }
 
 #page {
@@ -41,5 +57,8 @@ hr {
 	background: url(../res/line.svg);
 	/* background: url(../res/line.png) repeat-x 0 0; */
     border: 0;
-    margin-bottom: 1vw;
+}
+
+.project {
+    padding-left: 3.5em;
 }
