@@ -1,0 +1,45 @@
+body {
+    background-color: #263238;
+    font-family: 'Consolas', sans-serif;
+    overflow: hidden;
+}
+
+#page h1 {
+    font-family: 'Roboto Slab', serif;
+    font-size: 6em;
+    font-weight: normal;
+    margin: 0;
+    padding-left: 1.5vw;
+    padding-top: .5vw;
+}
+
+#page p {
+    font-size: 1em;
+    padding-left: 1.5vw;
+}
+
+#page {
+    user-select: none;
+    background-color: #EFEBE9;
+    width: 68vmin;
+    height: 85vmin;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    transform: scale(1);
+    transition: all .1s ease;
+    color: #FF7043;
+    overflow-wrap: break-word;
+    z-index: 999;
+}
+
+hr {
+	height: 6px;
+	background: url(../res/line.svg);
+	/* background: url(../res/line.png) repeat-x 0 0; */
+    border: 0;
+    margin-bottom: 1vw;
+}
