@@ -64,7 +64,7 @@ a {
     color: #00796B;
     overflow-wrap: break-word;
     z-index: 999;
-    overflow: scroll;
+    overflow: auto;
 }
 
 hr {
