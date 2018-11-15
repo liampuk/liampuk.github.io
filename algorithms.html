@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=VT323|Vollkorn:400,600,700" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/algorithms.css">
+    <script src="js/algorithms.js"></script>
+</head>
+
+<body onload="init()">
+    <header>
+        <h1>Fundamental Algorithms</h1>
+        <p>
+            This website explains the algorithms fundamental to computer science, along with their
+            <span class="expl">pseudocode
+                <span class="expl-content">A high-level description of an algorithm, not relating to any specific
+                    programming language.</span>
+            </span> and
+            <span class="expl">complexity
+                <span class="expl-content">The amount of time taken to execute an algorithm (time complexity), measured
+                    in Big-O.</span>
+            </span>
+        </p>
+    </header>
+    <hr>
+    <section id="main">
+        <div class="row">
+            <div class="col col-md-2">
+                <h2>Sorting</h2>
+                <p>
+                    <span onclick="toggleDisplay(this)">> Selection Sort</span><br>
+                    <span onclick="toggleDisplay(this)">> Insertion Sort</span><br>
+                    <span onclick="toggleDisplay(this)">> Bubble Sort</span><br>
+                    <span onclick="toggleDisplay(this)">> Quick Sort</span><br>
+                    <span onclick="toggleDisplay(this)">> Merge Sort</span><br>
+                    <span onclick="toggleDisplay(this)">> Shell Sort</span><br>
+                    <span onclick="toggleDisplay(this)">> Radix Sort</span><br>
+                    <span onclick="toggleDisplay(this)">> Heap Sort</span><br>
+                </p>
+            </div>
+            <div class="col col-md-2">
+                <h2>Searching</h2>
+                <p>
+                    <span onclick="toggleDisplay(this)">> Sequential Search</span><br>
+                    <span onclick="toggleDisplay(this)">> Binary Search</span><br>
+                    <span onclick="toggleDisplay(this)">> Binary Search Tree</span><br>
+                    <span onclick="toggleDisplay(this)">> Interpolation Search</span><br>
+                    <span onclick="toggleDisplay(this)">> Hashing</span><br>
+                </p>
+            </div>
+            <div class="display col col-md-8">
+                <div id="screen-container">
+                    <div id="screen">
+                        <!-- ### Sorts ### -->
+                        <div class="hide" id="SelectionSort">
+                            <h1>Selection Sort</h1>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer pulvinar enim a orci
+                                gravida, eu vehicula mauris egestas. Curabitur pretium sem id felis sollicitudin, vitae
+                                venenatis tortor dapibus. Etiam sit amet magna eu lacus blandit imperdiet vel sit amet
+                                sem. Praesent nunc tellus, imperdiet id turpis et, bibendum aliquam risus. Nullam
+                                lacinia at ante vitae malesuada. Ut volutpat risus nec enim rutrum commodo. Nullam
+                                malesuada laoreet risus non posuere. Suspendisse nisl diam, elementum ac velit quis,
+                                finibus malesuada metus. Nulla pellentesque iaculis interdum. Cras dignissim posuere
+                                nisi ut rhoncus. Morbi ac condimentum velit, eu mattis ex. Nunc lacinia a leo a
+                                posuere.
+
+                                Maecenas in sapien nisi. Sed elementum nunc at elit tincidunt, eget suscipit ante
+                                blandit. Vivamus aliquet urna ut volutpat rutrum. Nulla eget nisl tincidunt, fringilla
+                                nulla vitae, tincidunt ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                Curabitur odio augue, blandit nec leo sed, pretium viverra metus. Maecenas volutpat
+                                consectetur euismod.
+                            </p>
+                        </div>
+                        <div class="hide" id="InsertionSort"><h1>Insertion Sort</h1></div>
+                        <div class="hide" id="BubbleSort"><h1>Bubble Sort</h1></div>
+                        <div class="hide" id="QuickSort"><h1>Quick Sort</h1></div>
+                        <div class="hide" id="MergeSort"><h1>Merge Sort</h1></div>
+                        <div class="hide" id="ShellSort"><h1>Shell Sort</h1></div>
+                        <div class="hide" id="RadixSort"><h1>Radix Sort</h1></div>
+                        <div class="hide" id="HeapSort"><h1>Heap Sort</h1></div>
+                        <!-- ### Searches ### -->
+                        <div class="hide" id="SequentialSearch"><h1>Sequential Search</h1></div>
+                        <div class="hide" id="BinarySearch"><h1>Binary Search</h1></div>
+                        <div class="hide" id="BinarySearchTree"><h1>Binary Search Tree</h1></div>
+                        <div class="hide" id="InterpolationSearch"><h1>Interpolation Search</h1></div>
+                        <div class="hide" id="Hashing"><h1>Hashing</h1></div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <hr>
+    <footer>
+        <p><a href="http://liamp.uk">liamp.uk</a></p>
+    </footer>
+</body>
+
+</html>

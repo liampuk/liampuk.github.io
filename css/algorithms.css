@@ -1,0 +1,134 @@
+body{
+    margin: 3%;
+    color: black;
+}
+
+header h1{
+    font-family: 'Vollkorn', serif;
+    font-weight: 400;
+    font-size: 5em;
+    margin: 0;
+    user-select: none;
+}
+
+header p, footer p{
+    font-family: 'VT323', monospace;
+    font-size: 1.8em;
+    margin: 0;
+    user-select: none;
+}
+
+header .expl{
+    color: #29B6F6;
+    position: relative;
+    display: inline-block;
+}
+
+header .expl:hover{
+    color: black;
+    cursor: default;
+}
+
+.expl .expl-content {
+    display: none;
+    background-color: #29B6F6;
+    color: white;
+    width: 20vw;
+    padding: 0 1ch;
+    z-index: 1;
+    position: absolute;
+    left: 0px;
+}
+
+.expl:hover .expl-content {
+    display: block;
+}
+
+hr{
+    border: 2px solid;
+    margin: 3vh 0 0 0;
+}
+
+#main h2{
+    font-family: 'Vollkorn', serif;
+    font-weight: 400;
+    font-size: 3em;
+    margin: 0;
+    user-select: none;
+    margin-top: 3vh;
+}
+
+footer{
+    height: 0;
+}
+
+footer a{
+    text-decoration: none;
+    color: black;
+}
+
+footer a:hover{
+    color: #29B6F6;
+    text-decoration: none;
+}
+
+footer p{
+    position: relative;
+    top: .5vh;
+    float: right;
+}
+
+.col{
+    height: 70vh;
+}
+
+#main{
+    user-select: none;
+}
+
+#main p{
+    font-family: 'VT323', monospace;
+    font-size: 1.9em;
+    margin: 1vw;
+}
+
+#main span:hover{
+    cursor: pointer;
+    background-color: #29B6F6!important;
+    color: white!important;
+}
+
+.display{
+    padding-right: 15px;
+    padding-top: 3vh;
+}
+
+.hide{
+    display: none;
+}
+
+#screen-container{
+    height: 100%;
+    background-color: #222;
+}
+
+#screen{
+    padding: 1.5% 2%;
+    height: 100%;
+    width: 100%;
+    transition: all 2s cubic-bezier(0,.9,.5,1);
+    transform: scale(.98);
+    opacity: 0;
+}
+
+#screen h1{
+    margin: 0;
+    font-family: 'VT323', monospace;
+    font-size: 3.2em;
+    text-decoration: underline;
+    color: white;
+}
+
+#screen p{
+    color: white;
+}
