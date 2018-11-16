@@ -163,8 +163,6 @@ function removeEmoji(elem) {
             document.getElementsByClassName("grid")[0].style.transition = "all .3s ease";
             document.getElementsByClassName("grid")[0].style.opacity = 1;
         }, 200);
-
-
     }
     renderPad(true);
 }

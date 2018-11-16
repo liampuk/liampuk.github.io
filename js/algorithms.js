@@ -28,6 +28,17 @@ function toggleDisplay(elem){
 }
 
 function init(){
-    // document.getElementsByTagName("span")[4].click();
     screen = document.getElementById("screen");
+    var elem = document.getElementsByTagName("span")[4];
+    setTimeout(function(){
+        elem.click();
+        setTimeout(function(){
+            elem.style.backgroundColor = "transparent";
+            elem.style.color = "black";
+            setTimeout(function(){
+                elem.style.backgroundColor = "#29B6F6";
+                elem.style.color = "white";
+            }, 100);
+        }, 200);
+    }, 500);
 }
