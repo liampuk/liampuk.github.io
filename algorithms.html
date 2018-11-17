@@ -7,6 +7,7 @@
     <link href="https://fonts.googleapis.com/css?family=VT323|Vollkorn:400,600,700" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/algorithms.css">
     <script src="js/algorithms.js"></script>
+    <meta name="viewport" content="width=device-width" />
 </head>
 
 <body onload="init()">
@@ -28,30 +29,32 @@
     <hr>
     <section id="main">
         <div class="row">
-            <div class="col col-md-2">
-                <h2>Sorting</h2>
-                <p>
-                    <span onclick="toggleDisplay(this)">> Selection Sort</span><br>
-                    <span onclick="toggleDisplay(this)">> Insertion Sort</span><br>
-                    <span onclick="toggleDisplay(this)">> Bubble Sort</span><br>
-                    <span onclick="toggleDisplay(this)">> Quick Sort</span><br>
-                    <span onclick="toggleDisplay(this)">> Merge Sort</span><br>
-                    <span onclick="toggleDisplay(this)">> Shell Sort</span><br>
-                    <span onclick="toggleDisplay(this)">> Radix Sort</span><br>
-                    <span onclick="toggleDisplay(this)">> Heap Sort</span><br>
-                </p>
+            <div class="contents col col-md-2">
+                <div id="contents-container">
+                    <h2>Sorting</h2>
+                    <p>
+                        <span onclick="toggleDisplay(this)">> Selection Sort</span><br>
+                        <span onclick="toggleDisplay(this)">> Insertion Sort</span><br>
+                        <span onclick="toggleDisplay(this)">> Bubble Sort</span><br>
+                        <span onclick="toggleDisplay(this)">> Quick Sort</span><br>
+                        <span onclick="toggleDisplay(this)">> Merge Sort</span><br>
+                        <span onclick="toggleDisplay(this)">> Shell Sort</span><br>
+                        <span onclick="toggleDisplay(this)">> Radix Sort</span><br>
+                        <span onclick="toggleDisplay(this)">> Heap Sort</span><br>
+                    </p>
+                    <h2>Searching</h2>
+                    <p>
+                        <span onclick="toggleDisplay(this)">> Sequential Search</span><br>
+                        <span onclick="toggleDisplay(this)">> Binary Search</span><br>
+                        <span onclick="toggleDisplay(this)">> Binary Search Tree</span><br>
+                        <span onclick="toggleDisplay(this)">> Interpolation Search</span><br>
+                        <span onclick="toggleDisplay(this)">> Hashing</span><br>
+                    </p>
+                </div>
+
             </div>
-            <div class="col col-md-2">
-                <h2>Searching</h2>
-                <p>
-                    <span onclick="toggleDisplay(this)">> Sequential Search</span><br>
-                    <span onclick="toggleDisplay(this)">> Binary Search</span><br>
-                    <span onclick="toggleDisplay(this)">> Binary Search Tree</span><br>
-                    <span onclick="toggleDisplay(this)">> Interpolation Search</span><br>
-                    <span onclick="toggleDisplay(this)">> Hashing</span><br>
-                </p>
-            </div>
-            <div class="display col col-md-8">
+
+            <div class="display col col-md-10">
                 <div id="screen-container">
                     <div id="screen">
                         <!-- ### Sorts ### -->
@@ -135,6 +138,10 @@
                 </div>
             </div>
         </div>
+    </section>
+    <section id="small">
+        <h1>This page is best viewed on a computer</h1>
+        <img src="res/computer.gif">
     </section>
     <hr>
     <footer>

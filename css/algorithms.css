@@ -66,7 +66,6 @@ hr{
     font-size: 3em;
     margin: 0;
     user-select: none;
-    margin-top: 3vh;
 }
 
 footer{
@@ -88,10 +87,6 @@ footer p{
     position: relative;
     top: .5vh;
     float: right;
-}
-
-.col{
-    height: 74vh;
 }
 
 #main{
@@ -119,6 +114,13 @@ footer p{
 .display{
     padding-right: 15px;
     padding-top: 3vh;
+    height: 74vh;
+}
+
+.contents{
+    height: 71vh;
+    overflow: auto;
+    margin-top: 3vh;
 }
 
 .hide{
@@ -167,6 +169,10 @@ footer p{
 }
 
 #screen:hover::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,1);
+}
+
+.contents:hover::-webkit-scrollbar-thumb{
     background: rgba(0,0,0,1);
 }
 
@@ -264,4 +270,29 @@ footer p{
 .body-dark{
     background-color: black;
     color: white;
+}
+
+#small{
+    display: none;
+}
+
+@media screen and (max-width: 992px) {
+    header, #main, footer, hr{
+        display: none;
+    }
+
+    body, html{
+        width: 100vw;
+    }
+
+    #small{
+        width: 100vw;
+        display: block;
+        font-family: 'VT323', monospace;
+    }
+
+    #small h1{
+        text-align: center;
+        margin-top: 10vh;
+    }
 }
