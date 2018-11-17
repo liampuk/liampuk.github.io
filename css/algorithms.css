@@ -276,7 +276,7 @@ footer p{
     display: none;
 }
 
-@media screen and (max-width: 768px) {
+@media all and (max-width: 768px) {
     header, #main, footer, hr{
         display: none;
     }
