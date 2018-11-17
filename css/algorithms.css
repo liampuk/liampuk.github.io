@@ -281,8 +281,8 @@ footer p{
         display: none;
     }
 
-    body, html{
-        width: 100vw;
+    body{
+        margin: 5vw;
     }
 
     #small{
@@ -293,6 +293,15 @@ footer p{
 
     #small h1{
         text-align: center;
+        margin-top: 10vh;
+    }
+
+    #small img{
+        width: 500px;
+        height: 500px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
         margin-top: 10vh;
     }
 }
