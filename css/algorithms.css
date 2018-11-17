@@ -296,6 +296,7 @@ footer p{
     #small h1{
         text-align: center;
         margin-top: 10vh;
+        padding: 0 10vw;
     }
 
     #small img{
