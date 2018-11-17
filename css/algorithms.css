@@ -1,19 +1,26 @@
 body{
-    margin: 3%;
+    margin: 4vh 4vh 0 4vh;
     color: black;
+    /* position: absolute; */
+    /* width: 100%; */
+    display: flex;
+    height: 96vh;
+    flex-direction: column;
 }
 
 header h1{
     font-family: 'Vollkorn', serif;
     font-weight: 400;
-    font-size: 5em;
+    font-size: 7vh;
+    height: 7vh;
     margin: 0;
     user-select: none;
 }
 
 header p, footer p{
     font-family: 'VT323', monospace;
-    font-size: 1.8em;
+    font-size: 2.5vh;
+    height: 2.5vh;
     margin: 0;
     user-select: none;
 }
@@ -63,12 +70,13 @@ hr{
 }
 
 footer{
-    height: 0;
+    height: 5vh;
+    flex:none;
 }
 
 footer a{
     text-decoration: none;
-    color: black;
+    color: inherit;
 }
 
 footer a:hover{
@@ -83,11 +91,12 @@ footer p{
 }
 
 .col{
-    height: 70vh;
+    height: 74vh;
 }
 
 #main{
     user-select: none;
+    flex: auto;
 }
 
 #main p{
@@ -167,7 +176,7 @@ footer p{
 
 #colours{
     position: relative;
-    top: 2vh;
+    top: 1.75vh;
     float: left;
     height: 1.5vh;
     width: 6vh;
@@ -207,7 +216,7 @@ footer p{
     height: 100%;
     flex-grow:1;
     float: left;
-    transition: all .5s;
+    transition: all .2s;
 }
 
 #clr2{
@@ -215,7 +224,7 @@ footer p{
     height: 100%;
     flex-grow:1;
     float: left;
-    transition: all .5s;
+    transition: all .2s;
 }
 
 #clr3{
@@ -223,7 +232,7 @@ footer p{
     height: 100%;
     flex-grow:1;
     float: left;
-    transition: all .5s;
+    transition: all .2s;
 }
 
 #clr4{
@@ -231,7 +240,7 @@ footer p{
     height: 100%;
     flex-grow:1;
     float: left;
-    transition: all .5s;
+    transition: all .2s;
 }
 
 .active{
