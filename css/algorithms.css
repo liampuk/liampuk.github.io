@@ -89,6 +89,12 @@ footer p{
     float: right;
 }
 
+footer i{
+    font-style: normal;
+    position: relative;
+    transition: all .3s;
+}
+
 #main{
     user-select: none;
     flex: auto;
@@ -274,6 +280,15 @@ footer p{
 
 #small{
     display: none;
+}
+
+.load-in{
+    margin-top: 1.5vh;
+    opacity: 0;
+}
+
+#link{
+    transition: all .35s;
 }
 
 @media all and (max-width: 768px) {

@@ -6,6 +6,7 @@
         crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=VT323|Vollkorn:400,600,700" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/algorithms.css">
+    <link rel="shortcut icon" type="image/png" href="res/faviconAlgorithms.ico"/>
     <script src="js/algorithms.js"></script>
     <meta name="viewport" content="initial-scale=1.0, width=device-width">
 </head>
@@ -146,12 +147,12 @@
     <hr>
     <footer>
         <div id="colours" class="colours-light" onclick="changeTheme()">
-            <div id="clr1"></div>
-            <div id="clr2"></div>
-            <div id="clr3"></div>
-            <div id="clr4"></div>
+            <div id="clr1" class="load-in"></div>
+            <div id="clr2" class="load-in"></div>
+            <div id="clr3" class="load-in"></div>
+            <div id="clr4" class="load-in"></div>
         </div>
-        <p><a href="http://liamp.uk">liamp.uk</a></p>
+        <p onmouseover="animateNameGate();" onmouseleave="animateNameStop()" id="link" class="load-in"><a href="http://liamp.uk"><i>l</i><i>i</i><i>a</i><i>m</i><i>p</i><i>.</i><i>u</i><i>k</i></a></p>
     </footer>
 </body>
 
