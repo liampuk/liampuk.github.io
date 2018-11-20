@@ -4,6 +4,10 @@ var screenState = false;
 var dark = false;
 var name;
 var stopNameLoop = false;
+var rndData = [11,3,15,9,5,7,3,9,17,7,17,9,20,14,1,21,29,23,7,29,17,4,14,12,20,15,4,12,30,20,5,23];
+var nearData = [1,0,2,3,4,7,5,6,8,10,9,11,13,14,12,15,17,18,19,16,20,22,21,24,23,26,25,27,28,29,31,30];
+var revData = [31,30,29,28,27,26,25,24,23,22,21,20,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0];
+var uniData = [29,22,5,16,16,16,5,12,5,22,16,5,16,22,12,5,29,22,32,32,32,22,12,5,22,5,12,29,29,12,12,5];
 
 function toggleDisplay(elem) {
     if (prevElem != null && elem == prevElem && screenState) {
@@ -24,6 +28,16 @@ function toggleDisplay(elem) {
         document.getElementById(elem.innerText.substring(2).replace(new RegExp(" ", "g"), '')).setAttribute('style', 'display:block !important');
         elem.classList.add("active");
     }
+
+    var sortName = elem.innerText.substring(2).replace(new RegExp(" ", "g"), '');
+
+    if(sortName.endsWith("Sort")){
+        drawGraphs(sortName, 0, rndData);
+        drawGraphs(sortName, 1, nearData);
+        drawGraphs(sortName, 2, revData);
+        drawGraphs(sortName, 3, uniData);
+    }
+
     prevElem = elem;
 }
 
@@ -93,6 +107,27 @@ function init() {
     }, 1000);
 }
 
+function drawGraphs(sortName, c, arr){
+    var canvas = document.querySelectorAll("#"+sortName+" canvas")[c];
+    var width = canvas.width;
+    var height = canvas.height;
+    var ctx = canvas.getContext("2d");
+    ctx.lineWidth = 4;
+    ctx.strokeStyle = 'black';
+    
+    xPos = 2;
+    num = 0;
+
+    while(xPos <= width){
+        ctx.moveTo(xPos, height);
+        ctx.lineTo(xPos, height-(height/32*arr[num]));
+        ctx.stroke();
+        xPos = xPos + 8;
+        num = num+1;
+    }
+
+}
+
 // ### web link animation ###
 
 var arrN = [0,0,0,0,0,0,0,0];
@@ -119,18 +154,17 @@ function resetName(){
     }
 }
 
-function animateName(l){
-    // alert(arrN);
-    if(l <= 3){
+function animateName(n){
+    if(n <= 3){
         arrN.pop();
         arrN.unshift(1);
-        l = l+1;
+        n = n+1;
     }else{
-        arrN.pop();
+        arrN.pop(); 
         arrN.unshift(0);
-        l= l+1;
-        if(l > 6){
-            l = 0;
+        n= n+1;
+        if(n > 6){
+            n = 0;
         }
     }
     for(var i=0; i<=7; i++){
@@ -142,8 +176,7 @@ function animateName(l){
     }
     setTimeout(function () {
         if(stillGo){
-            animateName(l);
+            animateName(n);
         }
     }, 100);
-    console.log(arrN);
 }

@@ -60,7 +60,7 @@ hr{
     margin: 3vh 0 0 0;
 }
 
-#main h2{
+.main h2{
     font-family: 'VT323', monospace;
     font-weight: 400;
     font-size: 3em;
@@ -95,23 +95,18 @@ footer i{
     transition: all .3s;
 }
 
-#main{
+.main{
     user-select: none;
     flex: auto;
 }
 
-#main p{
+.main p{
     font-family: 'VT323', monospace;
     font-size: 1.9em;
     margin: 1vh 0;
 }
 
-/* #main span{
-    background-color: transparent;
-    color: black
-} */
-
-#main span:hover{
+.main span:hover{
     cursor: pointer;
     background-color: #29B6F6!important;
     color: white!important;
@@ -292,7 +287,7 @@ footer i{
 }
 
 @media all and (max-width: 768px) {
-    header, #main, footer, hr{
+    header, .main, footer, hr{
         display: none;
     }
 
@@ -322,4 +317,45 @@ footer i{
         margin-right: auto;
         margin-top: 6vh;
     }
+}
+/*
+###############
+    changes    
+###############
+*/
+
+.sort-container{
+    height: 34vh;
+    display: flex;
+    margin-top: 1vh;
+    background-color: #eaeaea;
+    padding-top: 1vh;
+    transition: all .5s;
+}
+
+.sort{
+    height: 100%;
+    flex: 1;
+    width: 100%;
+    text-align:center;
+}
+
+.sort h2{
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    font-size: 2em;
+    text-decoration:underline;
+    color: black;
+}
+
+.inner-sort{
+    height: 25vh;
+    width: 25vh;
+    margin: auto;
+    margin-top: 1.5vh;
+    border-bottom: 4px black solid;
+    bottom:0;
+    display: inline-block;
+    transition: all .5s;
 }
