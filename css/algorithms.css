@@ -376,7 +376,7 @@ footer i{
     line-height: 4vh;
     float: right;
     overflow: hidden;
-    transition: all .5s;
+    transition: height .5s;
 }
 
 .play{
