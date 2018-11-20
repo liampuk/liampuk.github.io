@@ -53,6 +53,11 @@ function changeTheme() {
             accents[0].classList.add("accent");
             accents[0].classList.remove("accent-dark");
         }
+        var canvi = document.getElementsByTagName("canvas");
+        for(var i=0; i<canvi.length; i++){
+            canvi[i].classList.remove("invert");
+            canvi[i].previousElementSibling.style.color = "black";
+        }
         localStorage.setItem("algoTheme", "light");
     } else {
         document.body.classList.add("body-dark");
@@ -64,6 +69,11 @@ function changeTheme() {
         while (accents.length > 0) {
             accents[0].classList.add("accent-dark");
             accents[0].classList.remove("accent");
+        }
+        var canvi = document.getElementsByTagName("canvas");
+        for(var i=0; i<canvi.length; i++){
+            canvi[i].classList.add("invert");
+            canvi[i].previousElementSibling.style.color = "white";
         }
         localStorage.setItem("algoTheme", "dark");
     }

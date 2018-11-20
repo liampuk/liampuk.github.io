@@ -328,7 +328,7 @@ footer i{
     height: 34vh;
     display: flex;
     margin-top: 1vh;
-    background-color: #eaeaea;
+    background-color: rgba(128,128,128,.2);
     padding-top: 1vh;
     transition: all .5s;
 }
@@ -358,4 +358,8 @@ footer i{
     bottom:0;
     display: inline-block;
     transition: all .5s;
+}
+
+.invert{
+    filter: invert(1);
 }
