@@ -355,9 +355,12 @@ footer i{
     height: 25vh;
     border-bottom: 4px black solid;
     position: absolute;
-    left: 5vh;
     bottom: 3vh;
     transition: all 1s;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .invert{
