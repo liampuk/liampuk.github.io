@@ -337,6 +337,7 @@ footer i{
     height: 100%;
     flex: 1;
     width: 100%;
+    position: relative;
     text-align:center;
 }
 
@@ -350,16 +351,19 @@ footer i{
 }
 
 .inner-sort{
-    height: 25vh;
     width: 25vh;
-    margin: auto;
-    margin-top: 1.5vh;
+    height: 25vh;
     border-bottom: 4px black solid;
-    bottom:0;
-    display: inline-block;
-    transition: all .5s;
+    position: absolute;
+    left: 5vh;
+    bottom: 3vh;
+    transition: all 1s;
 }
 
 .invert{
     filter: invert(1);
+}
+
+.short{
+    height: 0;
 }

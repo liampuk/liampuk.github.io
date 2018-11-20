@@ -36,6 +36,7 @@ function toggleDisplay(elem) {
         drawGraphs(sortName, 1, nearData);
         drawGraphs(sortName, 2, revData);
         drawGraphs(sortName, 3, uniData);
+        growCanvi(sortName);
     }
 
     prevElem = elem;
@@ -77,6 +78,21 @@ function changeTheme() {
         }
         localStorage.setItem("algoTheme", "dark");
     }
+}
+
+function growCanvi(sortName,){
+    setTimeout(function () {
+        document.querySelectorAll("#"+sortName+" canvas")[0].classList.remove("short");
+        setTimeout(function () {
+            document.querySelectorAll("#"+sortName+" canvas")[1].classList.remove("short");
+            setTimeout(function () {
+                document.querySelectorAll("#"+sortName+" canvas")[2].classList.remove("short");
+                setTimeout(function () {
+                    document.querySelectorAll("#"+sortName+" canvas")[3].classList.remove("short");
+                }, 150);
+            }, 150);
+        }, 150);
+    }, 500);
 }
 
 function init() {
