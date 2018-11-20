@@ -365,5 +365,36 @@ footer i{
 }
 
 .short{
-    height: 0;
+    height: 0!important;
 }
+
+.playback {
+    font-family: 'VT323', monospace;
+    font-size: 2.5em;
+    background-color: rgba(128,128,128,.2);
+    height: 4vh;
+    line-height: 4vh;
+    float: right;
+    overflow: hidden;
+    transition: all .5s;
+}
+
+.play{
+    float: left;
+    padding: 0 0 0 .5vw;
+}
+
+.play i{
+    font-size: 4vh!important;
+}
+
+.play:hover{
+    color: #29b6f6;
+    cursor: pointer;
+}
+
+.time{
+    float: left;
+    padding: 0 1vw;
+}
+

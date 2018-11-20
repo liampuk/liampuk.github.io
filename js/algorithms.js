@@ -89,6 +89,9 @@ function growCanvi(sortName,){
                 document.querySelectorAll("#"+sortName+" canvas")[2].classList.remove("short");
                 setTimeout(function () {
                     document.querySelectorAll("#"+sortName+" canvas")[3].classList.remove("short");
+                    setTimeout(function () {
+                        document.querySelectorAll("#"+sortName+" .playback")[0].classList.remove("short");
+                    }, 800);
                 }, 150);
             }, 150);
         }, 150);
