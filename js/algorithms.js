@@ -4,10 +4,36 @@ var screenState = false;
 var dark = false;
 var name;
 var stopNameLoop = false;
-var rndData = [11,3,15,9,5,7,3,9,17,7,17,9,20,14,1,21,29,23,7,29,17,4,14,12,20,15,4,12,30,20,5,23];
-var nearData = [1,0,2,3,4,7,5,6,8,10,9,11,13,14,12,15,17,18,19,16,20,22,21,24,23,26,25,27,28,29,31,30];
-var revData = [31,30,29,28,27,26,25,24,23,22,21,20,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0];
-var uniData = [29,22,5,16,16,16,5,12,5,22,16,5,16,22,12,5,29,22,32,32,32,22,12,5,22,5,12,29,29,12,12,5];
+// var rndData = [11,3,15,9,5,7,3,9,17,7,17,9,20,14,1,21,29,23,7,29,17,4,14,12,20,15,4,12,30,20,5,23];
+// var nearData = [1,0,2,3,4,7,5,6,8,10,9,11,13,14,12,15,17,18,19,16,20,22,21,24,23,26,25,27,28,29,31,30];
+// var revData = [31,30,29,28,27,26,25,24,23,22,21,20,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0];
+// var uniData = [29,22,5,16,16,16,5,12,5,22,16,5,16,22,12,5,29,22,32,32,32,22,12,5,22,5,12,29,29,12,12,5];
+
+// var rndData = selectionSort[0][selectionSort[0].length-1];
+// var nearData = selectionSort[1][selectionSort[0].length-1];
+// var revData = selectionSort[2][selectionSort[0].length-1];
+// var uniData = selectionSort[3][selectionSort[0].length-1];
+
+var rndData = selectionSort[0][0];
+var nearData = selectionSort[1][0];
+var revData = selectionSort[2][0];
+var uniData = selectionSort[3][0];
+
+var rndDataTemp;
+var nearDataTemp;
+var revDataTemp;
+var uniDataTemp;
+
+var sortName;
+
+// var dataSet = [
+//     [6,21,1,29,11,20,3,17,4,25,7,27,16,10,24,30,14,26,32,19,18,15,22,8,13,9,28,5,23,31,2,12],
+//     [1,0,2,3,4,7,5,6,8,10,9,11,13,14,12,15,17,18,19,16,20,22,21,24,23,26,25,27,28,29,31,30],
+//     [31,30,29,28,27,26,25,24,23,22,21,20,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0],
+//     [29,22,5,16,16,16,5,12,5,22,16,5,16,22,12,5,29,22,32,32,32,22,12,5,22,5,12,29,29,12,12,5]
+// ];
+
+var blockAnim = false;
 
 function toggleDisplay(elem) {
     if (prevElem != null && elem == prevElem && screenState) {
@@ -29,7 +55,7 @@ function toggleDisplay(elem) {
         elem.classList.add("active");
     }
 
-    var sortName = elem.innerText.substring(2).replace(new RegExp(" ", "g"), '');
+    sortName = elem.innerText.substring(2).replace(new RegExp(" ", "g"), '');
 
     if(sortName.endsWith("Sort")){
         drawGraphs(sortName, 0, rndData);
@@ -40,6 +66,14 @@ function toggleDisplay(elem) {
     }
 
     prevElem = elem;
+    // selectionSort(0);
+    // selectionSort(1);
+    // selectionSort(2);
+    // selectionSort(3);
+
+    setTimeout(function(){
+        animateGraphs(sortName, 0, 0, 0, 0, 0);
+    },2200);
 }
 
 function changeTheme() {
@@ -134,6 +168,7 @@ function init() {
             }, 50);
         }, 50);
     }, 1000);
+
 }
 
 function drawGraphs(sortName, c, arr){
@@ -141,6 +176,9 @@ function drawGraphs(sortName, c, arr){
     var width = canvas.width;
     var height = canvas.height;
     var ctx = canvas.getContext("2d");
+    ctx.beginPath();
+    ctx.clearRect(0, 0, width, height);
+    
     ctx.lineWidth = 4;
     ctx.strokeStyle = 'black';
     
@@ -154,7 +192,7 @@ function drawGraphs(sortName, c, arr){
         xPos = xPos + 8;
         num = num+1;
     }
-
+    ctx.closePath();
 }
 
 // ### web link animation ###
@@ -209,3 +247,73 @@ function animateName(n){
         }
     }, 100);
 }
+
+
+function animateGraphs(sortName, s, rndI, nearI, revI, uniI){
+    if(rndI != -1){
+        drawGraphs(sortName, 0, selectionSort[0][rndI]);
+    }
+    if(nearI != -1){
+        drawGraphs(sortName, 1, selectionSort[1][nearI]);
+    }
+    if(revI != -1){
+        drawGraphs(sortName, 2, selectionSort[2][revI]);
+    }
+    if(uniI != -1){
+        drawGraphs(sortName, 3, selectionSort[3][uniI]);
+    }
+
+    setTimeout(function(){
+        if(rndI+nearI+revI+uniI == -4){
+            blockAnim = false;
+            return;
+        }
+        rndI++;
+        nearI++;
+        revI++;
+        uniI++;
+        if(rndI >= selectionSort[0].length){
+            rndI = -1;
+        }
+        if(nearI >= selectionSort[1].length){
+            nearI = -1;
+        }
+        if(revI >= selectionSort[2].length){
+            revI = -1;
+        }
+        if(uniI >= selectionSort[3].length){
+            uniI = -1;
+        }
+        animateGraphs(sortName, s, rndI, nearI, revI, uniI);
+    }, 80);
+}
+
+function restartGraphAnim(){
+    if(!blockAnim){
+        blockAnim = true;
+        animateGraphs(sortName, 0, 0, 0, 0, 0);
+    }
+}
+
+
+
+
+
+
+// var selectionSortPointer = [0,0];
+
+// function selectionSort(n){
+//     for(var i = 0; i<dataSet[n].length; i++){
+//         var min = i;
+//         for(var j = i+1; j<dataSet[n].length; j++){
+//             if(dataSet[n][j] < dataSet[n][min]){
+//                 min = j;
+//             }
+//         }
+//         var temp = dataSet[n][i];
+//         dataSet[n][i] = dataSet[n][min];
+//         dataSet[n][min] = temp;
+//     }
+//     drawGraphs(sortName, n, dataSet[n]);
+// }
+
