@@ -315,7 +315,30 @@ function togglePanel() {
     }
 }
 
+var keyStore = "";
+var keyStoreEnable = false;
+
 window.onload = function () {
     storage();
     renderAddPad();
+    setTimeout(function(){
+        window.addEventListener('keydown', function(){
+            if (localStorage.emojiMode) {
+                if (localStorage.getItem("emojiMode") == "grid" && event.keyCode >= 48 && event.keyCode <= 90 && !event.ctrlKey) {
+                    console.log("test");
+                    toggleMode(false);
+                    keyStoreEnable = true;
+                    setTimeout(function(){
+                        keyStoreEnable = false;
+                        document.getElementById("search-input").value = keyStore;
+                        search(keyStore);
+                        keyStore = "";
+                    }, 300)
+                }
+            }
+            if(keyStoreEnable && event.keyCode >= 48 && event.keyCode <= 90){
+                keyStore += event.key;
+            }
+        });
+    }, 300);
 }
