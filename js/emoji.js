@@ -323,6 +323,9 @@ window.onload = function () {
     renderAddPad();
     setTimeout(function(){
         window.addEventListener('keydown', function(){
+            if(event.keyCode == 27){
+                toggleMode(true);
+            }
             if (localStorage.emojiMode) {
                 if (localStorage.getItem("emojiMode") == "grid" && event.keyCode >= 48 && event.keyCode <= 90 && !event.ctrlKey) {
                     console.log("test");
