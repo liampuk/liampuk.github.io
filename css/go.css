@@ -33,9 +33,8 @@ h1{
 } */
 
 #board{
-    height: 768px;
+    height: 767px;
     width: 768px;
-    background-color: #e9c896;
     position: absolute;
     top: 0;
     right: 0;
@@ -44,6 +43,19 @@ h1{
     margin: auto;
     transition: all 2s;
     transform: translate(35px,50px);
+    z-index: 999;
+}
+
+#board-colour{
+    background-color: #e9c896;
+    height: 767px;
+    width: 768px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
 }
 
 #board::after{
@@ -51,7 +63,7 @@ h1{
     width: 768px;
     position:absolute;
     left:0;
-    background: linear-gradient(to bottom, #ddbd8c 0%,#f0eae2 100%);
+    background: linear-gradient(to bottom, #ddbd8c 0%,#bd9d71 100%);
     transform:skew(35deg);
     transform-origin:top; 
     height:0px;
@@ -62,19 +74,21 @@ h1{
 .boardPseudo::after{
     height:50px!important;
     bottom:-50px!important;
+    box-shadow: 10px 10px 62px -16px rgba(0,0,0,0.4);
 }
 
 .boardPseudo::before{
     width: 35px!important;
     right: -35px!important;
     top: 25px!important;
+    box-shadow: 10px 10px 62px -16px rgba(0,0,0,0.4);
 }
 
 #board::before{
     content: '';
     height: 768px;
     position: absolute;
-    background: linear-gradient(to right, #ddbd8c 0%,#f0eae2 100%);
+    background: linear-gradient(to right, #ddbd8c 0%,#bd9d71 100%);
     transform: skewY(55deg);
     width: 0px;
     right: 0px;
@@ -95,5 +109,68 @@ h1{
     position: absolute;
     height: 768px;
     width: 768px;
-    cursor: none;
+}
+
+#board-canvas:hover{
+    cursor: pointer;
+}
+
+#board-canvas:active{
+    cursor: none!important;
+}
+
+#controls{
+    width: 50px;
+    height: auto;
+    position: absolute;
+    bottom: -50px;
+    right: -85px;
+    display: flex;
+    flex-direction: column-reverse;
+    opacity: 0;
+    transition: opacity .3s
+}
+
+#controls img{
+    height: 36px;
+    width: auto;
+    transition: all .5s;
+}
+
+#controls .show{
+    filter: invert(.9);
+}
+
+#controls .hide{
+    filter: invert(1);
+    display: none;
+}
+
+#controls img:hover{
+    filter: invert(.3)!important;
+    cursor: pointer;
+}
+
+#up:hover .hide{
+    display: block;
+    filter: invert(.3);
+}
+
+#popout{
+    width: 320px;
+    height: 42px;
+    position: absolute;
+    top:0;
+    left:0px;
+    background-color: #333;
+    text-align: center;
+    z-index: 0;
+    transition: left .3s ease-out;
+}
+
+p{
+    font-family: 'Courier New', Courier, monospace;
+    color: white;
+    font-size: 18px;
+    margin-top: 12px;
 }

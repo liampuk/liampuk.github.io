@@ -18,8 +18,19 @@
     </div> -->
     <div id="board-container">
         <div id="board">
-            <img id="board-img" src="res/19.svg">
+            <div id="popout">
+                <p>game url copied to clipboard</p>
+            </div>
+            <div id="board-colour"></div>
+            <img id="board-img" src="res/go/19.svg">
             <canvas id="board-canvas" width="768" height="768"></canvas>
+            <div id="controls" onmouseover="expandControls()" onmouseout="collapseControls()" >
+                <img onclick="skipTurn()" class="show" id="skip" src="res/go/skip.svg">
+                <img class="show" id="up" src="res/go/up.svg">
+                <img onclick="resetHandler()" class="hide" id="reset" src="res/go/reset.svg">
+                <img onclick="toggleSound()" class="hide" id="vol" src="res/go/vol.svg">
+                <img onclick="exportGame()" class="hide" id="export" src="res/go/export.svg">
+            </div>
         </div>
     </div>
 </body>
