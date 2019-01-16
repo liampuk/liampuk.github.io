@@ -233,7 +233,7 @@ function copy(url) {
     var copyElem = document.createElement("input");
     document.body.appendChild(copyElem);
     copyElem.setAttribute("id", "copyElem");
-    document.getElementById("copyElem").value = "http://127.0.0.1:5500/go.html?board="+url;
+    document.getElementById("copyElem").value = "http://liamp.uk/go?board="+url;
     copyElem.select();
     document.execCommand("copy");
     document.body.removeChild(copyElem);
