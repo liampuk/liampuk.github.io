@@ -161,6 +161,12 @@ h1{
     cursor: pointer;
 }
 
+
+.controls:active{
+    right: -82px;
+    width: 47px;
+}
+
 .confirm:hover{
     background-color: #c22;
 }
