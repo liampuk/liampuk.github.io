@@ -119,41 +119,50 @@ h1{
     cursor: none!important;
 }
 
-#controls{
-    width: 50px;
+#skip{
+    bottom: -50px;
+}
+
+#reset{
+    bottom: -11px;
+}
+
+#vol{
+    bottom: 28px;
+}
+
+#export{
+    bottom: 67px;
+}
+
+.controls{
+    width: 40px;
     height: auto;
     position: absolute;
-    bottom: -50px;
-    right: -85px;
+    right: -75px;
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction: row-reverse;
     opacity: 0;
-    transition: opacity .3s
+    transition: all .3s;
+    background-color: #eee;
 }
 
-#controls img{
+.controls img{
     height: 36px;
-    width: auto;
-    transition: all .5s;
-}
-
-#controls .show{
-    filter: invert(.9);
-}
-
-#controls .hide{
+    width: 36px;
+    margin-right: 2px;
     filter: invert(1);
-    display: none;
 }
 
-#controls img:hover{
-    filter: invert(.3)!important;
+.controls:hover{
+    background-color: #333;
+    width: 50px;
+    right: -85px;
     cursor: pointer;
 }
 
-#up:hover .hide{
-    display: block;
-    filter: invert(.3);
+.confirm:hover{
+    background-color: #c22;
 }
 
 #popout{

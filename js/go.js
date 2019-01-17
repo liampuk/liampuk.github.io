@@ -4,6 +4,7 @@ var canvas;
 var ctx;
 var moveSound;
 var vol = true;
+var confirmReset = false;
 var col = ["", "#222", "#fff"];
 var mPos = [0, 0];
 var turn = 1;
@@ -58,12 +59,18 @@ function init() {
 
 function raiseBoard() {
     var boardElem = document.getElementById("board");
-    var controls = document.getElementById("controls");
+    var skip = document.getElementById("skip");
+    var reset = document.getElementById("reset");
+    var vol = document.getElementById("vol");
+    var expo = document.getElementById("export");
     setTimeout(function () {
         boardElem.classList.add("boardPseudo");
         boardElem.style.transform = "translate(0px,0px)";
         setTimeout(function () {
-            controls.style.opacity = "1";
+            skip.style.opacity = "1";
+            reset.style.opacity = "1";
+            vol.style.opacity = "1";
+            expo.style.opacity = "1";
         }, 2000)
     }, 300);
 }
@@ -133,36 +140,6 @@ function mouseClick(evt) {
 
 // toggle sound effect
 
-function expandControls(){
-    var arrow = document.getElementById("up");
-    var reset = document.getElementById("reset");
-    var vol = document.getElementById("vol");
-    var exp = document.getElementById("export");
-    arrow.src = "res/go/down.svg"
-    reset.style.display = "block";
-    vol.style.display = "block";
-    exp.style.display = "block"
-    setTimeout(function(){
-        reset.style.filter = "invert(.9)";
-        vol.style.filter = "invert(.9)";
-        exp.style.filter = "invert(.9)";
-    }, 1)
-}
-
-function collapseControls(){
-    var arrow = document.getElementById("up");
-    var reset = document.getElementById("reset");
-    var vol = document.getElementById("vol");
-    var exp = document.getElementById("export");
-    arrow.src = "res/go/up.svg"
-    reset.style.display = "none";
-    reset.style.filter = "invert(1)";
-    vol.style.display = "none";
-    vol.style.filter = "invert(1)";
-    exp.style.display = "none"
-    exp.style.filter = "invert(1)";
-}
-
 function toggleSound(){
     var muteElem = document.getElementById("mute");
     if(vol){
@@ -187,8 +164,23 @@ function skipTurn() {
 // reset the board
 
 function resetHandler(){
-    clearBoard();
-    clearGrid();
+    if(confirmReset){
+        document.getElementById("reset").classList.remove("confirm");
+        confirmReset = false;
+        clearBoard();
+        clearGrid();
+        hidePopout();
+    }else{
+        showPopout("are you sure?", -1);
+        document.getElementById("reset").classList.add("confirm");
+        confirmReset = true;
+    }
+}
+
+function unReset(){
+    document.getElementById("reset").classList.remove("confirm");
+    confirmReset = false;
+    hidePopout();
 }
 
 // ### Game Sharing Functions ###
@@ -216,15 +208,23 @@ function exportGame(){
     
     copy(expBuilder);
 
-    showPopout();
+    showPopout("game url copied to clipboard", 5000);
 }
 
-function showPopout(){
+function showPopout(text, timeout){
     var popout = document.getElementById("popout");
+    document.getElementById("popout-text").innerText = text;
     popout.style.left = "-320px";
-    setTimeout(function(){
-        popout.style.left = "0px";
-    },5000);
+    if(timeout > 0){
+        setTimeout(function(){
+            popout.style.left = "0px";
+        },timeout);
+    }
+}
+
+function hidePopout(){
+    var popout = document.getElementById("popout");
+    popout.style.left = "0px";
 }
 
 // copies game url to clipboard
