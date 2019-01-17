@@ -143,7 +143,7 @@ h1{
     display: flex;
     flex-direction: row-reverse;
     opacity: 0;
-    transition: all .3s;
+    transition: all .3s, opacity 1s;
     background-color: #eee;
 }
 
