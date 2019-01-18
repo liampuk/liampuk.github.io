@@ -103,6 +103,7 @@ h1{
     margin-left: 24px;
     margin-top: 24px;
     opacity: 0.5;
+    border: 1px solid black;
 }
 
 #board-canvas{
@@ -183,9 +184,19 @@ h1{
     transition: left .3s ease-out;
 }
 
+.hide-clip{
+    border-top: 1px solid white;
+}
+
 p{
     font-family: 'Courier New', Courier, monospace;
     color: white;
     font-size: 18px;
     margin-top: 12px;
+}
+
+@media only screen and (max-height: 768px) {
+    body {
+        transform: scale(.8);
+    }
 }

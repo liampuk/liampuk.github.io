@@ -3,11 +3,13 @@
 var canvas;
 var ctx;
 var moveSound;
+var mod = 1;
 var vol = true;
 var confirmReset = false;
 var col = ["", "#222", "#fff"];
 var mPos = [0, 0];
 var turn = 1;
+var codeMap = "23456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$-_.+!*'(),"
 var board = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -32,7 +34,11 @@ var board = [
 // ### Initialisation functions ###
 
 function init() {
+    window.addEventListener('resize', function(){
+        windowSizeMod();
+    }, true);
     loadGame();
+    windowSizeMod();
     
     canvas = document.getElementById("board-canvas");
     ctx = canvas.getContext("2d");
@@ -112,8 +118,8 @@ function renderGrid() {
 
 function mouseMove(evt) {
     var rect = canvas.getBoundingClientRect();
-    var x = Math.floor((evt.clientX - rect.left) / 40);
-    var y = Math.floor((evt.clientY - rect.top) / 40);
+    var x = Math.floor(((evt.clientX - rect.left)*mod) / 40);
+    var y = Math.floor(((evt.clientY - rect.top)*mod) / 40);
     if (x < 19 && y < 19 && board[y][x] == 0) {
         mPos = [x, y];
         clearGrid();
@@ -188,43 +194,48 @@ function unReset(){
 // formats game data for exporting
 
 function exportGame(){
+    var zeroCount = 0;
     var boardExp = board.toString().replace(/,/g, "");
     var expBuilder = "";
-    curVal = boardExp.charAt(0);
-    curCount = 0;
-    addedLast = false;
     for(var i=0; i<boardExp.length; i++){
-        if(boardExp.charAt(i) == curVal){
-            curCount++;
-            addedLast = false;
-        }else{
-            expBuilder = expBuilder + curVal+""+curCount+"a";
-            curVal = boardExp.charAt(i);
-            curCount = 1;
-            addedLast = true;
+        if(boardExp.charAt(i) == "1"){
+            while(zeroCount > 0){
+                if(zeroCount > 71){
+                    expBuilder = expBuilder + codeMap.charAt(70);
+                    zeroCount = zeroCount - 71;
+                }else{
+                    expBuilder = expBuilder + codeMap.charAt(zeroCount-1);
+                    zeroCount = 0;
+                }
+            }
+            expBuilder = expBuilder + "0";
+        }else if(boardExp.charAt(i) == "2"){
+            while(zeroCount > 0){
+                if(zeroCount > 71){
+                    expBuilder = expBuilder + codeMap.charAt(70);
+                    zeroCount = zeroCount - 71
+                }else{
+                    expBuilder = expBuilder + codeMap.charAt(zeroCount-1);
+                    zeroCount = 0;
+                }
+            }
+            expBuilder = expBuilder + "1";
+        }else if(boardExp.charAt(i) == "0"){
+            zeroCount++;
         }
     }
-    expBuilder = expBuilder + curVal+""+curCount;
-    
-    copy(expBuilder);
-
-    showPopout("game url copied to clipboard", 5000);
-}
-
-function showPopout(text, timeout){
-    var popout = document.getElementById("popout");
-    document.getElementById("popout-text").innerText = text;
-    popout.style.left = "-320px";
-    if(timeout > 0){
-        setTimeout(function(){
-            popout.style.left = "0px";
-        },timeout);
+    while(zeroCount > 0){
+        if(zeroCount > 71){
+            expBuilder = expBuilder + codeMap.charAt(70);
+            zeroCount = zeroCount - 71
+        }else{
+            expBuilder = expBuilder + codeMap.charAt(zeroCount-1);
+            zeroCount = 0;
+        }
     }
-}
 
-function hidePopout(){
-    var popout = document.getElementById("popout");
-    popout.style.left = "0px";
+    copy(expBuilder);
+    showPopout("game url copied to clipboard", 5000);
 }
 
 // copies game url to clipboard
@@ -234,6 +245,7 @@ function copy(url) {
     document.body.appendChild(copyElem);
     copyElem.setAttribute("id", "copyElem");
     document.getElementById("copyElem").value = "http://liamp.uk/go?board="+url;
+    // document.getElementById("copyElem").value = "http://127.0.0.1:5500/go.html?board="+url;
     copyElem.select();
     document.execCommand("copy");
     document.body.removeChild(copyElem);
@@ -243,17 +255,20 @@ function copy(url) {
 
 function loadGame(){
     var urlParams = new URLSearchParams(window.location.search);
-    var dataFromUrl = urlParams.get('board');
-    if(dataFromUrl == null){
+    var code = urlParams.get('board');
+    if(code == null){
         return;
     }
-    var url = dataFromUrl.split("a");
     var boardBuilder = "";
-    for(var i=0; i<url.length; i++){
-        var val = url[i].substring(0,1);
-        var num = url[i].substring(1);
-        for(var j=0; j<num; j++){
-            boardBuilder = boardBuilder + val;
+    for(var i=0; i<code.length; i++){
+        if(code.charAt(i) == "0"){
+            boardBuilder = boardBuilder + "1";
+        }else if(code.charAt(i) == "1"){
+            boardBuilder = boardBuilder + "2";
+        }else{
+            for(var j=0; j<codeMap.indexOf(code.charAt(i))+1; j++){
+                boardBuilder = boardBuilder + "0";
+            }
         }
     }
     for (var x = 0; x < 19; x++) {
@@ -264,6 +279,8 @@ function loadGame(){
 }
 
 // ### Utility functions ###
+
+// handler for sound effects
 
 function sound(src) {
     this.sound = document.createElement("audio");
@@ -309,4 +326,37 @@ function clearGrid() {
 
 function updateBoard(x, y, c) {
     board[y][x] = c;
+}
+
+// Allows for scaling the webpage on smaller devices
+
+function windowSizeMod(){
+    var height = document.documentElement.clientHeight;
+    var popout = document.getElementById("popout");
+
+    if(height < 768){
+        mod = 1.25;
+        popout.classList.add("hide-clip");
+    }else{
+        mod = 1;
+        popout.classList.remove("hide-clip");
+    }
+}
+
+// Shows and hides popout for copying url and warning
+
+function showPopout(text, timeout){
+    var popout = document.getElementById("popout");
+    document.getElementById("popout-text").innerText = text;
+    popout.style.left = "-320px";
+    if(timeout > 0){
+        setTimeout(function(){
+            popout.style.left = "0px";
+        },timeout);
+    }
+}
+
+function hidePopout(){
+    var popout = document.getElementById("popout");
+    popout.style.left = "0px";
 }
