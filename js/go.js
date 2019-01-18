@@ -2,7 +2,8 @@
 
 var canvas;
 var ctx;
-var moveSound;
+var moveSounds = [];
+var clearSound;
 var mod = 1;
 var vol = true;
 var confirmReset = false;
@@ -43,7 +44,9 @@ function init() {
     canvas = document.getElementById("board-canvas");
     ctx = canvas.getContext("2d");
 
-    moveSound = new sound("res/go/move.mp3");
+    moveSounds[1] = new sound("res/go/move.mp3");
+    moveSounds[2] = new sound("res/go/move.mp3");
+    clearSound = new sound("res/go/clear.mp3");
 
     canvas.addEventListener('mousemove', function (evt) {
         mouseMove(evt);
@@ -138,7 +141,7 @@ function mouseClick(evt) {
         }
     }
     if(vol){
-        moveSound.play();
+        moveSounds[turn].play();
     }
 }
 
@@ -171,6 +174,9 @@ function skipTurn() {
 
 function resetHandler(){
     if(confirmReset){
+        if(board.toString().replace(/[,0]/g, "").length>0){
+            clearSound.play();
+        }
         document.getElementById("reset").classList.remove("confirm");
         confirmReset = false;
         clearBoard();
