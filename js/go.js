@@ -11,30 +11,12 @@ var col = ["", "#222", "#fff"];
 var mPos = [0, 0];
 var turn = 1;
 var codeMap = "23456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$-_.+!,'()*"
-var board = [
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
+var board;
 
 // ### Initialisation functions ###
 
 function init() {
+    clearBoard();
     window.addEventListener('resize', function(){
         windowSizeMod();
     }, true);
@@ -132,6 +114,7 @@ function mouseMove(evt) {
 }
 
 function mouseClick(evt) {
+    isLegal(mPos[0],mPos[1])
     if (board[mPos[1]][mPos[0]] == 0) {
         updateBoard(mPos[0], mPos[1], turn);
         if (turn == 1) {
@@ -365,4 +348,53 @@ function showPopout(text, timeout){
 function hidePopout(){
     var popout = document.getElementById("popout");
     popout.style.left = "0px";
+}
+
+// ### game logic ###
+
+var curGroupId = 0;
+var groupToLibsMap = new Object();
+var stoneToGroupMap = new Object();
+
+function isLegal(x,y){
+    var libs = 4;
+    var groupFound = false;
+    // Check stone to left
+    if(x > 0 && board[y][x-1] > 0){
+        if(board[y][x-1] == turn){
+            groupFound = true;
+            stoneToGroupMap[x+","+y]=stoneToGroupMap[x-1+","+y];
+            libs = libs-2;
+        }else{
+            libs--;
+            groupToLibsMap[stoneToGroupMap[x-1+","+y]] = groupToLibsMap[stoneToGroupMap[x-1+","+y]]-1;
+        }
+    }
+    // Check stone above
+    if(x > 0 && board[y-1][x] > 0){
+        if(board[y-1][x1] == turn){
+            groupFound = true;
+            stoneToGroupMap[x+","+y]=stoneToGroupMap[x+","+y-1];
+            libs = libs-2;
+        }else{
+            libs--;
+            groupToLibsMap[stoneToGroupMap[x+","+y-1]] = groupToLibsMap[stoneToGroupMap[x+","+y-1]]-1;
+        }
+    }
+    
+    //TODO add all angles
+    
+    if(!groupFound){
+        stoneToGroupMap[x+","+y] = curGroupId;
+        curGroupId++;
+        groupToLibsMap[stoneToGroupMap[x+","+y]] = libs;
+    }else{
+        groupToLibsMap[stoneToGroupMap[x+","+y]] = groupToLibsMap[stoneToGroupMap[x+","+y]]+libs;
+    }
+
+
+}
+
+function placeStone(x,y){
+    // TODO update board
 }
