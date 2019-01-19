@@ -145,12 +145,11 @@ h1{
 }
 
 #skip-backing{
-    width: 40px;
-    height: 36px;
-    bottom: -50px;
+    width: 38px;
+    height: 34px;
+    bottom: -49px;
     position: absolute;
-    right: -75px;
-    border-radius: 3px;
+    right: -74px;
 }
 
 #skip::before{
@@ -205,12 +204,11 @@ h1{
 }
 
 #reset-backing{
-    width: 40px;
-    height: 36px;
-    bottom: -12px;
+    width: 38px;
+    height: 34px;
+    bottom: -11px;
     position: absolute;
-    right: -75px;
-    border-radius: 3px;
+    right: -74px;
 }
 
 #reset:hover{
@@ -265,12 +263,11 @@ h1{
 }
 
 #vol-backing{
-    width: 40px;
-    height: 36px;
-    bottom: 26px;
+    width: 39px;
+    height: 34px;
+    bottom: 27px;
     position: absolute;
-    right: -75px;
-    border-radius: 3px;
+    right: -74px;
 }
 
 #vol:hover{
@@ -325,12 +322,11 @@ h1{
 }
 
 #export-backing{
-    width: 40px;
-    height: 36px;
+    width: 38px;
+    height: 35px;
     bottom: 64px;
     position: absolute;
-    right: -75px;
-    border-radius: 3px;
+    right: -74px;
 }
 
 #export:hover{
