@@ -57,6 +57,21 @@ h1{
     left: 0;
 }
 
+#board-colour-backing{
+    background-color: #d2b384;
+    height: 767px;
+    width: 768px;
+    position: absolute;
+    top: 50px;
+    right: 0px;
+    bottom: 0;
+    left: 35px;
+    z-index: -1;
+    display:block;
+    transition: all 2s;    
+    transform: translate(-35px,-50px);
+}
+
 #board::after{
     content: '';   
     width: 768px;

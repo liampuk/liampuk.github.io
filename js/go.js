@@ -50,6 +50,7 @@ function init() {
 
 function raiseBoard() {
     var boardElem = document.getElementById("board");
+    var boardBackingElem = document.getElementById("board-colour-backing");
     var skip = document.getElementById("skip");
     var reset = document.getElementById("reset");
     var vol = document.getElementById("vol");
@@ -61,6 +62,7 @@ function raiseBoard() {
     setTimeout(function () {
         boardElem.classList.add("boardPseudo");
         boardElem.style.transform = "translate(0px,0px)";
+        boardBackingElem.style.transform = "translate(0px,0px)";
         setTimeout(function () {
             skip.style.opacity = "1";
             reset.style.opacity = "1";
