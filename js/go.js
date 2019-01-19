@@ -126,8 +126,7 @@ function mouseMove(evt) {
     var rect = canvas.getBoundingClientRect();
     var x = Math.floor(((evt.clientX - rect.left)*mod) / 40);
     var y = Math.floor(((evt.clientY - rect.top)*mod) / 40);
-    var mouseOffMod = 0;
-    clearGrid();
+    var mouseOffMod = 2;
     if (x < 19 && y < 19) {
         if(board[y][x] != 0){
             mouseOffMod = 2;
