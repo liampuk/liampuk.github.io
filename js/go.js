@@ -5,9 +5,11 @@ var ctx;
 var moveSounds = [];
 var clearSound;
 var mod = 1;
+var mouseOff = false;
 var vol = true;
 var confirmReset = false;
-var col = ["", "#222", "#fff"];
+var col = ["", "#222", "#fff", "rgba(0,0,0,0.5)", "rgba(255,255,255,0.5)"];
+var lPos = [0, 0];
 var mPos = [0, 0];
 var turn = 1;
 var codeMap = "23456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$-_.+!,'()*"
@@ -36,7 +38,7 @@ function init() {
 
     canvas.addEventListener('click', function (evt) {
         mouseClick(evt);
-        mouseMove(evt);
+        // mouseMove(evt);
     });
 
     canvas.addEventListener('mouseout', function (evt) {
@@ -81,12 +83,19 @@ function raiseBoard() {
 // ### Rendering Functions ###
 
 function renderStone(x, y, c, s) {
-    var rX = 24 + x * 40;
-    var rY = 24 + y * 40;
+    var rX = 26 + x * 40;
+    var rY = 26 + y * 40;
     ctx.beginPath();
     ctx.arc(rX, rY, 18, 0, 2 * Math.PI, false);
     ctx.fillStyle = c;
     if (s) {
+        // if(mouseOff){
+        //     if(turn == 1){
+        //         ctx.fillStyle = "rgba(0,0,0,0.5)"
+        //     }else{
+        //         ctx.fillStyle = "rgba(255,255,255,0.5)"
+        //     }
+        // }
         ctx.shadowColor = 'rgba(0,0,0,0.3)';
         ctx.shadowBlur = 20;
         ctx.shadowOffsetX = 3;
@@ -117,27 +126,39 @@ function mouseMove(evt) {
     var rect = canvas.getBoundingClientRect();
     var x = Math.floor(((evt.clientX - rect.left)*mod) / 40);
     var y = Math.floor(((evt.clientY - rect.top)*mod) / 40);
-    if (x < 19 && y < 19 && board[y][x] == 0) {
-        mPos = [x, y];
+    var mouseOffMod = 0;
+    clearGrid();
+    if (x < 19 && y < 19) {
+        if(board[y][x] != 0){
+            mouseOffMod = 2;
+        }else{
+            mouseOffMod = 0;
+            mPos = [x, y];
+        }
         clearGrid();
         renderGrid();
-        renderStone(x, y, col[turn], true);
+        if(!(mPos[0] == lPos[0] && mPos[1] == lPos[1])){
+            renderStone(mPos[0], mPos[1], col[turn+mouseOffMod], true);
+        }
     }
 }
 
 function mouseClick(evt) {
     // isLegal(mPos[0],mPos[1])
     if (board[mPos[1]][mPos[0]] == 0) {
+        lPos[0] = mPos[0];
+        lPos[1] = mPos[1];
         updateBoard(mPos[0], mPos[1], turn);
         if (turn == 1) {
             turn = 2;
         } else {
             turn = 1;
         }
+        if(vol){
+            moveSounds[turn].play();
+        }
     }
-    if(vol){
-        moveSounds[turn].play();
-    }
+    mouseMove(evt);
 }
 
 // ### Control functions ###
@@ -171,6 +192,7 @@ function resetHandler(){
     if(confirmReset){
         if(board.toString().replace(/[,0]/g, "").length>0){
             clearSound.play();
+            turn = 1;
         }
         document.getElementById("reset").classList.remove("confirm");
         confirmReset = false;
