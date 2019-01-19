@@ -26,9 +26,9 @@ function init() {
     canvas = document.getElementById("board-canvas");
     ctx = canvas.getContext("2d");
 
-    moveSounds[1] = new sound("res/go/move.mp3");
-    moveSounds[2] = new sound("res/go/move.mp3");
-    clearSound = new sound("res/go/clear.mp3");
+    moveSounds[1] = new Audio("res/go/move.mp3");
+    moveSounds[2] = new Audio("res/go/move.mp3");
+    clearSound = new Audio("res/go/clear.mp3");
 
     canvas.addEventListener('mousemove', function (evt) {
         mouseMove(evt);
@@ -54,6 +54,10 @@ function raiseBoard() {
     var reset = document.getElementById("reset");
     var vol = document.getElementById("vol");
     var expo = document.getElementById("export");
+    var skipBacking = document.getElementById("skip-backing");
+    var resetBacking = document.getElementById("reset-backing");
+    var volBacking = document.getElementById("vol-backing");
+    var expoBacking = document.getElementById("export-backing");
     setTimeout(function () {
         boardElem.classList.add("boardPseudo");
         boardElem.style.transform = "translate(0px,0px)";
@@ -62,6 +66,12 @@ function raiseBoard() {
             reset.style.opacity = "1";
             vol.style.opacity = "1";
             expo.style.opacity = "1";
+            setTimeout(function(){
+                skipBacking.style.backgroundColor = "#222";
+                resetBacking.style.backgroundColor = "#222";
+                volBacking.style.backgroundColor = "#222";
+                expoBacking.style.backgroundColor = "#222";
+            },1000)
         }, 2000)
     }, 300);
 }
@@ -114,7 +124,7 @@ function mouseMove(evt) {
 }
 
 function mouseClick(evt) {
-    isLegal(mPos[0],mPos[1])
+    // isLegal(mPos[0],mPos[1])
     if (board[mPos[1]][mPos[0]] == 0) {
         updateBoard(mPos[0], mPos[1], turn);
         if (turn == 1) {
@@ -270,21 +280,6 @@ function loadGame(){
 // ### Utility functions ###
 
 // handler for sound effects
-
-function sound(src) {
-    this.sound = document.createElement("audio");
-    this.sound.src = src;
-    this.sound.setAttribute("preload", "auto");
-    this.sound.setAttribute("controls", "none");
-    this.sound.style.display = "none";
-    document.body.appendChild(this.sound);
-    this.play = function () {
-        this.sound.play();
-    }
-    this.stop = function () {
-        this.sound.pause();
-    }
-}
 
 function clearBoard() {
     board = [

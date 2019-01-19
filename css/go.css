@@ -55,7 +55,6 @@ h1{
     right: 0;
     bottom: 0;
     left: 0;
-
 }
 
 #board::after{
@@ -86,7 +85,7 @@ h1{
 
 #board::before{
     content: '';
-    height: 768px;
+    height: 766px;
     position: absolute;
     background: linear-gradient(to right, #ddbd8c 0%,#bd9d71 100%);
     transform: skewY(55deg);
@@ -120,21 +119,249 @@ h1{
     cursor: none!important;
 }
 
+/* ### Buttons ### */
+
+/* ### Skip ### */
+
 #skip{
     bottom: -50px;
+    position: absolute;
+    z-index: 5;
 }
+
+#skip-backing{
+    width: 40px;
+    height: 36px;
+    bottom: -50px;
+    position: absolute;
+    right: -75px;
+    border-radius: 3px;
+}
+
+#skip::before{
+    width: 0px;
+    left: 40px;
+    height: 36px;
+    bottom: 0px;
+}
+
+#skip::after{
+    width: 40px;
+    bottom: -14px;
+    height: 0px;
+    bottom: 0px;
+}
+
+#skip:hover{
+    bottom: -36px;
+}
+
+#skip:active{
+    bottom: -39px;
+}
+
+#skip:hover::before{
+    bottom: -7px;
+    width: 10px;
+}
+
+#skip:hover::after{
+    bottom: -14px;
+    height: 14px;
+}
+
+#skip:active::before{
+    bottom: -5px;
+    width: 8px;
+    height: 35px;
+}
+
+#skip:active::after{
+    bottom: -11px;
+    height: 11px;
+}
+
+/* ### Reset ### */
 
 #reset{
-    bottom: -11px;
+    bottom: -12px;
+    position: absolute;
+    z-index: 4;
 }
+
+#reset-backing{
+    width: 40px;
+    height: 36px;
+    bottom: -12px;
+    position: absolute;
+    right: -75px;
+    border-radius: 3px;
+}
+
+#reset:hover{
+    bottom: 1px;
+}
+
+#reset:active{
+    bottom: -2px;
+}
+
+#reset::after{
+    width: 40px;
+    bottom: -14px;
+    height: 0px;
+    bottom: 0px;
+}
+
+#reset:hover::after{
+    bottom: -14px;
+    height: 14px;
+}
+
+#reset::before{
+    width: 0px;
+    left: 40px;
+    height: 36px;
+    bottom: 0px;
+}
+
+#reset:hover::before{
+    bottom: -7px;
+    width: 10px;
+}
+
+#reset:active::before{
+    bottom: -5px;
+    width: 8px;
+    height: 35px;
+}
+
+#reset:active::after{
+    bottom: -12px;
+    height: 13px;
+}
+
+/* ### Vol ### */
 
 #vol{
-    bottom: 28px;
+    bottom: 26px;
+    position: absolute;
+    z-index: 3;
 }
 
-#export{
-    bottom: 67px;
+#vol-backing{
+    width: 40px;
+    height: 36px;
+    bottom: 26px;
+    position: absolute;
+    right: -75px;
+    border-radius: 3px;
 }
+
+#vol:hover{
+    bottom: 40px;
+}
+
+#vol:active{
+    bottom: 38px;
+}
+
+#vol::after{
+    width: 40px;
+    bottom: -14px;
+    height: 0px;
+    bottom: 0px;
+}
+
+#vol:hover::after{
+    bottom: -14px;
+    height: 14px;
+}
+
+#vol::before{
+    width: 0px;
+    left: 40px;
+    height: 36px;
+    bottom: 0px;
+}
+
+#vol:hover::before{
+    bottom: -7px;
+    width: 10px;
+}
+
+#vol:active::before{
+    bottom: -5px;
+    width: 8px;
+    height: 35px;
+}
+
+#vol:active::after{
+    bottom: -12px;
+    height: 12px;
+}
+
+/* ### Export ### */
+
+#export{
+    bottom: 64px;
+    position: absolute;
+    z-index: 2;
+}
+
+#export-backing{
+    width: 40px;
+    height: 36px;
+    bottom: 64px;
+    position: absolute;
+    right: -75px;
+    border-radius: 3px;
+}
+
+#export:hover{
+    bottom: 78px;
+}
+
+#export:active{
+    bottom: 76px;
+}
+
+#export::after{
+    width: 40px;
+    bottom: -14px;
+    height: 0px;
+    bottom: 0px;
+}
+
+#export:hover::after{
+    bottom: -14px;
+    height: 14px;
+}
+
+#export::before{
+    width: 0px;
+    left: 40px;
+    height: 36px;
+    bottom: 0px;
+}
+
+#export:hover::before{
+    bottom: -7px;
+    width: 10px;
+}
+
+#export:active::before{
+    bottom: -5px;
+    width: 8px;
+    height: 35px;
+}
+
+#export:active::after{
+    bottom: -12px;
+    height: 12px;
+}
+
+/* ### Buttons Generic ### */
 
 .controls{
     width: 40px;
@@ -148,6 +375,33 @@ h1{
     background-color: #eee;
 }
 
+.controls::after{
+    content: '';
+    position: absolute;
+    background: #eee;
+    transform: skew(35deg);
+    transform-origin: top;
+    transition: all .3s;
+
+}
+
+.controls::before{
+    content: '';
+    position: absolute;
+    background: #eee;
+    transform: skewY(55deg);
+    transform-origin: top;
+    transition: all .3s;
+}
+
+.controls:hover::before{
+    background: rgb(63, 63, 63);
+}
+
+.controls:hover::after{
+    background: #222;
+}
+
 .controls img{
     height: 36px;
     width: 36px;
@@ -157,19 +411,24 @@ h1{
 
 .controls:hover{
     background-color: #333;
-    width: 50px;
-    right: -85px;
+    right: -65px;
     cursor: pointer;
 }
 
-
 .controls:active{
-    right: -82px;
-    width: 47px;
+    right: -67px;
 }
 
 .confirm:hover{
     background-color: #c22;
+}
+
+.confirm::after{
+    background-color: rgb(190, 31, 31)!important;
+}
+
+.confirm::before{
+    background-color: rgb(212, 40, 40)!important;
 }
 
 #popout{
@@ -182,6 +441,7 @@ h1{
     text-align: center;
     z-index: 0;
     transition: left .3s ease-out;
+    box-shadow: 50px 30px 30px 0px rgba(0,0,0,0.05); 
 }
 
 .hide-clip{
