@@ -9,10 +9,10 @@ var mouseOff = false;
 var vol = true;
 var confirmReset = false;
 var col = ["", "#222", "#fff", "rgba(0,0,0,0.5)", "rgba(255,255,255,0.5)"];
-var lPos = [0, 0];
-var mPos = [0, 0];
+var lPos = [];
+var mPos = [];
 var turn = 1;
-var codeMap = "23456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$-_.+!,'()*"
+var codeMap = "$-_abcdefghijklmnopqrstuvwx"
 var board;
 
 // ### Initialisation functions ###
@@ -211,56 +211,54 @@ function unReset(){
     hidePopout();
 }
 
-// ### Game Sharing Functions ###
-
-// formats game data for exporting
+// exports game to url
 
 function exportGame(){
-    var zeroCount = 0;
-    var boardExp = board.toString().replace(/,/g, "");
-    var expBuilder = "";
-    for(var i=0; i<boardExp.length; i++){
-        if(boardExp.charAt(i) == "1"){
-            while(zeroCount > 0){
-                if(zeroCount > 71){
-                    expBuilder = expBuilder + codeMap.charAt(70);
-                    zeroCount = zeroCount - 71;
-                }else{
-                    expBuilder = expBuilder + codeMap.charAt(zeroCount-1);
-                    zeroCount = 0;
-                }
-            }
-            expBuilder = expBuilder + "0";
-        }else if(boardExp.charAt(i) == "2"){
-            while(zeroCount > 0){
-                if(zeroCount > 71){
-                    expBuilder = expBuilder + codeMap.charAt(70);
-                    zeroCount = zeroCount - 71
-                }else{
-                    expBuilder = expBuilder + codeMap.charAt(zeroCount-1);
-                    zeroCount = 0;
-                }
-            }
-            expBuilder = expBuilder + "1";
-        }else if(boardExp.charAt(i) == "0"){
-            zeroCount++;
-        }
+    var boardFlat = board.toString().replace(/,/g, "");
+    var expBuilder = codeMap[boardFlat.charAt(0)];
+    boardFlat = boardFlat.substring(1);
+    while(boardFlat.length > 0){
+        expBuilder = expBuilder + codeMap[parseInt(boardFlat.substring(0,3),3)];
+        boardFlat = boardFlat.substring(3);
     }
-    while(zeroCount > 0){
-        if(zeroCount > 71){
-            expBuilder = expBuilder + codeMap.charAt(70);
-            zeroCount = zeroCount - 71
-        }else{
-            expBuilder = expBuilder + codeMap.charAt(zeroCount-1);
-            zeroCount = 0;
-        }
-    }
+    console.log(expBuilder);
+    var expBuilderComp = compExport(expBuilder);
 
-    copy(expBuilder);
+    copy(expBuilderComp);
     showPopout("game url copied to clipboard", 5000);
 }
 
-// copies game url to clipboard
+// loads game from url
+
+function loadGame(){
+    var urlParams = new URLSearchParams(window.location.search);
+    var codeComp = urlParams.get('board');
+    if(codeComp == null){
+        return;
+    }
+    code = unComp(codeComp);
+
+    var boardBuilder = codeMap.indexOf(code.charAt(i));
+    code = code.substring(1);
+    var temp = "";
+    for(var i=0; i<code.length; i++){
+        temp = codeMap.indexOf(code.charAt(i)).toString(3);
+        if(temp.length == 1){
+            temp = "00"+temp;
+        }else if(temp.length == 2){
+            temp = "0"+temp;
+        }
+        boardBuilder = boardBuilder + temp;
+    }
+    console.log(boardBuilder);
+    for (var x = 0; x < 19; x++) {
+        for (var y = 0; y < 19; y++) {
+            board[y][x] = boardBuilder.charAt(x+(y*19));
+        }
+    }
+}
+
+// copies exported game in url
 
 function copy(url) {
     var copyElem = document.createElement("input");
@@ -271,33 +269,6 @@ function copy(url) {
     copyElem.select();
     document.execCommand("copy");
     document.body.removeChild(copyElem);
-}
-
-// loads game from url
-
-function loadGame(){
-    var urlParams = new URLSearchParams(window.location.search);
-    var code = urlParams.get('board');
-    if(code == null){
-        return;
-    }
-    var boardBuilder = "";
-    for(var i=0; i<code.length; i++){
-        if(code.charAt(i) == "0"){
-            boardBuilder = boardBuilder + "1";
-        }else if(code.charAt(i) == "1"){
-            boardBuilder = boardBuilder + "2";
-        }else{
-            for(var j=0; j<codeMap.indexOf(code.charAt(i))+1; j++){
-                boardBuilder = boardBuilder + "0";
-            }
-        }
-    }
-    for (var x = 0; x < 19; x++) {
-        for (var y = 0; y < 19; y++) {
-            board[y][x] = boardBuilder.charAt(x+(y*19));
-        }
-    }
 }
 
 // ### Utility functions ###
@@ -367,6 +338,67 @@ function hidePopout(){
     var popout = document.getElementById("popout");
     popout.style.left = "0px";
 }
+
+// compresses url
+
+function compExport(expBuilder){
+    var expBuilderShort = "";
+    var hold = expBuilder.charAt(0);
+    var count = 1;
+    for(var i=1; i<=expBuilder.length; i++){
+        if(expBuilder.charAt(i) == hold && i!= expBuilder.length-1){
+            count++;
+        }else{
+            if(count == 1){
+                expBuilderShort = expBuilderShort + hold;
+            }else if(count == 2){
+                expBuilderShort = expBuilderShort + hold + hold;
+            }
+            if(count >= 3){
+                expBuilderShort = expBuilderShort + hold + count;
+            }
+            count = 1;
+            hold = expBuilder.charAt(i);
+        }
+    }
+    return expBuilderShort;
+}
+
+// uncompresses url
+
+function unComp(code){
+    var curMulti = "";
+    var lastFound = "";
+    var newCode = "";
+    for(var i=0; i<=code.length+1; i++){
+        if(codeMap.includes(code.charAt(i))){
+            if(curMulti.length > 0){
+                for(var j = 0; j<parseInt(curMulti); j++){
+                    newCode = newCode + lastFound;
+                }
+                curMulti = "";
+            }else{
+                newCode = newCode + lastFound;
+            }
+            lastFound = code.charAt(i);
+        }else{
+            curMulti = curMulti+code.charAt(i);
+        }
+    }
+    console.log("extended: "+newCode);
+    return newCode;
+}
+
+
+
+
+
+
+
+
+
+
+
 
 // ### game logic ###
 
