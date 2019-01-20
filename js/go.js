@@ -143,7 +143,7 @@ function mouseMove(evt) {
 }
 
 function mouseClick(evt) {
-    // isLegal(mPos[0],mPos[1])
+    isLegal(mPos[0],mPos[1])
     if (board[mPos[1]][mPos[0]] == 0) {
         lPos[0] = mPos[0];
         lPos[1] = mPos[1];
@@ -413,25 +413,54 @@ function isLegal(x,y){
     if(x > 0 && board[y][x-1] > 0){
         if(board[y][x-1] == turn){
             groupFound = true;
-            stoneToGroupMap[x+","+y]=stoneToGroupMap[x-1+","+y];
+            stoneToGroupMap[x+","+y]=stoneToGroupMap[(x-1)+","+y];
             libs = libs-2;
         }else{
             libs--;
-            groupToLibsMap[stoneToGroupMap[x-1+","+y]] = groupToLibsMap[stoneToGroupMap[x-1+","+y]]-1;
+            groupToLibsMap[stoneToGroupMap[(x-1)+","+y]] = groupToLibsMap[stoneToGroupMap[(x-1)+","+y]]-1;
         }
     }
     // Check stone above
-    if(x > 0 && board[y-1][x] > 0){
-        if(board[y-1][x1] == turn){
+    if(y > 0 && board[y-1][x] > 0){
+        if(board[y-1][x] == turn){
             groupFound = true;
-            stoneToGroupMap[x+","+y]=stoneToGroupMap[x+","+y-1];
+            stoneToGroupMap[x+","+y]=stoneToGroupMap[x+","+(y-1)];
             libs = libs-2;
         }else{
             libs--;
-            groupToLibsMap[stoneToGroupMap[x+","+y-1]] = groupToLibsMap[stoneToGroupMap[x+","+y-1]]-1;
+            groupToLibsMap[stoneToGroupMap[x+","+(y-1)]] = groupToLibsMap[stoneToGroupMap[x+","+(y-1)]]-1;
         }
     }
-    
+    // Check stone to right
+    if(x < 18 && board[y][x+1] > 0){
+        if(board[y][x+1] == turn){
+            groupFound = true;
+            stoneToGroupMap[x+","+y]=stoneToGroupMap[(x+1)+","+y];
+            libs = libs-2;
+        }else{
+            libs--;
+            groupToLibsMap[stoneToGroupMap[(x+1)+","+y]] = groupToLibsMap[stoneToGroupMap[(x+1)+","+y]]-1;
+        }
+    }
+    // Check stone below
+    if(y < 18 && board[y+1][x] > 0){
+        if(board[y+1][x] == turn){
+            groupFound = true;
+            stoneToGroupMap[x+","+y]=stoneToGroupMap[x+","+(y+1)];
+            libs = libs-2;
+        }else{
+            libs--;
+            groupToLibsMap[stoneToGroupMap[x+","+(y+1)]] = groupToLibsMap[stoneToGroupMap[x+","+(y+1)]]-1;
+        }
+    }
+
+    if(x == 0 || x == 18){
+        libs--;
+    }
+    if(y == 0 || y == 18){
+        libs--;
+    }
+
     //TODO add all angles
     
     if(!groupFound){
@@ -440,6 +469,14 @@ function isLegal(x,y){
         groupToLibsMap[stoneToGroupMap[x+","+y]] = libs;
     }else{
         groupToLibsMap[stoneToGroupMap[x+","+y]] = groupToLibsMap[stoneToGroupMap[x+","+y]]+libs;
+    }
+
+    for (var xC = 0; xC < 19; xC++) {
+        for (var yC = 0; yC < 19; yC++) {
+            if (groupToLibsMap[stoneToGroupMap[xC+","+yC]] == 0) {
+                board[yC][xC] = 0;
+            }
+        }
     }
 
 
