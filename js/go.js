@@ -460,8 +460,6 @@ function isLegal(x,y){
     if(y == 0 || y == 18){
         libs--;
     }
-
-    //TODO add all angles
     
     if(!groupFound){
         stoneToGroupMap[x+","+y] = curGroupId;
@@ -475,11 +473,28 @@ function isLegal(x,y){
         for (var yC = 0; yC < 19; yC++) {
             if (groupToLibsMap[stoneToGroupMap[xC+","+yC]] == 0) {
                 board[yC][xC] = 0;
+                // Check stone to left
+                if(x > 0 && board[y][x-1] > 0){
+                    groupToLibsMap[stoneToGroupMap[(x-1)+","+y]] = groupToLibsMap[stoneToGroupMap[(x-1)+","+y]]+1;
+                }
+                // Check stone above
+                if(y > 0 && board[y-1][x] > 0){
+                    groupToLibsMap[stoneToGroupMap[x+","+(y-1)]] = groupToLibsMap[stoneToGroupMap[x+","+(y-1)]]+1;
+                }
+                // Check stone to right
+                if(x < 18 && board[y][x+1] > 0){
+                    groupToLibsMap[stoneToGroupMap[(x+1)+","+y]] = groupToLibsMap[stoneToGroupMap[(x+1)+","+y]]+1;
+                }
+                // Check stone below
+                if(y < 18 && board[y+1][x] > 0){
+                    groupToLibsMap[stoneToGroupMap[x+","+(y+1)]] = groupToLibsMap[stoneToGroupMap[x+","+(y+1)]]+1;
+                }
+
             }
         }
     }
 
-
+    //TODO fix bugs ^, prioritise current turn
 }
 
 function placeStone(x,y){
