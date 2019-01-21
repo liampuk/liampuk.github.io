@@ -463,11 +463,17 @@ h1{
     border-top: 1px solid white;
 }
 
-p{
+#popout-text{
     font-family: 'Courier New', Courier, monospace;
     color: white;
     font-size: 18px;
     margin-top: 12px;
+}
+
+#debug{
+    display: none;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 12px;
 }
 
 @media only screen and (max-height: 768px) {

@@ -126,6 +126,7 @@ function mouseMove(evt) {
     var rect = canvas.getBoundingClientRect();
     var x = Math.floor(((evt.clientX - rect.left)*mod) / 40);
     var y = Math.floor(((evt.clientY - rect.top)*mod) / 40);
+    updateDebugger(x,y);
     var mouseOffMod = 2;
     if (x < 19 && y < 19) {
         if(board[y][x] != 0){
@@ -189,6 +190,9 @@ function skipTurn() {
 
 function resetHandler(){
     if(confirmReset){
+        groupToLibsMap = {};
+        stoneToGroupMap = {};
+        curGroupId = 0;
         if(board.toString().replace(/[,0]/g, "").length>0){
             clearSound.play();
             turn = 1;
@@ -233,6 +237,10 @@ function exportGame(){
 function loadGame(){
     var urlParams = new URLSearchParams(window.location.search);
     var codeComp = urlParams.get('board');
+    var debug = urlParams.get('debug');
+    if(debug){
+        showDebugger();
+    }
     if(codeComp == null){
         return;
     }
@@ -264,8 +272,8 @@ function copy(url) {
     var copyElem = document.createElement("input");
     document.body.appendChild(copyElem);
     copyElem.setAttribute("id", "copyElem");
-    document.getElementById("copyElem").value = "http://liamp.uk/go?board="+url;
-    // document.getElementById("copyElem").value = "http://127.0.0.1:5500/go.html?board="+url;
+    // document.getElementById("copyElem").value = "http://liamp.uk/go?board="+url;
+    document.getElementById("copyElem").value = "http://127.0.0.1:5500/go.html?board="+url;
     copyElem.select();
     document.execCommand("copy");
     document.body.removeChild(copyElem);
@@ -389,6 +397,15 @@ function unComp(code){
     return newCode;
 }
 
+function showDebugger(){
+    document.getElementById("debug").style.display = "block";
+}
+
+function updateDebugger(x,y){
+    document.getElementById("debug-group").innerText = "group id: " + stoneToGroupMap[x+","+y];
+    document.getElementById("debug-libs").innerText = "libs    : " + groupToLibsMap[stoneToGroupMap[x+","+y]];
+}
+
 
 
 
@@ -494,7 +511,9 @@ function isLegal(x,y){
         }
     }
 
-    //TODO fix bugs ^, prioritise current turn
+    // TODO recursive check for neighbour pieces to sync group
+    // TODO prioritise current turn
+    // TODO join groups on load from url
 }
 
 function placeStone(x,y){
