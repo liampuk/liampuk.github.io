@@ -4,7 +4,7 @@ var height;
 var ctr = 0;
 var colBool = 0;
 var shift = 0;
-var speed = 2;
+var speed = 1.5;
 
 var col1 = Math.floor(Math.random() * 360) + ",75%,55%";
 var col2 = Math.floor(Math.random() * 360) + ",75%,55%";
@@ -119,7 +119,10 @@ function renderMap() {
         }
     }
     ctr++;
-    if (enableWorm && !(Math.round(wormX) == Math.round(mousePos.x) && Math.round(wormY) == Math.round(mousePos.y))) {
+    // if (enableWorm && !(Math.round(wormX) == Math.round(mousePos.x) && Math.round(wormY) == Math.round(mousePos.y))) {
+    if(enableWorm && !(Math.abs(wormX-mousePos.x)<2 && Math.abs(wormY-mousePos.y)<2)){
+        console.log(wormX+","+wormY);
+        console.log(mousePos.x+","+mousePos.y);
         moveWorm2();
     }
 }
