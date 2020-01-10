@@ -34,8 +34,9 @@ function rndColours(){
 
 function main() {
     rndColours();
-    resizeMyCanvas();
+    // resizeMyCanvas();
     var canvas = document.getElementById('canvas');
+    setupCanvas(canvas);
     ctx  = canvas.getContext('2d');
     width = ctx.canvas.clientWidth;
     height = ctx.canvas.clientHeight;
@@ -137,6 +138,16 @@ function dothing(){
     ctx.fillStyle="hsla(255,255,255,"+Math.random()+")";
     ctx.fillText("liam piesley", x, y);
 }
+
+function setupCanvas(canvas) {
+    var dpr = window.devicePixelRatio || 1;
+    var rect = canvas.getBoundingClientRect();
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    var ctx = canvas.getContext('2d');
+    ctx.scale(dpr, dpr);
+    return ctx;
+  }
 
 function resizeMyCanvas() {
     canvas.width = canvas.clientWidth;
