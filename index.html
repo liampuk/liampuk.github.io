@@ -2,42 +2,84 @@
 <html>
 
 <head>
-    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:300" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/index.css">
+    <!-- <script src="https://cdn.jsdelivr.net/npm/p5@0.10.2/lib/p5.js"></script> -->
     <script src="js/index.js"></script>
-    <meta name="description" content="Hi! I'm a computer science undergrad at Newcastle.">
-    <title>Liam Piesley.</title>
-    <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+    <meta charset="utf-8" />
+    <link href="https://fonts.googleapis.com/css?family=Rubik+Mono+One|Rubik:300,400,500,700,900&display=swap"
+        rel="stylesheet">
 </head>
 
-<body>
-    <div id="container">
-        <div id="page">
-            <div id="page-content">
-                <h1>Hello!</h1>
-                <hr>
-                <p>I'm Liam Piesley, a computer science undergraduate at Newcastle University.</p>
-                <p>I'm currently half way through a placement year at Nissan, writing software that helps ship cars all
-                    around europe!
-                    I've met loads of cool people and learned a lot from all the devs.</p>
-                <p>I'm currently looking for a summer placement for 2019 ;)</p>
-                <h2>Some Projects:</h2>
-                <p class="project">> <a href="http://liamp.uk/2048">2048</a> - A 2048 clone written in javascript over a couple days during my placement induction.</p>
-                <p class="project">> <a href="http://liamp.uk/emoji">emojiPad</a> - A minimal emoji keyboard.</p>
-                <p class="project">> <a href="http://liamp.uk/kino">Kino</a> - A cinema website mockup made for a team project during my placement induction.</p>
-                <p class="project">> <a href="https://github.com/liampuk/code-practice">CodingBat</a> - A copy of all my solutions to some practice programming problems.</p>
-                <p class="project">> <a href="http://liamp.uk/go">Go</a> - Go Board Game (work in progress)</p>
-                <p class="project">> <a href="http://liamp.uk/algorithms">Algorithms</a> - Website to explain the algorithms fundamental to computer science (work in progress)</p>
-                <p class="project">> <a href="http://liamp.uk/zorki">Zorki</a> - A website to help sell my camera (work in progress)</p>
-                <h2>Other Stuff:</h2>
-                <p class="project">> <a href="http://instagram.com/liampiesley">instagram</a> - Old cameras are cool</p>
-                <p class="project">> <a href="https://www.linkedin.com/in/liampuk/">linkedIn</a> - Jobs are cool too</p>
-                <br>
-                <hr>
-                <p><span id="const">[This page is under construction]</span></p>
+<body onload="main()">
+    <div id="main">
+        <canvas id="canvas"></canvas>
+    </div>
+    <div class="ease" id="side">
+        <h1>Liam Piesley</h1>
+        <div id="nav">
+            <a onclick="colourSwap(0)" class="navLinks" href="#about">About</a>
+            <a onclick="colourSwap(1)" class="navLinks" href="#projects">Projects</a href="#">
+            <a onclick="colourSwap(2)" class="navLinks" href="#cv">CV</a href="#">
+            <a onclick="colourSwap(3)" class="navLinks" href="#contact">Contact</a href="#">
+        </div>
+        <div id="content">
+            <div id="about">
+                <p>Hi! I'm Liam, an undergraduate computer scientist at Newcastle University.
+                    <p>I'm currently halfway through my final year at university, writing a dissertation on algorithm
+                        animation (have a <a href="http://liamp.uk/algorithms">sneak peek</a> in the projects section).
+                    </p>
+                    <p>I have previously worked at Nissan, Amazon and the BBC.</p>
+                    <p>Currently applying for graduate jobs starting September 2020</p>
             </div>
+            <div id="projects" class="hidden transparent">
+                <p><a href="http://liamp.uk/2048">> 2048</a> - A javascript clone of 2048 written over a couple days during
+                    my placement induction.</p>
+                <p><a href="http://liamp.uk/emoji">> emojiPad</a> - A minimal emoji keyboard.</p>
+                <p><a href="http://liamp.uk/algorithms">> Algorithms*</a> - Animating fundamental algorithms in computer science.</p>
+                <p><a href="http://liamp.uk/go">> Go*</a> - Go board game.</p>
+                <p><a href="https://github.com/liampuk/code-practice">> CodingBat</a> - Solutions to practice programming problems</p>
+                <p><a href="http://liamp.uk/kino">> Kino</a> - A mockup cinema website produced during my placement induction.</p>
+                <p>* work in progress</p>
+            </div>
+            <div id="cv" class="hidden transparent">
+                <p><u>Education</u></p>
+                <p>Newcastle University - Computer Science BSc (Predicted 1st class)</p>
+                <p><u>Work</u></p>
+                <p>07/19 - 08/19 - Amazon (SDE)</p>
+                <p>06/18 - 06/19 - Nissan (SDE)</p>
+                <p>02/18 - 05/19 - BBC (Teacher)</p>
+                <br>
+                <p><a href="res/LiamPiesleyPublicCV.pdf">> Full CV Download</a></p>
+            </div>
+            <div id="contact" class="hidden transparent">
+                <p><a href="https://www.linkedin.com/in/liampuk/">> linkedin</a></p>
+                <p><a href="https://www.instagram.com/liampiesley/">> instagram</a></p>
+                <p><a href="https://github.com/liampuk">> github</a></p>
+                <p><a href="mailto:liampiesley@gmail.com">> email - liampiesley@gmail.com</a></p>
+            </div>
+
+
+
         </div>
     </div>
-</body>
+</body onload="main()" onclick="delet()">
 
 </html>
+
+<!-- Colour Combos -->
+<!-- 22, 247 -->
+<!-- 200, 29 -->
+<!-- 229, 28 -->
+<!-- 299, 239 -->
+<!-- 88, 356 -->
+<!-- 305, 109 -->
+<!-- 39, 1 -->
+<!-- 151, 314 -->
+<!-- 226, 116 -->
+<!-- 246, 202 -->
+<!-- 76, 217 -->
+<!-- 149, 223 -->
+<!-- 285, 164 -->
+<!-- 179, 203 -->
+<!-- 211, 131 -->
+<!-- 237, 96 -->
