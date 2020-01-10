@@ -144,25 +144,25 @@ function resizeMyCanvas() {
 }
 
 function colourSwap(change){
-    var about = document.getElementById("about");
-    var projects = document.getElementById("projects");
-    var cv = document.getElementById("cv");
-    var contact = document.getElementById("contact");
+    var about = document.getElementById("aboutText");
+    var projects = document.getElementById("projectsText");
+    var cv = document.getElementById("cvText");
+    var contact = document.getElementById("contactText");
     if(change == 0){
-        about.classList.remove("hidden");
         projects.classList.add("hidden");
         cv.classList.add("hidden");
         contact.classList.add("hidden");
+        about.classList.remove("hidden");
     }else if(change == 1){
         about.classList.add("hidden");
-        projects.classList.remove("hidden");
         cv.classList.add("hidden");
         contact.classList.add("hidden");
+        projects.classList.remove("hidden");
     }else if(change == 2){
         about.classList.add("hidden");
         projects.classList.add("hidden");
-        cv.classList.remove("hidden");
         contact.classList.add("hidden");
+        cv.classList.remove("hidden");
     }else if(change == 3){
         about.classList.add("hidden");
         projects.classList.add("hidden");
@@ -173,7 +173,7 @@ function colourSwap(change){
         var side = document.getElementById("side");
         side.style.backgroundColor = "rgb(247, 244, 240)";
         side.style.color = "black";
-        document.body.style.backgroundColor = "white";
+        document.body.style.backgroundColor = "rgb(247, 244, 240)";
     }else{
         var side = document.getElementById("side");
         side.style.backgroundColor = "black";
@@ -184,6 +184,7 @@ function colourSwap(change){
     
     rndColours();
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
 }
 
 function setup(){
