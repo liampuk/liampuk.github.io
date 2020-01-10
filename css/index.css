@@ -11,6 +11,7 @@ body{
     left: 0;
     padding-left:1vw;
     color: rgb(247, 244, 240);
+    min-height: 100%;
 }
 
 #main{
@@ -83,3 +84,15 @@ a:hover{
 ::selection{
     background: #69c1e4;
 }
+
+@media (orientation: portrait) {
+    body {
+      zoom: 150%;
+    }
+    canvas{
+        zoom: 150%;
+    }
+    #side{
+        width: 32vw;
+    }
+  }

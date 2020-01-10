@@ -34,9 +34,9 @@ function rndColours(){
 
 function main() {
     rndColours();
-    // resizeMyCanvas();
+    resizeMyCanvas();
     var canvas = document.getElementById('canvas');
-    setupCanvas(canvas);
+    // setupCanvas(canvas);
     ctx  = canvas.getContext('2d');
     width = ctx.canvas.clientWidth;
     height = ctx.canvas.clientHeight;
