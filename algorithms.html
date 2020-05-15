@@ -3,30 +3,33 @@
 
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=VT323|Vollkorn:400,600,700" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/algorithms.css">
-    <link rel="shortcut icon" type="image/png" href="res/faviconAlgorithms.ico" />
-    <script src="js/algorithms-data.js"></script>
-    <script src="js/algorithms.js"></script>
+    <link rel="shortcut icon" type="image/png" href="res/algorithms/faviconAlgorithms.ico" />
+    <script src="js/algorithms/controller.js"></script>
+    <script src="js/algorithms/quickSortData.js"></script>
+    <script src="js/algorithms/packageWrappingData.js"></script>
+    <script src="js/algorithms/selectionSortData.js"></script>
+    <script src="js/algorithms/sequentialSearchData.js"></script>
+    <script src="js/algorithms/grahamsScanData.js"></script>
+    <script src="js/algorithms/binarySearchData.js"></script>
+    <script src="js/algorithms/bisectionMethodData.js"></script>
+    <script src="js/algorithms/newtonsMethodData.js"></script>
+    <script src="res/algorithms/pseudocode.js"></script>
+    <script src="js/algorithms/animation.js" charset="utf-8"></script>
+    <script src="js/algorithms/extra.js"></script>
+    <script src="js/algorithms/code.js"></script>
+    <script src="js/algorithms/ui.js"></script>
     <meta name="viewport" content="initial-scale=1.0, width=device-width">
     <title>Fundamental Algorithms</title>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-155987669-1"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-
-        gtag('config', 'UA-155987669-1');
-    </script>
 </head>
 
 <body onload="init()">
     <header>
         <h1>Fundamental Algorithms</h1>
-        <p>
-            This website demonstrates the fundamental algorithms of computer science, along with their
+        <p>This website demonstrates the fundamental algorithms of computer science, along with their
             <span class="expl accent">pseudocode
                 <span class="expl-content block">A high-level description of an algorithm, not relating to any specific programming language.</span>
             </span> and
@@ -38,267 +41,481 @@
     <hr>
     <section class="main">
         <div class="row">
-            <div class="contents col col-md-2">
+            <div class="contents col col-small">
                 <div id="contents-container">
                     <h2>Sorting</h2>
                     <p>
-                        <span onclick="toggleDisplay(this)">> Selection Sort</span>
+                        <span data-link="SelectionSort" onclick="updateScreen(this)">> Selection Sort</span>
                         <br>
-                        <span onclick="toggleDisplay(this)">> Insertion Sort</span>
-                        <br>
-                        <span onclick="toggleDisplay(this)">> Bubble Sort</span>
-                        <br>
-                        <span onclick="toggleDisplay(this)">> Quick Sort</span>
-                        <br>
-                        <span onclick="toggleDisplay(this)">> Merge Sort</span>
-                        <br>
-                        <span onclick="toggleDisplay(this)">> Shell Sort</span>
-                        <br>
-                        <span onclick="toggleDisplay(this)">> Radix Sort</span>
-                        <br>
-                        <span onclick="toggleDisplay(this)">> Heap Sort</span>
+                        <span data-link="QuickSort" onclick="updateScreen(this)">> Quicksort</span>
                         <br>
                     </p>
                     <h2>Searching</h2>
                     <p>
-                        <span onclick="toggleDisplay(this)">> Sequential Search</span>
+                        <span data-link="SequentialSearch" onclick="updateScreen(this, 'SequentialSearch')">> Sequential Search</span>
                         <br>
-                        <span onclick="toggleDisplay(this)">> Binary Search</span>
+                        <span data-link="BinarySearch" onclick="updateScreen(this, 'BinarySearch')">> Binary Search</span>
                         <br>
-                        <span onclick="toggleDisplay(this)">> Binary Search Tree</span>
+                    </p>
+                    <h2>Geometric</h2>
+                    <p>
+                        <span data-link="PackageWrapping" onclick="updateScreen(this, 'PackageWrapping')">> Package Wrapping</span>
                         <br>
-                        <span onclick="toggleDisplay(this)">> Interpolation Search</span>
+                        <span data-link="GrahamsScan" onclick="updateScreen(this, 'GrahamsScan')">> Graham's Scan</span>
                         <br>
-                        <span onclick="toggleDisplay(this)">> Hashing</span>
+                    </p>
+                    <h2>Root Finding</h2>
+                    <p>
+                        <span data-link="BisectionMethod" onclick="updateScreen(this, 'BisectionMethod')">> Bisection Method</span>
+                        <br>
+                        <span data-link="NewtonsMethod" onclick="updateScreen(this, 'NewtonsMethod')">> Newton's Method</span>
                         <br>
                     </p>
                 </div>
 
             </div>
 
-            <div class="display col col-md-10">
+            <div class="display col col-large">
                 <div id="screen-container">
                     <div id="screen">
+                        <!-- ############# -->
                         <!-- ### Sorts ### -->
+                        <!-- ############# -->
+
+                        <!-- ### Selection Sort ### -->
+
                         <div class="hide" id="SelectionSort">
                             <h1>Selection Sort</h1>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque imperdiet odio est, sit amet suscipit leo ornare eget. Ut auctor eleifend eleifend. Vestibulum ac convallis sem.</p>
-                            <div class="sort-container">
-                                <div class="random sort">
-                                    <h2>Random</h2>
-                                    <canvas class="short inner-sort" width="252" height="252"></canvas>
+                            <h3>&nbsp;Brute Force&nbsp;</h3>
+                            <img class="designIcon" src="res/algorithms/bruteForce.png">
+                            <br>
+                            <br>
+                            <p>Selection sort is a simple sorting algorithm that works by selecting the smallest unsorted element on each iteration and placing it in the correct location.</p>
+                            <div class="animation-container">
+                                <div class="animation-pane">
+                                    <p><span onclick="prevData()">&nbsp;&lt;&nbsp;</span>&nbsp; Random &nbsp;<span onclick="nextData()">&nbsp;&gt;&nbsp;</span></p>
+                                    <div class="animation">
+                                        <canvas id="SelectionSortCanvas"></canvas>
+                                    </div>
+                                    <div class="animation-data"></div>
                                 </div>
-                                <div class="nearly sort">
-                                    <h2>Nearly Sorted</h2>
-                                    <canvas class="short inner-sort" width="252" height="252"></canvas>
+                                <div class="code-pane" onscroll="drawArrow()">
+                                    <div class="line-nums"></div>
+                                    <div class="code"></div>
+                                    <img class="arrow" src="res/algorithms/arrow.svg">
                                 </div>
-                                <div class="reverse sort">
-                                    <h2>Reversed</h2>
-                                    <canvas class="short inner-sort" width="252" height="252"></canvas>
-                                </div>
-                                <div class="unique sort">
-                                    <h2>Few Unique</h2>
-                                    <canvas class="short inner-sort" width="252" height="252"></canvas>
-                                </div>
-                            </div>
-                            <div class="short playback">
-                                <div class="play" onclick="restartGraphAnim()"><i class="material-icons">play_arrow</i></div><div class="time">00:00</div>
-                            </div>
-                        </div>
-                        <div class="hide" id="InsertionSort">
-                            <h1>Insertion Sort</h1>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque imperdiet odio est, sit amet suscipit leo ornare eget. Ut auctor eleifend eleifend. Vestibulum ac convallis sem.</p>
-                            <div class="sort-container">
-                                <div class="random sort">
-                                    <h2>Random</h2>
-                                    <canvas class="inner-sort" width="252" height="252"></canvas>
-                                </div>
-                                <div class="nearly sort">
-                                    <h2>Nearly Sorted</h2>
-                                    <canvas class="inner-sort" width="252" height="252"></canvas>
-                                </div>
-                                <div class="reverse sort">
-                                    <h2>Reversed</h2>
-                                    <canvas class="inner-sort" width="252" height="252"></canvas>
-                                </div>
-                                <div class="unique sort">
-                                    <h2>Few Unique</h2>
-                                    <canvas class="inner-sort" width="252" height="252"></canvas>
+                                <div class="footer">
+                                    <img class="controls togglePlay expl accent" src="res/algorithms/play.svg" alt="play" onclick="togglePlay()">
+                                    <img class="controls" src="res/algorithms/step.svg" alt="step" onclick="step()">
+                                    <img class="controls" src="res/algorithms/back.svg" alt="back" onclick="stepBack()">
+                                    <img class="controls" src="res/algorithms/redo.svg" alt="back" onclick="reset()">
+                                    <p class="controls">Speed: </p>
+                                    <input type="range" min="1" max="100" value="70" class="controlls slider speed-slider" style="width: 100px" oninput="changeSpeed(this.value)">
+                                    <p class="controls">Progress: </p>
+                                    <input type="range" min="1" max="100" value="1" class="controlls slider prog-slider" style="width: 300px" oninput="changeStep(this.value)">
+                                    <!-- <div class="slidecontainer">
+                                    </div> -->
+                                    <p class="stats">-</p>
+                                    <!-- <button onclick="step()">step</button>
+                                    <button onclick="stepBack()">step back</button>
+                                    <button onclick="togglePlay()">play/pause</button> -->
                                 </div>
                             </div>
-                            <div class="playback">
-                                <div class="play"><i class="material-icons">play_arrow</i></div><div class="time">00:00</div>
-                            </div>
-                        </div>
-                        <div class="hide" id="BubbleSort">
-                            <h1>Bubble Sort</h1>
-                            <p>Bubble Sort is a very simple sorting algorithm that works by iterating over an array 2 elements
-                                at a time, swapping them if they're in the wrong order. It terminates when a loop is completed
-                                with no swaps.</p>
-                            <div class="sort-container">
-                                <div class="random sort">
-                                    <h2>Random</h2>
-                                    <canvas class="inner-sort" width="252" height="252"></canvas>
+                            <br>
+                            <div class="description">
+                                <div class="description-text">
+                                    <p>Selection Sort is a very simple algorithm as it functions the way people generally sort objects - find the smallest value and put it at the front, then the next smallest and so on. It is also an in-place algorithm, meaning it's space complexity (or memory requirement) is only <em>O(1)</em>. It minimises the number of swaps required to sort the array compared to more advanced sorting methods, which may be advantageous where swapping is costly.</p>
+                                    <p>Despite these advantages Selection Sort is a very slow algorithm, with <em>O(n<sup>2</sup>)</em> in its best, worst and average cases. Insertion Sort should generally be used where a simple in-place sorting algorithm is required.</p>
                                 </div>
-                                <div class="nearly sort">
-                                    <h2>Nearly Sorted</h2>
-                                    <canvas class="inner-sort" width="252" height="252"></canvas>
-                                </div>
-                                <div class="reverse sort">
-                                    <h2>Reversed</h2>
-                                    <canvas class="inner-sort" width="252" height="252"></canvas>
-                                </div>
-                                <div class="unique sort">
-                                    <h2>Few Unique</h2>
-                                    <canvas class="inner-sort" width="252" height="252"></canvas>
+                                <div class="complexity">
+                                    <canvas width="280" height="280"></canvas>
                                 </div>
                             </div>
-                            <div class="playback">
-                                <div class="play"><i class="material-icons">play_arrow</i></div><div class="time">00:00</div>
-                            </div>
-                        </div>
-                        <div class="hide" id="QuickSort">
-                            <h1>Quick Sort</h1>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque imperdiet odio est, sit amet suscipit leo ornare eget. Ut auctor eleifend eleifend. Vestibulum ac convallis sem.</p>
-                            <div class="sort-container">
-                                <div class="random sort">
-                                    <h2>Random</h2>
-                                    <canvas class="inner-sort" width="252" height="252"></canvas>
-                                </div>
-                                <div class="nearly sort">
-                                    <h2>Nearly Sorted</h2>
-                                    <canvas class="inner-sort" width="252" height="252"></canvas>
-                                </div>
-                                <div class="reverse sort">
-                                    <h2>Reversed</h2>
-                                    <canvas class="inner-sort" width="252" height="252"></canvas>
-                                </div>
-                                <div class="unique sort">
-                                    <h2>Few Unique</h2>
-                                    <canvas class="inner-sort" width="252" height="252"></canvas>
-                                </div>
-                            </div>
-                            <div class="playback">
-                                <div class="play"><i class="material-icons">play_arrow</i></div><div class="time">00:00</div>
-                            </div>
-                        </div>
-                        <div class="hide" id="MergeSort">
-                            <h1>Merge Sort</h1>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque imperdiet odio est, sit amet suscipit leo ornare eget. Ut auctor eleifend eleifend. Vestibulum ac convallis sem.</p>
-                            <div class="sort-container">
-                                <div class="random sort">
-                                    <h2>Random</h2>
-                                    <canvas class="inner-sort" width="252" height="252"></canvas>
-                                </div>
-                                <div class="nearly sort">
-                                    <h2>Nearly Sorted</h2>
-                                    <canvas class="inner-sort" width="252" height="252"></canvas>
-                                </div>
-                                <div class="reverse sort">
-                                    <h2>Reversed</h2>
-                                    <canvas class="inner-sort" width="252" height="252"></canvas>
-                                </div>
-                                <div class="unique sort">
-                                    <h2>Few Unique</h2>
-                                    <canvas class="inner-sort" width="252" height="252"></canvas>
-                                </div>
-                            </div>
-                            <div class="playback">
-                                <div class="play"><i class="material-icons">play_arrow</i></div><div class="time">00:00</div>
-                            </div>
-                        </div>
-                        <div class="hide" id="ShellSort">
-                            <h1>Shell Sort</h1>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque imperdiet odio est, sit amet suscipit leo ornare eget. Ut auctor eleifend eleifend. Vestibulum ac convallis sem.</p>
-                            <div class="sort-container">
-                                <div class="random sort">
-                                    <h2>Random</h2>
-                                    <canvas class="inner-sort" width="252" height="252"></canvas>
-                                </div>
-                                <div class="nearly sort">
-                                    <h2>Nearly Sorted</h2>
-                                    <canvas class="inner-sort" width="252" height="252"></canvas>
-                                </div>
-                                <div class="reverse sort">
-                                    <h2>Reversed</h2>
-                                    <canvas class="inner-sort" width="252" height="252"></canvas>
-                                </div>
-                                <div class="unique sort">
-                                    <h2>Few Unique</h2>
-                                    <canvas class="inner-sort" width="252" height="252"></canvas>
-                                </div>
-                            </div>
-                            <div class="playback">
-                                <div class="play"><i class="material-icons">play_arrow</i></div><div class="time">00:00</div>
-                            </div>
-                        </div>
-                        <div class="hide" id="RadixSort">
-                            <h1>Radix Sort</h1>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque imperdiet odio est, sit amet suscipit leo ornare eget. Ut auctor eleifend eleifend. Vestibulum ac convallis sem.</p>
-                            <div class="sort-container">
-                                <div class="random sort">
-                                    <h2>Random</h2>
-                                    <canvas class="inner-sort" width="252" height="252"></canvas>
-                                </div>
-                                <div class="nearly sort">
-                                    <h2>Nearly Sorted</h2>
-                                    <canvas class="inner-sort" width="252" height="252"></canvas>
-                                </div>
-                                <div class="reverse sort">
-                                    <h2>Reversed</h2>
-                                    <canvas class="inner-sort" width="252" height="252"></canvas>
-                                </div>
-                                <div class="unique sort">
-                                    <h2>Few Unique</h2>
-                                    <canvas class="inner-sort" width="252" height="252"></canvas>
-                                </div>
-                            </div>
-                            <div class="playback">
-                                <div class="play"><i class="material-icons">play_arrow</i></div><div class="time">00:00</div>
-                            </div>
-                        </div>
-                        <div class="hide" id="HeapSort">
-                            <h1>Heap Sort</h1>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque imperdiet odio est, sit amet suscipit leo ornare eget. Ut auctor eleifend eleifend. Vestibulum ac convallis sem.</p>
-                            <div class="sort-container">
-                                <div class="random sort">
-                                    <h2>Random</h2>
-                                    <canvas class="inner-sort" width="252" height="252"></canvas>
-                                </div>
-                                <div class="nearly sort">
-                                    <h2>Nearly Sorted</h2>
-                                    <canvas class="inner-sort" width="252" height="252"></canvas>
-                                </div>
-                                <div class="reverse sort">
-                                    <h2>Reversed</h2>
-                                    <canvas class="inner-sort" width="252" height="252"></canvas>
-                                </div>
-                                <div class="unique sort">
-                                    <h2>Few Unique</h2>
-                                    <canvas class="inner-sort" width="252" height="252"></canvas>
-                                </div>
-                            </div>
-                            <div class="playback">
-                                <div class="play"><i class="material-icons">play_arrow</i></div><div class="time">00:00</div>
-                            </div>
-                        </div>
-                        <!-- ### Searches ### -->
-                        <div class="hide" id="SequentialSearch">
-                            <h1>Sequential Search</h1>
-                        </div>
-                        <div class="hide" id="BinarySearch">
-                            <h1>Binary Search</h1>
-                        </div>
-                        <div class="hide" id="BinarySearchTree">
-                            <h1>Binary Search Tree</h1>
-                        </div>
-                        <div class="hide" id="InterpolationSearch">
-                            <h1>Interpolation Search</h1>
-                        </div>
-                        <div class="hide" id="Hashing">
-                            <h1>Hashing</h1>
                         </div>
 
+                        <!-- ### Quick Sort ### -->
+                        
+                        <div class="hide" id="QuickSort">
+                            <h1>Quicksort</h1>
+                            <h3>&nbsp;Divide-and-conquer&nbsp;</h3>
+                            <img class="designIcon" src="res/algorithms/divide.png">
+                            <br>
+                            <br>
+                            <p>Quicksort is an efficient divide-and-conquer sorting algorithm. It works by partitioning the array around a pivot and recursively sorting the resulting 2 sub-arrays.</p>
+                            <div class="animation-container">
+                                <div class="animation-pane">
+                                    <p><span onclick="prevData()">&nbsp;&lt;&nbsp;</span>&nbsp; Random &nbsp;<span onclick="nextData()">&nbsp;&gt;&nbsp;</span></p>
+                                    <div class="animation">
+                                        <canvas id="QuickSortCanvas"></canvas>
+                                    </div>
+                                    <div class="animation-data"></div>
+                                </div>
+                                <div class="code-pane" onscroll="drawArrow()">
+                                    <div class="line-nums"></div>
+                                    <div class="code"></div>
+                                    <img class="arrow" src="res/algorithms/arrow.svg">
+                                </div>
+                                <div class="footer">
+                                    <img class="controls togglePlay expl accent" src="res/algorithms/play.svg" alt="play" onclick="togglePlay()">
+                                    <img class="controls" src="res/algorithms/step.svg" alt="step" onclick="step()">
+                                    <img class="controls" src="res/algorithms/back.svg" alt="back" onclick="stepBack()">
+                                    <img class="controls" src="res/algorithms/redo.svg" alt="back" onclick="reset()">
+                                    <p class="controls">Speed: </p>
+                                    <input type="range" min="1" max="100" value="70" class="controlls slider speed-slider" style="width: 100px" oninput="changeSpeed(this.value)">
+                                    <p class="controls">Progress: </p>
+                                    <input type="range" min="1" max="100" value="1" class="controlls slider prog-slider" style="width: 300px" oninput="changeStep(this.value)">
+                                    <!-- <div class="slidecontainer">
+                                    </div> -->
+                                    <p class="stats">-</p>
+                                    <!-- <button onclick="step()">step</button>
+                                    <button onclick="stepBack()">step back</button>
+                                    <button onclick="togglePlay()">play/pause</button> -->
+                                </div>
+                            </div>
+                            <br>
+                            <div class="description">
+                                <div class="description-text">
+                            <p>Quicksort was developed in 1959 and is still commonly used today as it is significantly faster than rudamentary sorts such as insertion and selection sort.</p>
+                            <p>In its best and average cases quicksort is very fast, performing with <em>O(nlogn)</em>. The best case occurs when the middle element is always chosen as a pivot.</p>
+                            <p>The main disadvantage to quicksort is its very poor worst case performance of <em>O(n<sup>2</sup>)</em>. This occurs when each partition is as unbalanced as possible. This situation can be mitigated by choosing a better initial pivot, such as comparing the leftmost, rightmost and central elements in the array and choosing the median of them as the pivot.</p>
+                            <p>Quicksort is not a stable sort, as the relative order of elements with the same value is not preserved.</p>
+                        </div>
+                        <div class="complexity">
+                            <canvas width="280" height="280"></canvas>
+                        </div>
+                    </div>
+                        </div>
+
+                        <!-- ################ -->
+                        <!-- ### Searches ### -->
+                        <!-- ################ -->
+
+
+                        <!-- ### Sequential Search ### -->
+                        
+                        <div class="hide" id="SequentialSearch">
+                            <h1>Sequential Search</h1>
+                            <h3>&nbsp;Brute Force&nbsp;</h3>
+                            <img class="designIcon" src="res/algorithms/bruteForce.png">
+                            <br>
+                            <br>
+                            <p>Sequential Search is a brute force algorithm for finding an element in an array. It sequentially checks each element until a match is found.</p>
+                            <div class="animation-container">
+                                <div class="animation-pane">
+                                    <p><span onclick="prevData()">&nbsp;&lt;&nbsp;</span>&nbsp; Random &nbsp;<span onclick="nextData()">&nbsp;&gt;&nbsp;</span></p>
+                                    <div class="animation">
+                                        <canvas id="SequentialSearchCanvas"></canvas>
+                                    </div>
+                                    <div class="animation-data"></div>
+                                </div>
+                                <div class="code-pane">
+                                    <div class="line-nums"></div>
+                                    <div class="code"></div>
+                                    <img class="arrow" src="res/algorithms/arrow.svg">
+                                </div>
+                                <div class="footer">
+                                    <img class="controls togglePlay expl accent" src="res/algorithms/play.svg" alt="play" onclick="togglePlay()">
+                                    <img class="controls" src="res/algorithms/step.svg" alt="step" onclick="step()">
+                                    <img class="controls" src="res/algorithms/back.svg" alt="back" onclick="stepBack()">
+                                    <img class="controls" src="res/algorithms/redo.svg" alt="back" onclick="reset()">
+                                    <p class="controls">Speed: </p>
+                                    <input type="range" min="1" max="100" value="70" class="controlls slider speed-slider" style="width: 100px" oninput="changeSpeed(this.value)">
+                                    <p class="controls">Progress: </p>
+                                    <input type="range" min="1" max="100" value="1" class="controlls slider prog-slider" style="width: 300px" oninput="changeStep(this.value)">
+                                    <!-- <div class="slidecontainer">
+                                    </div> -->
+                                    <p class="stats">-</p>
+                                    <!-- <button onclick="step()">step</button>
+                                    <button onclick="stepBack()">step back</button>
+                                    <button onclick="togglePlay()">play/pause</button> -->
+                                </div>
+                            </div>
+                            <br>
+                            <div class="description">
+                                <div class="description-text">
+                            <p>Sequential search, or linear search is the simplest searching algorithm to understand and implement. It has limited use for searching unsorted or very small arrays, but generally there are many more efficient searching algorithms.</p>
+                            <p>Best case performance is <em>O(1)</em>, where the first element in the array is the target value (this is obviously a rare occurance). The performance in the average and worst case is <em>O(n)</em></p>
+                        </div>
+                        <div class="complexity">
+                            <canvas width="280" height="280"></canvas>
+                        </div>
+                    </div>
+                        </div>
+
+                        <!-- ### Binary Search ### -->
+                        
+                        <div class="hide" id="BinarySearch">
+                            <h1>Binary Search</h1>
+                            <h3>&nbsp;Divide-and-conquer&nbsp;</h3>
+                            <img class="designIcon" src="res/algorithms/divide.png">
+                            <br>
+                            <br>
+                            <p>Binary Search is an efficient algorithm for finding an element in a sorted array. It works by repeatedly dividing the array in half and checking the middle element of the sub-array that could contain the element.</p>
+                            <div class="animation-container">
+                                <div class="animation-pane">
+                                    <p>Sorted</p>
+                                    <div class="animation">
+                                        <canvas id="BinarySearchCanvas"></canvas>
+                                    </div>
+                                    <div class="animation-data"></div>
+                                </div>
+                                <div class="code-pane">
+                                    <div class="line-nums"></div>
+                                    <div class="code"></div>
+                                    <img class="arrow" src="res/algorithms/arrow.svg">
+                                </div>
+                                <div class="footer">
+                                    <img class="controls togglePlay expl accent" src="res/algorithms/play.svg" alt="play" onclick="togglePlay()">
+                                    <img class="controls" src="res/algorithms/step.svg" alt="step" onclick="step()">
+                                    <img class="controls" src="res/algorithms/back.svg" alt="back" onclick="stepBack()">
+                                    <img class="controls" src="res/algorithms/redo.svg" alt="back" onclick="reset()">
+                                    <p class="controls">Speed: </p>
+                                    <input type="range" min="1" max="100" value="70" class="controlls slider speed-slider" style="width: 100px" oninput="changeSpeed(this.value)">
+                                    <p class="controls">Progress: </p>
+                                    <input type="range" min="1" max="100" value="1" class="controlls slider prog-slider" style="width: 300px" oninput="changeStep(this.value)">
+                                    <!-- <div class="slidecontainer">
+                                    </div> -->
+                                    <p class="stats">-</p>
+                                    <!-- <button onclick="step()">step</button>
+                                    <button onclick="stepBack()">step back</button>
+                                    <button onclick="togglePlay()">play/pause</button> -->
+                                </div>
+                            </div>
+                            <br>
+                            <div class="description">
+                                <div class="description-text">
+                            <p>Binary Search is an intuitive algorithm for searching that people generally use to search through a sorted list (e.g. finding a word in a dictionary). It is a very efficient method for fixed arrays, however the overhead of keeping the array sorted when inserting new data can significantly lower overall efficiency.</p>
+                            <p>Best case performance is <em>O(1)</em> where the target value is in the middle of the array (the first element checked). The performance in average and worst cases is <em>O(logn)</em>.</p>
+                            <p>Although hashing is a faster algorithm for searching with <em>O(1)</em> performance in the majority of cases, it does not support approximate matches such as the next smallest or largest values. Binary search is ideal for such cases.</p>
+                        </div>
+                        <div class="complexity">
+                            <canvas width="280" height="280"></canvas>
+                        </div>
+                    </div>
+                        </div>
+
+                        <!-- ################# -->
+                        <!-- ### Geometric ### -->
+                        <!-- ################# -->
+
+
+                        <!-- ### Package-Wrapping ### -->
+                        
+                        <div class="hide" id="PackageWrapping">
+                            <h1>Package Wrapping Algorithm</h1>
+                            <h3>&nbsp;Brute Force&nbsp;</h3>
+                            <img class="designIcon" src="res/algorithms/bruteForce.png">
+                            <br>
+                            <br>
+                            <p>Package Wrapping is a brute force algorithm for computing the convex hull of a set of points. It works by starting with the lowest point, and iteratively finding the next point on the hull by minimum anti-clockwise angle.</p>
+                            <div class="animation-container">
+                                <div class="animation-pane">
+                                    <p><span onclick="prevData()">&nbsp;&lt;&nbsp;</span>&nbsp; Random &nbsp;<span onclick="nextData()">&nbsp;&gt;&nbsp;</span></p>
+                                    <div class="animation">
+                                        <canvas id="PackageWrappingCanvas"></canvas>
+                                    </div>
+                                    <div class="animation-data">
+                                        <canvas width="200" height="50"></canvas>
+                                        <p>: convex hull vertex</p>
+                                    </div>
+                                </div>
+                                <div class="code-pane">
+                                    <div class="line-nums"></div>
+                                    <div class="code"></div>
+                                    <img class="arrow" src="res/algorithms/arrow.svg">
+                                </div>
+                                <div class="footer">
+                                    <img class="controls togglePlay expl accent" src="res/algorithms/play.svg" alt="play" onclick="togglePlay()">
+                                    <img class="controls" src="res/algorithms/step.svg" alt="step" onclick="step()">
+                                    <img class="controls" src="res/algorithms/back.svg" alt="back" onclick="stepBack()">
+                                    <img class="controls" src="res/algorithms/redo.svg" alt="back" onclick="reset()">
+                                    <p class="controls">Speed: </p>
+                                    <input type="range" min="1" max="100" value="70" class="controlls slider speed-slider" style="width: 100px" oninput="changeSpeed(this.value)">
+                                    <p class="controls">Progress: </p>
+                                    <input type="range" min="1" max="100" value="1" class="controlls slider prog-slider" style="width: 300px" oninput="changeStep(this.value)">
+                                    <!-- <div class="slidecontainer">
+                                    </div> -->
+                                    <p class="stats">-</p>
+                                    <!-- <button onclick="step()">step</button>
+                                    <button onclick="stepBack()">step back</button>
+                                    <button onclick="togglePlay()">play/pause</button> -->
+                                </div>
+                            </div>
+                            <br>
+                            <div class="description">
+                                <div class="description-text">
+                            <p>The package wrapping algorithm (also called the gift wrapping algorithm, or Jarvis march when used in 2 dimensions) has an average and worst case performance of <em>O(n<sup>2</sup>)</em> where every point (or a large number of points in the average case) is a point on the convex hull (shown in the <i>Large Hull</i> run), making it an output-sensitive algorithm.</p>
+                            <p>Runtime complexity can also be defined as <em>O(nh)</em>, where <i>h</i> is the number of points on the hull. In the best case (<i>h</i>=3), the algorithm performs in <em>O(n)</em> time.</p>
+                        </div>
+                        <div class="complexity">
+                            <canvas width="280" height="280"></canvas>
+                        </div>
+                    </div>
+                        </div>
+
+                        <!-- ### Graham's Scab ### -->
+                        
+                        <div class="hide" id="GrahamsScan">
+                            <h1>Graham's Scan</h1>
+                            <h3>&nbsp;Backtracking&nbsp;</h3>
+                            <img class="designIcon" src="res/algorithms/backtrack.png">
+                            <br>
+                            <br>
+                            <p>Graham's Scan is an efficient algorithm for computing the convex hull of a set of points. It works by sorting the points by angle from the lowest point, adding each to the hull, and backtracking if previously added elements cannot be on the hull.</p>
+                            <div class="animation-container">
+                                <div class="animation-pane">
+                                    <p><span onclick="prevData()">&nbsp;&lt;&nbsp;</span>&nbsp; Random &nbsp;<span onclick="nextData()">&nbsp;&gt;&nbsp;</span></p>
+                                    <div class="animation">
+                                        <canvas id="GrahamsScanCanvas"></canvas>
+                                    </div>
+                                    <div class="animation-data">
+                                        <canvas width="200" height="50"></canvas>
+                                        <p>: convex hull vertex</p>
+                                    </div>
+                                </div>
+                                <div class="code-pane">
+                                    <div class="line-nums"></div>
+                                    <div class="code"></div>
+                                    <img class="arrow" src="res/algorithms/arrow.svg">
+                                </div>
+                                <div class="footer">
+                                    <img class="controls togglePlay expl accent" src="res/algorithms/play.svg" alt="play" onclick="togglePlay()">
+                                    <img class="controls" src="res/algorithms/step.svg" alt="step" onclick="step()">
+                                    <img class="controls" src="res/algorithms/back.svg" alt="back" onclick="stepBack()">
+                                    <img class="controls" src="res/algorithms/redo.svg" alt="back" onclick="reset()">
+                                    <p class="controls">Speed: </p>
+                                    <input type="range" min="1" max="100" value="70" class="controlls slider speed-slider" style="width: 100px" oninput="changeSpeed(this.value)">
+                                    <p class="controls">Progress: </p>
+                                    <input type="range" min="1" max="100" value="1" class="controlls slider prog-slider" style="width: 300px" oninput="changeStep(this.value)">
+                                    <!-- <div class="slidecontainer">
+                                    </div> -->
+                                    <p class="stats">-</p>
+                                    <!-- <button onclick="step()">step</button>
+                                    <button onclick="stepBack()">step back</button>
+                                    <button onclick="togglePlay()">play/pause</button> -->
+                                </div>
+                            </div>
+                            <br>
+                            <div class="description">
+                                <div class="description-text">
+                            <p>Graham's scan is an efficient method for computing convex hull with a time complexity in all cases of <em>O(nlogn)</em>.</p>
+                            <p>Unlike the package wrapping algorith, it requires the set of points to be sorted in increasing order by their anti-clockwise angle to the anchor point (the point with the lowest y value).</p>
+                            <p>Graham's scan then adds each point to the hull, backtracking to remove any points that cannot be points on the convex hull.</p>
+                        </div>
+                        <div class="complexity">
+                            <canvas width="280" height="280"></canvas>
+                        </div>
+                    </div>
+                        </div>
+
+                        <!-- #################### -->
+                        <!-- ### Root Finding ### -->
+                        <!-- #################### -->
+
+
+                        <!-- ### Bisection Method ### -->
+                        
+                        <div class="hide" id="BisectionMethod">
+                            <h1>Bisection Method for Root Finding</h1>
+                            <h3>&nbsp;Greedy&nbsp;</h3>
+                            <img class="designIcon" src="res/algorithms/greedy.png">
+                            <br>
+                            <br>
+                            <p>The Bisection Method is an algorithm for finding a root of a given function. It works by choosing 2 initial points with opposite signs as an interval containing the root. The interval is repeatedly cut in half until stopping criteria is reached (a root is found).</p>
+                            <div class="animation-container">
+                                <div class="animation-pane">
+                                    <p>f(x)=x<sup>3</sup>-3x+1</p>
+                                    <div class="animation">
+                                        <canvas id="BisectionMethodCanvas"></canvas>
+                                    </div>
+                                    <div class="animation-data">
+                                        <canvas class="canvas-left" width="100" height="50"></canvas>
+                                        <p>: x0, x1</p>
+                                        <canvas  width="100" height="50"></canvas>
+                                        <p>: m&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                                    </div>
+                                </div>
+                                <div class="code-pane" onscroll="drawArrow()">
+                                    <div class="line-nums"></div>
+                                    <div class="code"></div>
+                                    <img class="arrow" src="res/algorithms/arrow.svg">
+                                </div>
+                                <div class="footer">
+                                    <img class="controls togglePlay expl accent" src="res/algorithms/play.svg" alt="play" onclick="togglePlay()">
+                                    <img class="controls" src="res/algorithms/step.svg" alt="step" onclick="step()">
+                                    <img class="controls" src="res/algorithms/back.svg" alt="back" onclick="stepBack()">
+                                    <img class="controls" src="res/algorithms/redo.svg" alt="back" onclick="reset()">
+                                    <p class="controls">Speed: </p>
+                                    <input type="range" min="1" max="100" value="70" class="controlls slider speed-slider" style="width: 100px" oninput="changeSpeed(this.value)">
+                                    <p class="controls">Progress: </p>
+                                    <input type="range" min="1" max="100" value="1" class="controlls slider prog-slider" style="width: 300px" oninput="changeStep(this.value)">
+                                    <p class="stats">-</p>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="description">
+                                <div class="description-text">
+                            <p>The bisection method uses the Intermediate Value Theorem, meaning if the two initial points have opposite signs, one will be above the y-axis and one will be below, therefore straddling a root somewhere in the middle.</p>
+                            <p>The algorithm has three stopping criteria: if <i>x0</i> and <i>x1</i> are very close; if for a new midpoint <i>m</i>, f(<i>m</i>) is close to zero; or if the maximum number of iterations has been reached. As directly comparing equality of real numbers is not possible, a tolerance function (<i>close()</i>), is used.</p>
+                            <p>The time complexity of the bisection method cannot be defined in terms of Big-O. Instead, if the error in estimating a root is <i>h</i>, the rate of convergence toward a root is <em>h/2</em>.</p>
+                        </div>
+                        <div class="complexity">
+                            <canvas width="280" height="280"></canvas>
+                        </div>
+                    </div>
+                        </div>
+
+                        <!-- ### Newton's Method ### -->
+                        
+                        <div class="hide" id="NewtonsMethod">
+                            <h1>Newton's Method for Root Finding</h1>
+                            <h3>&nbsp;Greedy&nbsp;</h3>
+                            <img class="designIcon" src="res/algorithms/greedy.png">
+                            <br>
+                            <br>
+                            <p>Newton's Method is an efficient algorithm for root finding that starts with an approximation for the root, and iteratively calculates a new approximation for the root using the tangent at the current point.</p>
+                            <div class="animation-container">
+                                <div class="animation-pane">
+                                    <p>f(x)=x<sup>3</sup>-3x+1</p>
+                                    <div class="animation">
+                                        <canvas id="NewtonsMethodCanvas"></canvas>
+                                    </div>
+                                    <div class="animation-data">
+                                        <canvas class="canvas-left" width="100" height="50"></canvas>
+                                        <p>: tangent</p>
+                                        <canvas  width="100" height="50"></canvas>
+                                        <p>: x&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                                    </div>
+                                </div>
+                                <div class="code-pane" onscroll="drawArrow()">
+                                    <div class="line-nums"></div>
+                                    <div class="code"></div>
+                                    <img class="arrow" src="res/algorithms/arrow.svg">
+                                </div>
+                                <div class="footer">
+                                    <img class="controls togglePlay expl accent" src="res/algorithms/play.svg" alt="play" onclick="togglePlay()">
+                                    <img class="controls" src="res/algorithms/step.svg" alt="step" onclick="step()">
+                                    <img class="controls" src="res/algorithms/back.svg" alt="back" onclick="stepBack()">
+                                    <img class="controls" src="res/algorithms/redo.svg" alt="back" onclick="reset()">
+                                    <p class="controls">Speed: </p>
+                                    <input type="range" min="1" max="100" value="70" class="controlls slider speed-slider" style="width: 100px" oninput="changeSpeed(this.value)">
+                                    <p class="controls">Progress: </p>
+                                    <input type="range" min="1" max="100" value="1" class="controlls slider prog-slider" style="width: 300px" oninput="changeStep(this.value)">
+                                    <p class="stats">-</p>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="description">
+                                <div class="description-text">
+                            <p>Newton's method uses differentiation to converge much faster towards a root than the bisection method.</p>
+                            <p>The time complexity of Newton's method cannot be defined in terms of Big-O. Instead, if the error in estimating a root is <i>h</i>, the rate of convergence toward a root is <em>h<sup>2</sup></em>, significantly faster than the bisection method.</p>
+                            <p>However, for ever iteration of Newton's method f' must be evaluated, a costly calculation that is abscent in the bisection method. Also, if f'(x)=0 then the method fails as the tangent will longer intersect the y-axis. This can mostly be mitigated by carefully choosing initial values to avoid flat spots, runaways and cycles.</p>
+                        </div>
+                        <div class="complexity">
+                            <canvas width="280" height="280"></canvas>
+                        </div>
+                    </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -306,7 +523,7 @@
     </section>
     <section id="small">
         <h1>This page is best viewed on a computer.</h1>
-        <img src="res/computer.gif">
+        <img src="res/algorithms/computer.gif">
     </section>
     <hr>
     <footer>
