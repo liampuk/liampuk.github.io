@@ -78,6 +78,10 @@ var mapSketch = function (p) {
         }
         p.rndColours();
     }
+
+    p.bin = function(){
+        p.remove();
+    }
 }
 
 

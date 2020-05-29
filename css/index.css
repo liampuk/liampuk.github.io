@@ -83,6 +83,10 @@ a:hover{
     display: none;
 }
 
+.clickable{
+    cursor: pointer;
+}
+
 ::selection{
     background: #69c1e4;
 }

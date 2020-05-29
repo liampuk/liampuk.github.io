@@ -1,13 +1,14 @@
+var animIndex = 0;
 
 var animations = [
-    'map',
-    'spin'
+    'spin',
+    'map'
 ]
 
 var animation;
 
 function pickAnim(){
-    animation = animations[Math.floor(Math.random()*2)]
+    // animation = animations[Math.floor(Math.random()*2)]
     if(animation == 'map'){
         mapAnimation();
     }else if(animation == 'spin'){
@@ -16,6 +17,7 @@ function pickAnim(){
 }
 
 function main() {
+    animation = animations[animIndex];
     pickAnim();
     if (window.location.hash) {
         var hash = window.location.hash.substring(1);
@@ -81,3 +83,25 @@ function animScreenChangeHandler(light){
         spinp5.bg(light);
     }
 }
+
+function cycleAnim(){
+    if(animation == 'spin'){
+        spinp5.bin();
+    }else if(animation == 'map'){
+        mapp5.bin();
+    }
+    animIndex++;
+    if(animIndex >= animations.length){
+        animIndex = 0;
+    }
+    animation = animations[animIndex];
+    // document.getElementById('main').innerHTML = "";
+    pickAnim();
+}
+
+document.onkeydown = function(evt) {
+    evt = evt || window.event;
+    if (evt.keyCode == 32) {
+        cycleAnim();
+    }
+};

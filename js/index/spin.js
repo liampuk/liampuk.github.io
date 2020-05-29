@@ -124,6 +124,10 @@ var spinSketch = function (p) {
             p.colMod = 10;
         }
     }
+
+    p.bin = function(){
+        p.remove();
+    }
 }
 
 function spinAnimation (){
