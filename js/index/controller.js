@@ -7,7 +7,7 @@ var animations = [
 var animation;
 
 function pickAnim(){
-    animation = animations[1]
+    animation = animations[Math.floor(Math.random()*2)]
     if(animation == 'map'){
         mapAnimation();
     }else if(animation == 'spin'){
@@ -74,8 +74,9 @@ function updateScreen(change) {
 
 function animScreenChangeHandler(light){
     if(animation == 'map'){
-        rndColours();
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        // rndColours();
+        // ctx.clearRect(0, 0, canvas.width, canvas.height);
+        mapp5.reset(light);
     }else if(animation == 'spin'){
         spinp5.bg(light);
     }
