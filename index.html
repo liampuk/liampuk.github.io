@@ -6,7 +6,10 @@
     <title>Liam Piesley.</title>
     <link rel="stylesheet" type="text/css" href="css/index.css">
     <!-- <script src="https://cdn.jsdelivr.net/npm/p5@0.10.2/lib/p5.js"></script> -->
-    <script src="js/index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.0.0/lib/p5.js"></script>
+    <script src="js/index/spin.js"></script>
+    <script src="js/index/map.js"></script>
+    <script src="js/index/controller.js"></script>
     <meta charset="utf-8" />
     <link href="https://fonts.googleapis.com/css?family=Rubik+Mono+One|Rubik:300,400,500,700,900&display=swap"
         rel="stylesheet">
@@ -27,15 +30,15 @@
 
 <body onload="main()">
     <div id="main">
-        <canvas id="canvas"></canvas>
+        <!-- <canvas id="canvas"></canvas> -->
     </div>
     <div class="ease" id="side">
         <h1>Liam Piesley</h1>
         <div id="nav">
-            <a onclick="colourSwap(0)" class="navLinks" href="#about">About</a>
-            <a onclick="colourSwap(1)" class="navLinks" href="#projects">Projects</a href="#">
-            <a onclick="colourSwap(2)" class="navLinks" href="#cv">CV</a href="#">
-            <a onclick="colourSwap(3)" class="navLinks" href="#contact">Contact</a href="#">
+            <a onclick="updateScreen(0)" class="navLinks" href="#about">About</a>
+            <a onclick="updateScreen(1)" class="navLinks" href="#projects">Projects</a href="#">
+            <a onclick="updateScreen(2)" class="navLinks" href="#cv">CV</a href="#">
+            <a onclick="updateScreen(3)" class="navLinks" href="#contact">Contact</a href="#">
         </div>
         <div id="content">
             <div id="aboutText">
@@ -84,21 +87,3 @@
 </body onload="main()" onclick="delet()">
 
 </html>
-
-<!-- Colour Combos -->
-<!-- 22, 247 -->
-<!-- 200, 29 -->
-<!-- 229, 28 -->
-<!-- 299, 239 -->
-<!-- 88, 356 -->
-<!-- 305, 109 -->
-<!-- 39, 1 -->
-<!-- 151, 314 -->
-<!-- 226, 116 -->
-<!-- 246, 202 -->
-<!-- 76, 217 -->
-<!-- 149, 223 -->
-<!-- 285, 164 -->
-<!-- 179, 203 -->
-<!-- 211, 131 -->
-<!-- 237, 96 -->
