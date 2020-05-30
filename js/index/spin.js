@@ -13,6 +13,7 @@ var spinSketch = function (p) {
     p.colMod = 10;
     p.interactMode = 0;
     p.tilt = 0.7;
+    p.light = false;
 
     p.setup = function () {
         p.parent = document.getElementById('main');
@@ -133,9 +134,11 @@ var spinSketch = function (p) {
     }
     p.bg = function(light){
         if(light){
+            p.light = light;
             p.background('#edeae4');
             p.colMod = 0;
         }else{
+            p.light = light;
             p.background('#0d0d0d');
             p.colMod = 10;
         }
@@ -153,6 +156,14 @@ var spinSketch = function (p) {
                 p.interactMode = 0;
             }
         }
+    }
+
+    p.resize = function() {
+        p.parent = document.getElementById('main');
+        p.cnvX = p.parent.clientWidth;
+        p.cnvY = p.parent.clientHeight;
+        p.resizeCanvas(p.cnvX, p.cnvY);
+        p.bg(p.light);
     }
 }
 

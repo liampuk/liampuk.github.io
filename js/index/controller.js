@@ -1,4 +1,5 @@
 var animIndex = 0;
+var current = 0;
 
 var animations = [
     'spin',
@@ -36,6 +37,9 @@ function updateScreen(change) {
     var projects = document.getElementById("projectsText");
     var cv = document.getElementById("cvText");
     var contact = document.getElementById("contactText");
+    var navLinks = document.getElementsByClassName("navLinks");
+    navLinks[current].classList.remove("selected");
+    navLinks[change].classList.add("selected");
     if (change == 0) {
         projects.classList.add("hidden");
         cv.classList.add("hidden");
@@ -72,6 +76,7 @@ function updateScreen(change) {
         document.body.style.backgroundColor = "black";
     }
     animScreenChangeHandler(light)
+    current = change;
 }
 
 function animScreenChangeHandler(light){
@@ -105,3 +110,11 @@ document.onkeydown = function(evt) {
         cycleAnim();
     }
 };
+
+window.onresize = function(){
+    if(animation == 'spin'){
+        spinp5.resize();
+    }else if(animation == 'map'){
+        mapp5.resize();
+    }
+}

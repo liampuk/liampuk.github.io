@@ -1,6 +1,7 @@
 body{
     background-color: black;
     margin: 0px;
+    scroll-snap-stop: always;
 }
 
 #side{
@@ -29,8 +30,13 @@ body{
 
 h1{
     font-family: 'Rubik Mono One', sans-serif;
-    font-size: 100px;
+    font-size: 5.3vw;
+    /* font-size: 100px; */
     pointer-events:none;
+}
+
+h2{
+    display: none;
 }
 
 .ease{
@@ -39,7 +45,7 @@ h1{
 
 p{
     font-family: 'Rubik', sans-serif;
-    font-size: 20px;
+    font-size: 1.1vw;
     font-weight: 500;
     margin-top: 0px;
     margin-bottom: 10px;
@@ -51,14 +57,15 @@ a{
 
 a:hover{
     color:rgb(217, 219, 52);
+    cursor: pointer;
 }
 
 .navLinks{
     display: block;
     font-family: 'Rubik Mono One', sans-serif;
     font-weight: 600;
-    font-size: 40px;
-    height: 39px;
+    font-size: 2.2vw;
+    height: 2.1vw;
     text-decoration: none;
 }
 
@@ -72,33 +79,78 @@ a:hover{
     text-align:center;
 }
 
-#canvas{
-    width: 74vw;
-    height: 100vh;
-    /* background-color:rgba(255,255,255,0.1); */
-    /* cursor: none; */
-}
-
 .hidden{
     display: none;
 }
 
-.clickable{
-    cursor: pointer;
+.selected{
+    opacity: 75%;
 }
 
 ::selection{
     background: #69c1e4;
 }
 
+::-webkit-scrollbar {
+    display: none;   
+}
+
 @media (orientation: portrait) {
-    body {
-      zoom: 150%;
+
+    #main {
+        width: 100%;
+        height: 50vh;
+        position: fixed;
+        margin-top: 25vh;
     }
-    canvas{
-        zoom: 150%;
+
+    #side {
+        width: 100%;
+        padding: 0;
+        position: relative;
+        margin-top: 75vh;
+        z-index: 5;
     }
-    #side{
-        width: 32vw;
+
+    #nav{
+        display: none;
     }
-  }
+    
+    h1{
+        position: fixed;
+        top: 0;
+        font-size: 13vw;
+        width: 100%;
+        height: 25vh;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        background: black;
+        /* background: rgba(0,0,0,0.2); */
+    }
+
+    h2{
+        display: block;
+        font-family: 'Rubik Mono One', sans-serif;
+        font-size: 8vw;
+        /* font-size: 100px; */
+        pointer-events:none;
+    }
+
+    p{
+        font-size: 2vh;
+    }
+    #content{
+        margin: 0;
+        padding: 4vw;
+    }
+    .hidden{
+        display: block;
+    }
+
+    .desktop{
+        display: none;
+    }
+}
