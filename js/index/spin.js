@@ -11,6 +11,8 @@ var spinSketch = function (p) {
     p.speed = 3;
     p.mouse = false;
     p.colMod = 10;
+    p.interactMode = 0;
+    p.tilt = 0.7;
 
     p.setup = function () {
         p.parent = document.getElementById('main');
@@ -47,24 +49,39 @@ var spinSketch = function (p) {
         p.cols.push('#fcffa4');
     }
     p.draw = function () {
-        if (p.mouse) {
-            p.moveToMouse();
-        } else {
+        if(p.interactMode == 1){
+            if (p.mouse) {
+                p.moveToMouse();
+            } else {
+                p.moveToCentre();
+            }
+        }else{
+            if(p.mouse){
+                p.tiltAim = (p.mouseY/p.height)*1.5+0.1;
+                if(p.tilt < p.tiltAim){
+                    p.tilt += 0.01;
+                }else if(p.tilt > p.tiltAim){
+                    p.tilt -= 0.01;
+                }
+                // p.tilt = (p.mouseY/p.height)*1.5+0.1
+            }
+            // console.log(p.mouseY+"/"+p.height);
             p.moveToCentre();
+            // console.log(tilt);
         }
 
         p.translate(p.x, p.y);
-        p.rotateZ(p.angle);
-        p.rotateY(p.angle);
-        p.rotateX(p.angle * 3.14);
+        // p.rotateZ(p.angle);
+        p.rotateY(p.angle*4);
+        p.rotateX(p.tilt);
         p.noFill()
         p.stroke(p.cols[p.j+p.colMod]);
-        p.box(200);
-        p.translate(0, 200);
-        p.box(200);
+        p.box(p.height/4);
+        p.translate(0, p.height/4);
+        p.box(p.height/4);
 
-        p.translate(0, -400);
-        p.box(200);
+        p.translate(0, -(p.height/2));
+        p.box(p.height/4);
 
         p.angle += 0.01;
 
@@ -115,7 +132,6 @@ var spinSketch = function (p) {
         }
     }
     p.bg = function(light){
-        console.log(light)
         if(light){
             p.background('#edeae4');
             p.colMod = 0;
@@ -127,6 +143,16 @@ var spinSketch = function (p) {
 
     p.bin = function(){
         p.remove();
+    }
+
+    p.mouseClicked = function(){
+        if(p.mouse){
+            if(p.interactMode == 0){
+                p.interactMode = 1;
+            }else{
+                p.interactMode = 0;
+            }
+        }
     }
 }
 
