@@ -47,7 +47,7 @@ var linesSketch = function (p) {
         // offset = width/2-w/2;
         p.offsetX = -p.w / 2;
         p.offsetY = -p.h / 2
-        p.strokeWeight(2)
+        p.strokeWeight(3)
         // p.smooth()
         // p.stroke('rgba(0,0,0,1)');
         p.stroke('rgba(240, 176, 0,0.3)');
