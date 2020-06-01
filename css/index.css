@@ -87,6 +87,10 @@ a:hover{
     opacity: 75%;
 }
 
+.mobile{
+    display: none;
+}
+
 ::selection{
     background: #69c1e4;
 }
@@ -152,5 +156,9 @@ a:hover{
 
     .desktop{
         display: none;
+    }
+
+    .mobile{
+        display: block;
     }
 }

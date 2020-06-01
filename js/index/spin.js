@@ -167,6 +167,7 @@ var spinSketch = function (p) {
     }
 }
 
-function spinAnimation (){
+function spinAnimation (light){
     spinp5 = new p5(spinSketch);
+    spinp5.bg(light);
 }

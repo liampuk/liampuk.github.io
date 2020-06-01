@@ -1,8 +1,10 @@
 var animIndex = 0;
 var current = 0;
+var light = false;
 
 var animations = [
     'spin',
+    'lines',
     'map'
 ]
 
@@ -11,9 +13,11 @@ var animation;
 function pickAnim(){
     // animation = animations[Math.floor(Math.random()*2)]
     if(animation == 'map'){
-        mapAnimation();
+        mapAnimation(light);
     }else if(animation == 'spin'){
-        spinAnimation();
+        spinAnimation(light);
+    }else if(animation == 'lines'){
+        linesAnimation(light);
     }
 }
 
@@ -61,7 +65,6 @@ function updateScreen(change) {
         cv.classList.add("hidden");
         contact.classList.remove("hidden");
     }
-    var light = false;
     if (change == 1 || change == 3) {
         light = true;
         var side = document.getElementById("side");
@@ -75,17 +78,19 @@ function updateScreen(change) {
         side.style.color = "rgb(247, 244, 240)";
         document.body.style.backgroundColor = "black";
     }
-    animScreenChangeHandler(light)
+    animScreenChangeHandler()
     current = change;
 }
 
-function animScreenChangeHandler(light){
+function animScreenChangeHandler(){
     if(animation == 'map'){
         // rndColours();
         // ctx.clearRect(0, 0, canvas.width, canvas.height);
         mapp5.reset(light);
     }else if(animation == 'spin'){
         spinp5.bg(light);
+    }else if(animation == 'lines'){
+        linesp5.bg(light);
     }
 }
 
@@ -94,6 +99,8 @@ function cycleAnim(){
         spinp5.bin();
     }else if(animation == 'map'){
         mapp5.bin();
+    }else if(animation == 'lines'){
+        linesp5.bin();
     }
     animIndex++;
     if(animIndex >= animations.length){
@@ -116,5 +123,7 @@ window.onresize = function(){
         spinp5.resize();
     }else if(animation == 'map'){
         mapp5.resize();
+    }else if(animation == 'lines'){
+        linesp5.resize();
     }
 }
