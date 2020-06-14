@@ -10,6 +10,10 @@ My personal site, [liamp.uk](http://liamp.uk)
 
 ***
 
+[MiniKeys](http://liamp.uk/minikeys) - A tiny Javascript Library that plays the piano.
+
+***
+
 [emojiPad](http://liamp.uk/emoji) - A minimal emoji keyboard.
 
 ***
