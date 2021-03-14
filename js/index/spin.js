@@ -50,6 +50,7 @@ var spinSketch = function (p) {
         p.cols.push('#fcffa4');
     }
     p.draw = function () {
+        /*
         if(p.interactMode == 1){
             if (p.mouse) {
                 p.moveToMouse();
@@ -70,6 +71,7 @@ var spinSketch = function (p) {
             p.moveToCentre();
             // console.log(tilt);
         }
+        */
 
         p.translate(p.x, p.y);
         // p.rotateZ(p.angle);
