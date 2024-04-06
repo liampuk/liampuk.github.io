@@ -98,9 +98,7 @@ Error generating stack: `+o.message+`
 `,Ih=Ut.div`
   ${({$rotate:e})=>e&&"svg {rotate: 180deg;}"}
   ${({$black:e})=>e?ut`
-          background-image: radial-gradient(black 0.5px, transparent 0);
-          background-size: 2.5px 2.5px;
-          background-position: -0.5px -0.5px;
+          background-color: #eee;
         `:"background-color: white"};
   display: flex;
   align-items: center;
@@ -141,7 +139,7 @@ Error generating stack: `+o.message+`
     `}
 
   &:hover {
-    ${({$move:e,$capture:t})=>(e||t)&&"background-color: #eee;"}
+    ${({$move:e,$capture:t})=>(e||t)&&"background-color: #ddd;"}
   }
 `,Th=X0`
   html,
