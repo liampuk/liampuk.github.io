@@ -97,7 +97,7 @@ Error generating stack: `+o.message+`
     transition: none;
   }
   transition: none;
-`,Ja=({top:e=!1,show:t,setShowSettings:n,newGame:r,enableRotatePieces:l,setEnableRotatePieces:o})=>{const i=C.useRef(0),u=C.useRef(0),s=p=>{i.current=p.changedTouches[0].clientY},a=p=>{u.current=p.changedTouches[0].clientY,Math.abs(i.current-u.current)>20&&n(e?h=>({black:!h.black,white:!1}):h=>({white:!h.white,black:!1}))};return _.jsxs(Bh,{$top:e,$expand:t,children:[_.jsx(Vh,{$shrink:t}),_.jsx(Uh,{$show:t,onClick:()=>n(e?p=>({black:!p.black,white:!1}):p=>({white:!p.white,black:!1})),onTouchStart:s,onTouchEnd:a,children:_.jsx(qh,{})}),_.jsxs(Wh,{$show:t,$top:e,children:[_.jsx(kl,{onClick:p=>r(p),children:"New Game"}),_.jsx(kl,{$enabled:l,onClick:p=>{p.stopPropagation(),o(h=>!h)},children:"Rotate pieces"}),_.jsx(kl,{$disabled:!0,onClick:p=>p.stopPropagation(),children:"Import game from clipboard"}),_.jsx(kl,{$disabled:!0,onClick:p=>p.stopPropagation(),children:"Copy game to clipboard"}),_.jsxs(Qh,{children:[_.jsx(ho,{$size:14,onClick:p=>p.stopPropagation(),children:"for Alice"}),_.jsxs(ho,{onClick:p=>p.stopPropagation(),$size:20,children:["made by"," ",_.jsx("a",{href:"https://liamp.uk",target:"_blank",children:_.jsx("u",{children:"Liam"})})]})]})]})]})},Bh=ie.div`
+`,Ja=({top:e=!1,show:t,setShowSettings:n,newGame:r,enableRotatePieces:l,setEnableRotatePieces:o})=>{const i=C.useRef(0),u=C.useRef(0),s=p=>{i.current=p.changedTouches[0].clientY},a=p=>{u.current=p.changedTouches[0].clientY,Math.abs(i.current-u.current)>20&&n(e?h=>({black:!h.black,white:!1}):h=>({white:!h.white,black:!1}))};return _.jsxs(Bh,{$top:e,$expand:t,children:[_.jsx(Vh,{$shrink:t}),_.jsx(Uh,{$show:t,onClick:()=>n(e?p=>({black:!p.black,white:!1}):p=>({white:!p.white,black:!1})),onTouchStart:s,onTouchEnd:a,children:_.jsx(qh,{})}),_.jsxs(Wh,{$show:t,$top:e,children:[_.jsx(kl,{onClick:p=>r(p),children:"New Game"}),_.jsx(kl,{$enabled:l,onClick:p=>{p.stopPropagation(),o(h=>!h)},children:"Rotate pieces"}),_.jsx(kl,{$disabled:!0,onClick:p=>p.stopPropagation(),children:"Import game from clipboard"}),_.jsx(kl,{$disabled:!0,onClick:p=>p.stopPropagation(),children:"Copy game to clipboard"}),_.jsxs(Qh,{children:[_.jsx(ho,{$size:14,onClick:p=>p.stopPropagation(),children:"for Alice"}),_.jsxs(ho,{onClick:p=>p.stopPropagation(),$size:18,children:["made by"," ",_.jsx("a",{href:"https://liamp.uk",target:"_blank",children:_.jsx("u",{children:"Liam"})})]})]})]})]})},Bh=ie.div`
   position: fixed;
   ${({$top:e})=>e?`
         top: 0;
@@ -134,11 +134,11 @@ Error generating stack: `+o.message+`
   background-color: black;
 `,kl=ie.div`
   user-select: none;
-  padding: 16px;
+  padding: 12px;
   border: 3px solid black;
   border-radius: 2px;
   cursor: pointer;
-  font-size: 20px;
+  font-size: 18px;
   width: 80%;
   max-width: 500px;
   text-align: center;
