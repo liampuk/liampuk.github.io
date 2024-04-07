@@ -120,7 +120,6 @@ Error generating stack: `+o.message+`
     `}
   transition: all .2s;
 `,Uh=ie.div`
-  background-color: white;
   cursor: pointer;
   width: 100%;
   display: flex;
