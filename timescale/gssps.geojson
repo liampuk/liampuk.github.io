@@ -1,0 +1,785 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [91.715, 25.262222]
+      },
+      "properties": {
+        "title": "Meghalayan Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-42.32, 75.1]
+      },
+      "properties": {
+        "title": "Northgrippian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-42.32, 37.2889]
+      },
+      "properties": {
+        "title": "Greenlandian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [140.146528, 35.294333]
+      },
+      "properties": {
+        "title": "Chibanian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [17.1348, 39.0385]
+      },
+      "properties": {
+        "title": "Calabrian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [14.2035, 37.1469]
+      },
+      "properties": {
+        "title": "Gelasian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [13.4933, 37.2889]
+      },
+      "properties": {
+        "title": "Piacenzian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [13.2806, 37.3917]
+      },
+      "properties": {
+        "title": "Zanclean Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-6.8125, 33.936]
+      },
+      "properties": {
+        "title": "Messinian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [13.566172, 43.587292]
+      },
+      "properties": {
+        "title": "Tortonian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [14.3361, 35.9139]
+      },
+      "properties": {
+        "title": "Serravallian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [8.8364, 44.658]
+      },
+      "properties": {
+        "title": "Aquitanian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.467731, 43.646614]
+      },
+      "properties": {
+        "title": "Chattian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [13.6011, 43.5328]
+      },
+      "properties": {
+        "title": "Rupelian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [11.918019, 45.914167]
+      },
+      "properties": {
+        "title": "Priabonian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.014336, 43.929575]
+      },
+      "properties": {
+        "title": "Lutetian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [32.5311, 25.5]
+      },
+      "properties": {
+        "title": "Ypresian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-2.2594, 43.3]
+      },
+      "properties": {
+        "title": "Thanetian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-2.2594, 43.3]
+      },
+      "properties": {
+        "title": "Selandian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [8.6486, 36.153]
+      },
+      "properties": {
+        "title": "Danian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-1.1133, 43.679]
+      },
+      "properties": {
+        "title": "Maastrichtian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [2.1968, 42.866]
+      },
+      "properties": {
+        "title": "Santonian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.3295, 52.124]
+      },
+      "properties": {
+        "title": "Coniacian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-104.7275, 38.282]
+      },
+      "properties": {
+        "title": "Turonian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [5.5119, 44.392]
+      },
+      "properties": {
+        "title": "Cenomanian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [5.29725, 44.507861]
+      },
+      "properties": {
+        "title": "Albian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [5.443722, 44.469444]
+      },
+      "properties": {
+        "title": "Hauterivian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-6.2455, 57.661]
+      },
+      "properties": {
+        "title": "Kimmeridgian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.3153, 43.9606]
+      },
+      "properties": {
+        "title": "Bathonian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-8.9042, 40.1992]
+      },
+      "properties": {
+        "title": "Bajocian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-1.8333, 41.1708]
+      },
+      "properties": {
+        "title": "Aalenian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-9.3853, 39.3708]
+      },
+      "properties": {
+        "title": "Toarcian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-0.4975, 54.4069]
+      },
+      "properties": {
+        "title": "Pliensbachian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-3.2364, 51.1909]
+      },
+      "properties": {
+        "title": "Sinemurian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [11.5306, 47.4839]
+      },
+      "properties": {
+        "title": "Hettangian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [11.9303, 46.5269]
+      },
+      "properties": {
+        "title": "Carnian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.471, 45.8193]
+      },
+      "properties": {
+        "title": "Ladinian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [28.8022, 45.0742]
+      },
+      "properties": {
+        "title": "Anisian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [78.0246, 31.9654]
+      },
+      "properties": {
+        "title": "Olenekian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [119.7058, 31.0798]
+      },
+      "properties": {
+        "title": "Induan Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [119.7064, 31.0819]
+      },
+      "properties": {
+        "title": "Changhsingian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [109.3211, 23.6953]
+      },
+      "properties": {
+        "title": "Wuchiapingian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-104.7892, 31.9091]
+      },
+      "properties": {
+        "title": "Capitanian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-104.8328, 31.8658]
+      },
+      "properties": {
+        "title": "Wordian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-104.8768, 31.8767]
+      },
+      "properties": {
+        "title": "Roadian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [57.8914, 50.2458]
+      },
+      "properties": {
+        "title": "Asselian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-114.7778, 36.7333]
+      },
+      "properties": {
+        "title": "Bashkirian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [109.45, 24.4333]
+      },
+      "properties": {
+        "title": "Visean Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.3573, 43.5555]
+      },
+      "properties": {
+        "title": "Tournaisian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.0403, 43.4613]
+      },
+      "properties": {
+        "title": "Famennian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.0868, 43.5032]
+      },
+      "properties": {
+        "title": "Frasnian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-4.3541, 31.2374]
+      },
+      "properties": {
+        "title": "Givetian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.4716, 50.1496]
+      },
+      "properties": {
+        "title": "Eifelian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [67.3056, 39.2]
+      },
+      "properties": {
+        "title": "Emsian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [14.3726, 50.0147]
+      },
+      "properties": {
+        "title": "Pragian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [14.0611, 49.9008]
+      },
+      "properties": {
+        "title": "Lochkovian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [14.3249, 50.0277]
+      },
+      "properties": {
+        "title": "P\u0159\u00eddol\u00ed Series"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-2.7772, 52.3592]
+      },
+      "properties": {
+        "title": "Ludfordian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-2.7772, 52.3592]
+      },
+      "properties": {
+        "title": "Gorstian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-2.5647, 52.6156]
+      },
+      "properties": {
+        "title": "Homerian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-2.6389, 52.5811]
+      },
+      "properties": {
+        "title": "Sheinwoodian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-3.79, 51.97]
+      },
+      "properties": {
+        "title": "Telychian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-3.7, 52.03]
+      },
+      "properties": {
+        "title": "Aeronian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-3.27, 55.44]
+      },
+      "properties": {
+        "title": "Rhuddanian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [111.4197, 30.984]
+      },
+      "properties": {
+        "title": "Hirnantian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-96.0746, 34.4305]
+      },
+      "properties": {
+        "title": "Katian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [13.3255, 55.7137]
+      },
+      "properties": {
+        "title": "Sandbian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [118.4897, 28.853]
+      },
+      "properties": {
+        "title": "Darriwilian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [110.374, 30.86]
+      },
+      "properties": {
+        "title": "Dapingian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.5024, 58.3589]
+      },
+      "properties": {
+        "title": "Floian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-57.9653, 49.6829]
+      },
+      "properties": {
+        "title": "Tremadocian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [118.6149, 28.8159]
+      },
+      "properties": {
+        "title": "Jiangshanian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [109.5257, 28.389]
+      },
+      "properties": {
+        "title": "Paibian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [109.9647, 28.72]
+      },
+      "properties": {
+        "title": "Guzhangian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-112.9915, 39.511]
+      },
+      "properties": {
+        "title": "Drumian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-55.831, 47.0762]
+      },
+      "properties": {
+        "title": "Fortunian Stage"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [138.6334, -31.3314]
+      },
+      "properties": {
+        "title": "Ediacaran Period"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [13.56229, 43.59193]
+      },
+      "properties": {
+        "title": "Langhian Stage"
+      }
+    }
+  ]
+}
