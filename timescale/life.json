@@ -98,12 +98,12 @@
     { "id": "Sanchytriomycota", "group": 2 },
     { "id": "Zoopagomycota", "group": 2 },
 
-    { "id": "Chordata", "group": 2, "age": 540 },
-    { "id": "Echinodermata", "group": 2, "age": 509, "name": "Starfish, sea urchins, and more" },
+    { "id": "Chordata", "group": 2, "age": 525, "name": "Vertibrates (includes humans)" },
+    { "id": "Echinodermata", "group": 2, "age": 509, "name": "Starfish, sea urchins" },
     { "id": "Hemichordata", "group": 2, "age": 509, "name": "Acorn worms" },
     { "id": "Nematoda", "group": 2, "age": 419.2, "name": "Roundworms" },
     { "id": "Nematomorpha", "group": 2, "age": 100.5, "name": "Hairworms" },
-    { "id": "Arthropoda", "group": 2, "age": 538.8, "name": "Insects, crustaceans, and more" },
+    { "id": "Arthropoda", "group": 2, "age": 538.8, "name": "Insects, crustaceans" },
     { "id": "Onychophora", "group": 2, "age": 323.2, "name": "Velvet worms" },
     { "id": "Tardigrada", "group": 2, "age": 93.9, "name": "Water bears" },
     { "id": "Kinorhyncha", "group": 2, "age": 538.8, "name": "Mud dragons" },
@@ -126,21 +126,21 @@
     { "id": "Phoronida", "group": 2, "age": 443.8, "name": "Horseshoe worms" },
     { "id": "Platyhelminthes", "group": 2, "age": 270, "name": "Flatworms" },
     { "id": "Xenacoelomorpha", "group": 2 },
-    { "id": "Cnidaria", "group": 2, "age": 580, "name": "Jellyfish, corals, and more" },
+    { "id": "Cnidaria", "group": 2, "age": 580, "name": "Jellyfish, corals" },
     { "id": "Ctenophora", "group": 2, "age": 540, "name": "Comb jellies" },
     { "id": "Placozoa", "group": 2, "age": 247.2 },
     { "id": "Porifera", "group": 2, "age": 650, "name": "Sponges" },
 
     { "id": "Chlorophyta", "group": 2, "name": "Green algae", "age": 1850 },
     { "id": "Prasinodermophyta", "group": 2, "age": 850 },
-    { "id": "Streptophyta", "group": 2 }
+    { "id": "Streptophyta", "name": "Green plants", "group": 2 }
   ],
   "links": [
-    { "source": "LUCA", "target": "Eukaryota", "highlight": true },
+    { "source": "LUCA", "target": "Eukaryota" },
     { "source": "LUCA", "target": "Bacteria" },
     { "source": "LUCA", "target": "Archaea" },
 
-    { "source": "Eukaryota", "target": "Animals", "highlight": true },
+    { "source": "Eukaryota", "target": "Animals" },
     { "source": "Eukaryota", "target": "Plants" },
     { "source": "Eukaryota", "target": "Fungi" },
     { "source": "Eukaryota", "target": "Protista" },
@@ -232,7 +232,7 @@
     { "source": "Fungi", "target": "Sanchytriomycota" },
     { "source": "Fungi", "target": "Zoopagomycota" },
 
-    { "source": "Animals", "target": "Chordata", "highlight": true },
+    { "source": "Animals", "target": "Chordata" },
     { "source": "Animals", "target": "Echinodermata" },
     { "source": "Animals", "target": "Hemichordata" },
     { "source": "Animals", "target": "Nematoda" },
