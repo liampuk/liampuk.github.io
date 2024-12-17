@@ -118,7 +118,7 @@ repeating-linear-gradient(
     hsla(0, 0%, 90%, 0.9) 0%,
     hsla(0, 0%, 78%, 0.1) 50%,
     hsl(0, 0%, 0%) 90%
-  )`,yh=(e,t)=>`url("/galaxy-1.png"),
+  )`,yh=(e,t)=>`url("/art-cards/galaxy-1.png"),
     repeating-linear-gradient(
       172deg, 
       hsl(53, 65%, 60%) calc(4% * 1), 
