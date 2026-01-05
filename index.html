@@ -1,101 +1,18 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    <meta name="description" content="Hi! I'm Liam Piesley, a software engineer at Marshmallow.">
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Hi! I'm Liam Piesley, a software engineer in London.">
     <meta property="og:image:url" content="https://liamp.uk/res/banner.jpg" />
     <title>Liam Piesley.</title>
-    <link rel="stylesheet" type="text/css" href="css/index.css">
-    <!-- <script src="https://cdn.jsdelivr.net/npm/p5@0.10.2/lib/p5.js"></script> -->
-    <script src="https://cdn.jsdelivr.net/npm/p5@1.0.0/lib/p5.js"></script>
-    <script src="js/index/lines.js"></script>
-    <script src="js/index/spin.js"></script>
-    <script src="js/index/map.js"></script>
-    <script src="js/index/controller.js"></script>
-    <meta charset="utf-8" />
-    <link href="https://fonts.googleapis.com/css?family=Rubik+Mono+One|Rubik:300,400,500,700,900&display=swap"
-        rel="stylesheet">
     <link rel="apple-touch-icon" sizes="180x180" href="res/index/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="res/index/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="res/index/favicon-16x16.png">
-    <link rel="manifest" href="res/index/site.webmanifest">
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-155987669-1"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-
-        gtag('config', 'UA-155987669-1');
-    </script>
-</head>
-
-<body onload="main()">
-    <div id="main">
-        <!-- <canvas id="canvas"></canvas> -->
-    </div>
-    <div class="ease" id="side">
-        <h1>Liam Piesley</h1>
-        <div id="nav">
-            <a onclick="updateScreen(0)" class="navLinks" href="#about">About</a>
-            <a onclick="updateScreen(1)" class="navLinks" href="#projects">Projects</a href="#">
-            <a onclick="updateScreen(2)" class="navLinks" href="#cv">CV</a href="#">
-            <a onclick="updateScreen(3)" class="navLinks" href="#contact">Contact</a href="#">
-        </div>
-        <div id="content">
-            <div id="aboutText">
-                <h2>About</h2>
-                <p>Hi! I'm Liam, a software engineer at Marshmallow.
-                    <p>I graduated from Newcastle University in 2020, and have previously worked at Nissan, Amazon and the BBC.</p>
-                    <br>
-                    <p class="desktop">> Press <a onclick="cycleAnim()"><u>Space</u></a> to cycle animations <</p>
-                    <p class="mobile">> Press <a onclick="cycleAnim()"><u>Here</u></a> to cycle animations <</p>
-            </div>
-            <div id="projectsText" class="hidden transparent">
-                <h2>Projects</h2>
-                <p><a href="https://liamp.uk/gallery-quest">> Gallery Quest</a> - Collect cards of famous artworks from the 20th century.</p>
-                <p><a href="https://liamp.uk/timescale">> Geologic timescale</a> - A representation of time based on the rock record of Earth.</p>
-                <p><a href="https://liamp.uk/chess">> Chess</a> - Offline chess</p>
-                <p><a href="https://liamp.uk/minikeys">> MiniKeys</a> - A tiny Javascript Library that plays the piano.</p>
-                <p><a href="https://liamp.uk/polyglot">> Polyglot</a> - Easy to access common phrases in lots of languages.</p>
-                <p><a href="https://liamp.uk/deltadark">> Delta Dark</a> - A theme for the Delta emulator app.</p>
-                <p><a href="https://liamp.uk/aero">> Aero*</a> - An aeroplane window for HDR displays</p>
-                <p><a href="https://liamp.uk/algorithms">> Algorithms</a> - Animating fundamental algorithms in computer
-                    science.</p>
-                <p><a href="https://liamp.uk/2048">> 2048</a> - A clone of 2048 written during my placement induction.</p>
-                <p><a href="https://liamp.uk/emoji">> emojiPad</a> - A minimal emoji keyboard.</p>
-                <p><a href="https://liamp.uk/go">> Go*</a> - Go board game.</p>
-                <p><a href="https://github.com/liampuk/code-practice">> CodingBat</a> - Solutions to practice
-                    programming problems.</p>
-                <p><a href="https://liamp.uk/kino">> Kino</a> - A mockup cinema website produced during my placement
-                    induction.</p>
-                <p>* work in progress</p>
-            </div>
-            <div id="cvText" class="hidden transparent">
-                <h2>CV</h2>
-                <p><u>Education</u></p>
-                <p>Newcastle University - Computer Science BSc</p>
-                <p><u>Work</u></p>
-                <p>09/20 - present - Marshmallow (SE)</p>
-                <p>07/19 - 08/19 - Amazon (SE)</p>
-                <p>06/18 - 06/19 - Nissan (SE)</p>
-                <p>02/18 - 05/19 - BBC (Teacher)</p>
-                <br>
-                <p><a href="res/index/LiamPiesleyPublicCV.pdf">> Full CV Download</a></p>
-            </div>
-            <div id="contactText" class="hidden transparent">
-                <h2>Contact</h2>
-                <p><a href="https://x.com/LiamPiesley">> twitter</a></p>
-                <p><a href="https://www.linkedin.com/in/liampuk/">> linkedin</a></p>
-                <p><a href="https://www.instagram.com/liampiesley/">> instagram</a></p>
-                <p><a href="https://github.com/liampuk">> github</a></p>
-                <p><a href="mailto:liampiesley@gmail.com">> email - liampiesley@gmail.com</a></p>
-            </div>
-
-
-
-        </div>
-    </div>
-</body onload="main()" onclick="delet()">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + React + TS</title>
+    <script type="module" crossorigin src="/assets/index-DzIouTQI.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
 </html>
