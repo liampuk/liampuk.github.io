@@ -1,18 +1,44 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="description" content="Hi! I'm Liam Piesley, a software engineer in London.">
-    <meta property="og:image:url" content="https://liamp.uk/res/banner.jpg" />
-    <title>Liam Piesley.</title>
-    <link rel="apple-touch-icon" sizes="180x180" href="res/index/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="res/index/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="res/index/favicon-16x16.png">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React + TS</title>
-    <script type="module" crossorigin src="/assets/index-DzIouTQI.js"></script>
-  </head>
-  <body>
-    <div id="root"></div>
-  </body>
-</html>
+<!DOCTYPE html><html lang="en" data-astro-cid-sckkx6r4> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><meta name="generator" content="Astro v5.16.6"><meta name="description" content="Hi! I'm Liam Piesley, a software engineer in London."><meta property="og:image:url" content="https://liamp.uk/res/banner.jpg"><title>Liam Piesley.</title><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="preload" href="/PPEditorialOld-Regular.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="/_astro/index.fHc9pIqD.css">
+<style>._gradient_1an4s_1{position:fixed;top:0;left:0;width:100vw;background:linear-gradient(-175deg,#fff9f0,#ffd2a7 60%,#ff9e48 90%,#d17340);opacity:0;@media(orientation:portrait){background:none}}
+</style></head> <body data-astro-cid-sckkx6r4>  <style>astro-island,astro-slot,astro-static-slot{display:contents}</style><script>(()=>{var e=async t=>{await(await t())()};(self.Astro||(self.Astro={})).only=e;window.dispatchEvent(new Event("astro:only"));})();</script><script>(()=>{var A=Object.defineProperty;var g=(i,o,a)=>o in i?A(i,o,{enumerable:!0,configurable:!0,writable:!0,value:a}):i[o]=a;var d=(i,o,a)=>g(i,typeof o!="symbol"?o+"":o,a);{let i={0:t=>m(t),1:t=>a(t),2:t=>new RegExp(t),3:t=>new Date(t),4:t=>new Map(a(t)),5:t=>new Set(a(t)),6:t=>BigInt(t),7:t=>new URL(t),8:t=>new Uint8Array(t),9:t=>new Uint16Array(t),10:t=>new Uint32Array(t),11:t=>1/0*t},o=t=>{let[l,e]=t;return l in i?i[l](e):void 0},a=t=>t.map(o),m=t=>typeof t!="object"||t===null?t:Object.fromEntries(Object.entries(t).map(([l,e])=>[l,o(e)]));class y extends HTMLElement{constructor(){super(...arguments);d(this,"Component");d(this,"hydrator");d(this,"hydrate",async()=>{var b;if(!this.hydrator||!this.isConnected)return;let e=(b=this.parentElement)==null?void 0:b.closest("astro-island[ssr]");if(e){e.addEventListener("astro:hydrate",this.hydrate,{once:!0});return}let c=this.querySelectorAll("astro-slot"),n={},h=this.querySelectorAll("template[data-astro-template]");for(let r of h){let s=r.closest(this.tagName);s!=null&&s.isSameNode(this)&&(n[r.getAttribute("data-astro-template")||"default"]=r.innerHTML,r.remove())}for(let r of c){let s=r.closest(this.tagName);s!=null&&s.isSameNode(this)&&(n[r.getAttribute("name")||"default"]=r.innerHTML)}let p;try{p=this.hasAttribute("props")?m(JSON.parse(this.getAttribute("props"))):{}}catch(r){let s=this.getAttribute("component-url")||"<unknown>",v=this.getAttribute("component-export");throw v&&(s+=` (export ${v})`),console.error(`[hydrate] Error parsing props for component ${s}`,this.getAttribute("props"),r),r}let u;await this.hydrator(this)(this.Component,p,n,{client:this.getAttribute("client")}),this.removeAttribute("ssr"),this.dispatchEvent(new CustomEvent("astro:hydrate"))});d(this,"unmount",()=>{this.isConnected||this.dispatchEvent(new CustomEvent("astro:unmount"))})}disconnectedCallback(){document.removeEventListener("astro:after-swap",this.unmount),document.addEventListener("astro:after-swap",this.unmount,{once:!0})}connectedCallback(){if(!this.hasAttribute("await-children")||document.readyState==="interactive"||document.readyState==="complete")this.childrenConnectedCallback();else{let e=()=>{document.removeEventListener("DOMContentLoaded",e),c.disconnect(),this.childrenConnectedCallback()},c=new MutationObserver(()=>{var n;((n=this.lastChild)==null?void 0:n.nodeType)===Node.COMMENT_NODE&&this.lastChild.nodeValue==="astro:end"&&(this.lastChild.remove(),e())});c.observe(this,{childList:!0}),document.addEventListener("DOMContentLoaded",e)}}async childrenConnectedCallback(){let e=this.getAttribute("before-hydration-url");e&&await import(e),this.start()}async start(){let e=JSON.parse(this.getAttribute("opts")),c=this.getAttribute("client");if(Astro[c]===void 0){window.addEventListener(`astro:${c}`,()=>this.start(),{once:!0});return}try{await Astro[c](async()=>{let n=this.getAttribute("renderer-url"),[h,{default:p}]=await Promise.all([import(this.getAttribute("component-url")),n?import(n):()=>()=>{}]),u=this.getAttribute("component-export")||"default";if(!u.includes("."))this.Component=h[u];else{this.Component=h;for(let f of u.split("."))this.Component=this.Component[f]}return this.hydrator=p,this.hydrate},e,this)}catch(n){console.error(`[astro-island] Error hydrating ${this.getAttribute("component-url")}`,n)}}attributeChangedCallback(){this.hydrate()}}d(y,"observedAttributes",["props"]),customElements.get("astro-island")||customElements.define("astro-island",y)}})();</script><astro-island uid="2oRa5B" component-url="/_astro/Gradient.DXsrvV1T.js" component-export="Gradient" renderer-url="/_astro/client.9unXo8s5.js" props="{}" ssr client="only" opts="{&quot;name&quot;:&quot;Gradient&quot;,&quot;value&quot;:true}"></astro-island> <div id="content" data-astro-cid-kqty5qjk> <main data-astro-cid-kqty5qjk> <h1 data-astro-cid-kqty5qjk><span data-astro-cid-kqty5qjk>✺</span>Liam Piesley</h1> <p data-astro-cid-kqty5qjk>
+Hey! I'm Liam, a software engineer working in London. I love to create
+      beautiful and intuitive interfaces. If you like my work please get in
+      touch!
+</p> <section id="buttons" data-astro-cid-kqty5qjk> <a href="https://cal.com/liam-piesley-iof3ud" target="_blank" rel="noopener" data-astro-cid-kqty5qjk><span data-astro-cid-kqty5qjk>⟢</span>Book a Call<span data-astro-cid-kqty5qjk>⟣</span></a> <a href="mailto:liampiesley@gmail.com" target="_blank" rel="noopener" data-astro-cid-kqty5qjk><span data-astro-cid-kqty5qjk>⟢</span>Send an Email<span data-astro-cid-kqty5qjk>⟣</span></a> </section> <section id="software" data-astro-cid-kqty5qjk> <h2 data-astro-cid-kqty5qjk>Software Sidequests</h2> <ul data-astro-cid-kqty5qjk> <li data-astro-cid-kqty5qjk> <a href="https://liamp.uk/gallery-quest" target="_blank" data-astro-cid-kqty5qjk>Gallery Quest</a> → Art Nouveau card collecting game, exploring HDR and complex CSS animations.
+</li> <li data-astro-cid-kqty5qjk> <a href="https://liamp.uk/timescale" data-astro-cid-kqty5qjk>Geologic Timescale</a> → Building a
+          more intuitive way to explore Earth's history.
+</li> <li data-astro-cid-kqty5qjk> <a href="https://liamp.uk/chess" data-astro-cid-kqty5qjk>Chess Board</a> → A chess app that can
+          be played like a real board by placing the phone between two players.
+</li> <li data-astro-cid-kqty5qjk> <a href="https://liamp.uk/minikeys" data-astro-cid-kqty5qjk>Minikeys</a> → A tiny Javascript Library
+          that plays the piano.
+</li> <li data-astro-cid-kqty5qjk> <a href="https://liamp.uk/2048" data-astro-cid-kqty5qjk>2048</a> → A clone of the popular 2048 game.
+</li> </ul> </section> <section id="hardware" data-astro-cid-kqty5qjk> <h2 data-astro-cid-kqty5qjk>Hardware Doodads</h2> <ul data-astro-cid-kqty5qjk> <li data-astro-cid-kqty5qjk> <a href="https://github.com/liampuk/esp-2048" data-astro-cid-kqty5qjk>2048 Gamepad</a>
+→ A handheld 2048 game based on an esp32. (Work in progress)
+</li> <li data-astro-cid-kqty5qjk> <a href="https://github.com/liampuk/cpu-emu" data-astro-cid-kqty5qjk>TTL CPU</a>
+→ Designing and building a CPU from scratch with TTL chips. (Work in progress)
+</li> </ul> </section> <section id="garden" data-astro-cid-kqty5qjk> <h2 data-astro-cid-kqty5qjk>Website Garden</h2> <p data-astro-cid-kqty5qjk>
+Over the years I've grown a collection of well designed websites. From
+        unique experiences full of eye catching animation to simple intuitive
+        layouts, find some inspiration here:
+</p> <ul data-astro-cid-kqty5qjk> <li data-astro-cid-kqty5qjk> <a href="" data-astro-cid-kqty5qjk>Explore the Garden</a>
+→ coming soon
+</li> </ul> </section> <section id="blog" data-astro-cid-kqty5qjk> <h2 data-astro-cid-kqty5qjk>Blog</h2> <p data-astro-cid-kqty5qjk>
+I've recently started writing about programming and other things, read
+        some articles here:
+</p> <ul data-astro-cid-kqty5qjk> <li data-astro-cid-kqty5qjk>
+Latest article →
+<a href="" data-astro-cid-kqty5qjk>Minolta Weathermatic Review</a>
+→ coming soon
+</li> </ul> </section> <section id="about" data-astro-cid-kqty5qjk> <h2 data-astro-cid-kqty5qjk>About Me</h2> <p data-astro-cid-kqty5qjk>
+I started my career at Nissan in Newcastle while working on my computer
+        science degree. After a summer internship at Amazon I moved down to
+        London and joined Marshmallow, which I helped grow from a 60 person
+        startup to a 500+ employee unicorn. I'm currently building a video
+        editor for the web at Blackbird Video.
+</p> <ul data-astro-cid-kqty5qjk> <li data-astro-cid-kqty5qjk>
+See more projects on
+<a href="https://github.com/liampuk" target="_blank" data-astro-cid-kqty5qjk>GitHub</a> </li> <li data-astro-cid-kqty5qjk>
+Connect on
+<a href="https://www.linkedin.com/in/liampuk/" target="_blank" data-astro-cid-kqty5qjk>Linkedin</a> </li> <li data-astro-cid-kqty5qjk>
+Find my
+<a href="https://liamp.uk/liam-piesley-cv.pdf" target="_blank" data-astro-cid-kqty5qjk>full CV here</a> </li> </ul> </section> </main>  </div> <div data-astro-cid-aguojgpj> <script>(()=>{var e=async t=>{await(await t())()};(self.Astro||(self.Astro={})).load=e;window.dispatchEvent(new Event("astro:load"));})();</script><astro-island uid="Z1OxT2E" prefix="r1" component-url="/_astro/Window.CWDQvhlN.js" component-export="Window" renderer-url="/_astro/client.9unXo8s5.js" props="{&quot;data-astro-cid-aguojgpj&quot;:[0,true]}" ssr client="load" opts="{&quot;name&quot;:&quot;Window&quot;,&quot;value&quot;:true}" await-children><link rel="preload" as="image" href="/branch5.png"/><div class="_window_m78k8_1"><img class="_branch_m78k8_25" src="/branch5.png" alt="tree"/><img class="_branch2_m78k8_32" src="/branch5.png" alt="tree"/></div><!--astro:end--></astro-island> <div id="grain" data-astro-cid-aguojgpj></div>  </div>  </body></html>
