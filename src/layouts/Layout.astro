@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <meta
+      name="description"
+      content="Hi! I'm Liam Piesley, a software engineer in London."
+    />
+    <meta property="og:image:url" content="https://liamp.uk/res/banner.jpg" />
+    <title>Liam Piesley.</title>
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="res/index/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="res/index/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="res/index/favicon-16x16.png"
+    />
+    <link
+      rel="preload"
+      href="/PPEditorialOld-Regular.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
+
+<style>
+  * {
+    box-sizing: border-box;
+  }
+
+  html,
+  body {
+    margin: 0;
+    height: auto;
+    overflow-y: auto;
+    box-sizing: border-box;
+    background-color: #f8f3ea;
+    overflow-x: hidden;
+    overscroll-behavior: auto;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+
+    background-color: #f8f3ea;
+    z-index: -1;
+  }
+
+  @font-face {
+    font-family: 'Editorial Old';
+    src: url('/PPEditorialOld-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+</style>

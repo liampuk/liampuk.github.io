@@ -1,0 +1,12 @@
+---
+import Content from '../components/Content.astro';
+import { Gradient } from '../components/Gradient';
+import Overlay from '../components/Overlay.astro';
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout>
+  <Gradient client:only />
+  <Content />
+  <Overlay />
+</Layout>

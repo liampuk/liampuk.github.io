@@ -1,0 +1,19 @@
+.gradient {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    background: linear-gradient(
+    -175deg,
+    #fff9f0 0%,
+    #ffd2a7 60%,
+    #ff9e48 90%,
+    #d57846 100%
+    );
+
+    opacity: 0;
+
+    @media (orientation: portrait) {
+        background: none;
+    }
+}

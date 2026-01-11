@@ -1,0 +1,282 @@
+---
+
+---
+
+<div id="content">
+  <main>
+    <h1><span>✺</span>Liam Piesley</h1>
+    <p>
+      Hey! I'm Liam, a software engineer working in London. I love to create
+      beautiful and intuitive interfaces. If you like my work please get in
+      touch!
+    </p>
+
+    <section id="buttons">
+      <a
+        href="https://cal.com/liam-piesley-iof3ud"
+        target="_blank"
+        rel="noopener"><span>⟢</span>Book a Call<span>⟣</span></a
+      >
+      <a href="mailto:liampiesley@gmail.com" target="_blank" rel="noopener"
+        ><span>⟢</span>Send an Email<span>⟣</span></a
+      >
+    </section>
+    <section id="software">
+      <h2>Software Sidequests</h2>
+      <ul>
+        <li>
+          <a href="https://liamp.uk/gallery-quest" target="_blank"
+            >Gallery Quest</a
+          > → Art Nouveau card collecting game, exploring HDR and complex CSS animations.
+        </li>
+        <li>
+          <a href="https://liamp.uk/timescale">Geologic Timescale</a> → Building a
+          more intuitive way to explore Earth's history.
+        </li>
+        <li>
+          <a href="https://liamp.uk/chess">Chess Board</a> → A chess app that can
+          be played like a real board by placing the phone between two players.
+        </li>
+        <li>
+          <a href="https://liamp.uk/minikeys">Minikeys</a> → A tiny Javascript Library
+          that plays the piano.
+        </li>
+        <li>
+          <a href="https://liamp.uk/2048">2048</a> → A clone of the popular 2048 game.
+        </li>
+      </ul>
+    </section>
+    <section id="hardware">
+      <h2>Hardware Doodads</h2>
+      <ul>
+        <li>
+          <a href="https://github.com/liampuk/esp-2048">2048 Gamepad</a>
+          → A handheld 2048 game based on an esp32. (Work in progress)
+        </li>
+        <li>
+          <a href="https://github.com/liampuk/cpu-emu">TTL CPU</a>
+          → Designing and building a CPU from scratch with TTL chips. (Work in progress)
+        </li>
+      </ul>
+    </section>
+    <section id="garden">
+      <h2>Website Garden</h2>
+      <p>
+        Over the years I've grown a collection of well designed websites. From
+        unique experiences full of eye catching animation to simple intuitive
+        layouts, find some inspiration here:
+      </p>
+      <ul>
+        <li>
+          <a href="">Explore the Garden</a>
+          → coming soon
+        </li>
+      </ul>
+    </section>
+    <section id="blog">
+      <h2>Blog</h2>
+      <p>
+        I've recently started writing about programming and other things, read
+        some articles here:
+      </p>
+      <ul>
+        <li>
+          Latest article →
+          <a href="">Minolta Weathermatic Review</a>
+          → coming soon
+        </li>
+      </ul>
+    </section>
+    <section id="about">
+      <h2>About Me</h2>
+      <p>
+        I started my career at Nissan in Newcastle while working on my computer
+        science degree. After a summer internship at Amazon I moved down to
+        London and joined Marshmallow, which I helped grow from a 60 person
+        startup to a 500+ employee unicorn. I'm currently building a video
+        editor for the web at Blackbird Video.
+      </p>
+      <ul>
+        <li>
+          See more projects on
+          <a href="https://github.com/liampuk" target="_blank">GitHub</a>
+        </li>
+        <li>
+          Connect on
+          <a href="https://www.linkedin.com/in/liampuk/" target="_blank"
+            >Linkedin</a
+          >
+        </li>
+        <li>
+          Find my
+          <a href="https://liamp.uk/liam-piesley-cv.pdf" target="_blank"
+            >full CV here</a
+          >
+        </li>
+      </ul>
+    </section>
+  </main>
+
+  <style>
+    #content {
+      z-index: 1;
+      position: relative;
+      font-family:
+        Inter, Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial,
+        sans-serif;
+    }
+
+    main {
+      padding: 64px;
+      max-width: 500px;
+      font-weight: 400;
+      font-size: 15px;
+      padding-bottom: 192px;
+
+      @media (orientation: portrait) {
+        padding: 42px;
+      }
+    }
+
+    h1 {
+      margin: 0;
+      margin-top: 48px;
+      font-size: 64px;
+      color: #222;
+      font-weight: 500;
+      font-family: 'Editorial Old', serif;
+      font-variant-ligatures: discretionary-ligatures;
+
+      @media (orientation: portrait) {
+        font-size: 50px;
+        padding-left: 0;
+        text-align: center;
+      }
+    }
+
+    h1 span {
+      font-size: 74px;
+      margin-right: 8px;
+
+      @media (orientation: portrait) {
+        font-size: 66px;
+      }
+    }
+
+    p {
+      text-align: justify;
+    }
+
+    #buttons {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      gap: 48px;
+      padding: 16px;
+      margin-bottom: 64px;
+
+      @media (orientation: portrait) {
+        justify-content: space-between;
+        padding: 4px;
+        gap: 0;
+      }
+    }
+
+    #buttons a {
+      background: none;
+      border: 1px solid black;
+      padding: 16px;
+      font-size: 15px;
+      border-radius: 2px;
+      border: none;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      background-color: rgba(0, 0, 0, 0.05);
+      border-radius: 50px;
+      transition: all 0.3s ease;
+      color: #222;
+      text-decoration: none;
+
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.8);
+        color: white;
+        cursor: pointer;
+        gap: 16px;
+      }
+
+      @media (orientation: portrait) {
+        padding: 10px;
+        font-weight: 400;
+      }
+    }
+
+    a span {
+      font-size: 20px;
+    }
+
+    section {
+      margin-top: 32px;
+    }
+
+    h2 {
+      color: #222;
+      font-weight: 500;
+      font-family: 'Editorial Old', serif;
+      font-size: 34px;
+      margin: 0;
+
+      @media (orientation: portrait) {
+        margin-left: 0;
+      }
+    }
+
+    ul {
+      list-style: none;
+      margin-left: 0;
+      padding-left: 0;
+    }
+
+    li {
+      line-height: 1.7em;
+    }
+
+    li:before {
+      padding-right: 0.2em;
+    }
+
+    li a {
+      text-decoration: none;
+      color: #222;
+      background-color: rgba(0, 0, 0, 0.08);
+      padding: 1px 4px;
+      border-radius: 2px;
+      margin-right: 1px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.12);
+      }
+    }
+
+    #software li:before {
+      content: '✽';
+    }
+
+    #hardware li:before {
+      content: '✜';
+    }
+
+    #garden li:before {
+      content: '✧';
+    }
+
+    #blog li:before {
+      content: '✣';
+    }
+
+    #about li:before {
+      content: '✶';
+    }
+  </style>
+</div>
