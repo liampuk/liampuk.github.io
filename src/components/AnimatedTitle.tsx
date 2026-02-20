@@ -12,6 +12,8 @@ const SHRINK_SCALE = 2 / 3;
 const MOBILE_MEDIA_QUERY = '(max-width: 768px)';
 const LEFT_HOVER_ENABLED_CLASS = 'title-left-hover-enabled';
 const ANIMATION_COMPLETE_THRESHOLD = 0.999;
+const RESIZE_WIDTH_THRESHOLD = 2;
+const TRIGGER_START_OFFSET = 20;
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -57,13 +59,30 @@ export default function AnimatedTitle() {
 
         const leftShift = targetX - leftCenterX;
         const rightShift = targetX - rightCenterX;
+        const finalVisualTweenPosition = isMobile ? 0 : '>';
+
+        gsap.set('.title-full-left', { x: 0, opacity: 1, filter: 'none' });
+        gsap.set('.title-full-right', { x: 0, opacity: 1, filter: 'none' });
+        gsap.set('.title-segmented-char', { opacity: 0 });
+        gsap.set(leftRef.current, { x: 0 });
+        gsap.set(rightRef.current, { x: 0 });
+        gsap.set([leftVisualRef.current, rightVisualRef.current], { scale: 1 });
+        gsap.set('.title-visual-invert', { opacity: 0 });
+        gsap.set('.title-visual-base', { opacity: 1 });
+        gsap.set(leftVisualRef.current, { backgroundColor: 'transparent' });
 
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: document.documentElement,
-            start: 'top top',
+            start: `top+=${TRIGGER_START_OFFSET} top`,
             end: '+=220',
-            scrub: true,
+            scrub: isMobile ? false : true,
+            toggleActions: isMobile ? 'play none none none' : undefined,
+            onLeaveBack: isMobile
+              ? (self) => {
+                  self.animation?.reverse();
+                }
+              : undefined,
             onUpdate: ({ progress }) => {
               leftVisualRef.current?.classList.toggle(
                 LEFT_HOVER_ENABLED_CLASS,
@@ -86,13 +105,21 @@ export default function AnimatedTitle() {
           .to('.title-full-left', { x: leftShift, ease: MOVE_EASE }, 0)
           .to(
             '.title-full-left',
-            { opacity: 0, filter: 'blur(8px)', ease: FADE_EASE },
+            {
+              opacity: 0,
+              filter: 'blur(8px)',
+              ease: FADE_EASE,
+            },
             0
           )
           .to('.title-full-right', { x: rightShift, ease: MOVE_EASE }, 0)
           .to(
             '.title-full-right',
-            { opacity: 0, filter: 'blur(8px)', ease: FADE_EASE },
+            {
+              opacity: 0,
+              filter: 'blur(8px)',
+              ease: FADE_EASE,
+            },
             0
           )
           .to(leftRef.current, { x: leftShift, ease: MOVE_EASE }, 0)
@@ -102,10 +129,14 @@ export default function AnimatedTitle() {
             { scale: SHRINK_SCALE, ease: MOVE_EASE },
             0
           )
-          .to('.title-visual-invert', {
-            opacity: 1,
-            ease: FADE_EASE,
-          })
+          .to(
+            '.title-visual-invert',
+            {
+              opacity: 1,
+              ease: FADE_EASE,
+            },
+            finalVisualTweenPosition
+          )
           .to(
             '.title-visual-base',
             {
@@ -133,6 +164,7 @@ export default function AnimatedTitle() {
       };
 
       let tl = buildTimeline();
+      let lastViewportWidth = window.innerWidth;
 
       const recalc = () => {
         tl?.kill();
@@ -140,12 +172,23 @@ export default function AnimatedTitle() {
         ScrollTrigger.refresh();
       };
 
-      window.addEventListener('resize', recalc);
+      const handleResize = () => {
+        // iOS Safari/Chrome can fire resize while scrolling due to browser chrome;
+        // ignore height-only changes to avoid scrubbing timeline breakage.
+        const nextWidth = window.innerWidth;
+        if (Math.abs(nextWidth - lastViewportWidth) < RESIZE_WIDTH_THRESHOLD) {
+          return;
+        }
+        lastViewportWidth = nextWidth;
+        recalc();
+      };
+
+      window.addEventListener('resize', handleResize);
       window.addEventListener('orientationchange', recalc);
       document.fonts.ready.then(recalc);
 
       return () => {
-        window.removeEventListener('resize', recalc);
+        window.removeEventListener('resize', handleResize);
         window.removeEventListener('orientationchange', recalc);
         leftVisualRef.current?.classList.remove(LEFT_HOVER_ENABLED_CLASS);
         tl?.kill();
@@ -212,7 +255,6 @@ export default function AnimatedTitle() {
               transform: 'translate(-50%, -50%)',
               color: 'inherit',
               display: 'inline-block',
-              borderRadius: '8px',
               padding: '0.05em 0.25em',
               backgroundColor: 'transparent',
               whiteSpace: 'pre',
@@ -268,7 +310,6 @@ export default function AnimatedTitle() {
               transform: 'translate(-50%, -50%)',
               color: 'inherit',
               display: 'inline-block',
-              borderRadius: '4px',
               padding: '0.05em 0.25em',
               backgroundColor: 'transparent',
               whiteSpace: 'pre',
@@ -307,6 +348,13 @@ export default function AnimatedTitle() {
         {`
           .title-left-visual {
             cursor: default;
+            border-radius: 8px;
+          }
+
+          @media (max-width: 768px) {
+            .title-left-visual {
+              border-radius: 6px;
+            }
           }
 
           .title-left-visual.${LEFT_HOVER_ENABLED_CLASS} {
