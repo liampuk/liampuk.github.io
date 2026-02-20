@@ -16,7 +16,7 @@ import AnimatedTitle from './AnimatedTitle';
         <div></div>
       </div>
     </h1>
-    <p>
+    <p class="intro-text">
       Hey! I'm Liam, a software engineer working in London. I love to create
       beautiful and intuitive interfaces. If you like my work please get in
       touch!
@@ -164,7 +164,7 @@ import AnimatedTitle from './AnimatedTitle';
       font-family: 'Editorial Old', serif;
       font-variant-ligatures: discretionary-ligatures;
       position: sticky;
-      top: 16px;
+      top: 32px;
       z-index: 10;
       display: flex;
       align-items: baseline;
@@ -384,6 +384,12 @@ import AnimatedTitle from './AnimatedTitle';
 
       @media (orientation: portrait) {
         font-size: 66px;
+      }
+    }
+
+    .intro-text {
+      @media (orientation: portrait) {
+        margin-top: 64px;
       }
     }
 
