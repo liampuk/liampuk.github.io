@@ -4,21 +4,23 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 const TITLE = 'Liam Piesley';
-const MOVE_EASE = 'power1.out';
-const FADE_EASE = 'power2.out';
+const FORWARD_EASE = 'power2.out';
+const REVERSE_EASE = 'power2.in';
 const INVERT_BG = 'rgba(0,0,0,0.1)';
 const INVERT_BG_HOVER = 'rgba(0,0,0,0.18)';
-const SHRINK_SCALE = 2 / 3;
+const SHRINK_SCALE = 3 / 4;
 const MOBILE_MEDIA_QUERY = '(max-width: 768px)';
 const LEFT_HOVER_ENABLED_CLASS = 'title-left-hover-enabled';
-const ANIMATION_COMPLETE_THRESHOLD = 0.999;
+const ANIMATION_COMPLETE_THRESHOLD = 0.8;
 const RESIZE_WIDTH_THRESHOLD = 2;
 const TRIGGER_START_OFFSET = 20;
+const CONTENT_HORIZONTAL_PADDING = 16;
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function AnimatedTitle() {
   const rootRef = useRef<HTMLSpanElement>(null);
+  const backgroundBlockRef = useRef<HTMLSpanElement>(null);
   const leftRef = useRef<HTMLSpanElement>(null);
   const rightRef = useRef<HTMLSpanElement>(null);
   const leftVisualRef = useRef<HTMLSpanElement>(null);
@@ -38,6 +40,7 @@ export default function AnimatedTitle() {
       const buildTimeline = () => {
         if (
           !rootRef.current ||
+          !backgroundBlockRef.current ||
           !leftRef.current ||
           !rightRef.current ||
           !leftVisualRef.current ||
@@ -46,20 +49,37 @@ export default function AnimatedTitle() {
           return null;
         }
 
+        const isMobile = window.matchMedia(MOBILE_MEDIA_QUERY).matches;
+
         const rootRect = rootRef.current.getBoundingClientRect();
+        const mainElement = rootRef.current.closest('main');
+        const mainRect = mainElement?.getBoundingClientRect() ?? rootRect;
         const leftRect = leftRef.current.getBoundingClientRect();
         const rightRect = rightRef.current.getBoundingClientRect();
+        const mainStyles = mainElement
+          ? window.getComputedStyle(mainElement)
+          : null;
+        const mainPaddingLeft = mainStyles
+          ? Number.parseFloat(mainStyles.paddingLeft) || 0
+          : 0;
+        const mainPaddingRight = mainStyles
+          ? Number.parseFloat(mainStyles.paddingRight) || 0
+          : 0;
+        const contentLeft = mainRect.left + mainPaddingLeft;
+        const contentWidth =
+          mainRect.width - mainPaddingLeft - mainPaddingRight;
+        const backgroundLeft =
+          contentLeft - rootRect.left - CONTENT_HORIZONTAL_PADDING;
+        const backgroundWidth = contentWidth + CONTENT_HORIZONTAL_PADDING * 2;
 
-        const isMobile = window.matchMedia(MOBILE_MEDIA_QUERY).matches;
-        const targetX = isMobile
-          ? rootRect.left + rootRect.width / 2
-          : rootRect.left + rootRect.width * (1 / 16);
+        const targetX =
+          rootRect.left + rootRect.width * (isMobile ? 1 / 16 : 1 / 6);
         const leftCenterX = leftRect.left + leftRect.width / 2 + 1;
         const rightCenterX = rightRect.left + rightRect.width / 2;
 
         const leftShift = targetX - leftCenterX;
         const rightShift = targetX - rightCenterX;
-        const finalVisualTweenPosition = isMobile ? 0 : '>';
+        const finalVisualTweenPosition = 0;
 
         gsap.set('.title-full-left', { x: 0, opacity: 1, filter: 'none' });
         gsap.set('.title-full-right', { x: 0, opacity: 1, filter: 'none' });
@@ -67,22 +87,27 @@ export default function AnimatedTitle() {
         gsap.set(leftRef.current, { x: 0 });
         gsap.set(rightRef.current, { x: 0 });
         gsap.set([leftVisualRef.current, rightVisualRef.current], { scale: 1 });
+        gsap.set([leftVisualRef.current, rightVisualRef.current], {
+          color: 'inherit',
+        });
+        gsap.set(backgroundBlockRef.current, {
+          left: backgroundLeft,
+          width: backgroundWidth,
+          opacity: 0,
+        });
         gsap.set('.title-visual-invert', { opacity: 0 });
         gsap.set('.title-visual-base', { opacity: 1 });
-        gsap.set(leftVisualRef.current, { backgroundColor: 'transparent' });
 
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: document.documentElement,
             start: `top+=${TRIGGER_START_OFFSET} top`,
             end: '+=220',
-            scrub: isMobile ? false : true,
-            toggleActions: isMobile ? 'play none none none' : undefined,
-            onLeaveBack: isMobile
-              ? (self) => {
-                  self.animation?.reverse();
-                }
-              : undefined,
+            scrub: false,
+            toggleActions: 'play none none none',
+            onLeaveBack: (self) => {
+              self.animation?.reverse();
+            },
             onUpdate: ({ progress }) => {
               leftVisualRef.current?.classList.toggle(
                 LEFT_HOVER_ENABLED_CLASS,
@@ -91,49 +116,53 @@ export default function AnimatedTitle() {
             },
           },
         });
+        const forwardEase = gsap.parseEase(FORWARD_EASE);
+        const reverseEase = gsap.parseEase(REVERSE_EASE);
+        const directionalEase = (progress: number) =>
+          tl.reversed() ? reverseEase(progress) : forwardEase(progress);
 
         tl.to(
           '.title-full-char',
-          { opacity: 0, duration: 0.05, ease: FADE_EASE },
+          { opacity: 0, duration: 0.05, ease: directionalEase },
           0
         )
           .to(
             '.title-segmented-char',
-            { opacity: 1, duration: 0.05, ease: FADE_EASE },
+            { opacity: 1, duration: 0.05, ease: directionalEase },
             0
           )
-          .to('.title-full-left', { x: leftShift, ease: MOVE_EASE }, 0)
+          .to('.title-full-left', { x: leftShift, ease: directionalEase }, 0)
           .to(
             '.title-full-left',
             {
               opacity: 0,
               filter: 'blur(8px)',
-              ease: FADE_EASE,
+              ease: directionalEase,
             },
             0
           )
-          .to('.title-full-right', { x: rightShift, ease: MOVE_EASE }, 0)
+          .to('.title-full-right', { x: rightShift, ease: directionalEase }, 0)
           .to(
             '.title-full-right',
             {
               opacity: 0,
               filter: 'blur(8px)',
-              ease: FADE_EASE,
+              ease: directionalEase,
             },
             0
           )
-          .to(leftRef.current, { x: leftShift, ease: MOVE_EASE }, 0)
-          .to(rightRef.current, { x: rightShift, ease: MOVE_EASE }, 0)
+          .to(leftRef.current, { x: leftShift, ease: directionalEase }, 0)
+          .to(rightRef.current, { x: rightShift, ease: directionalEase }, 0)
           .to(
             [leftVisualRef.current, rightVisualRef.current],
-            { scale: SHRINK_SCALE, ease: MOVE_EASE },
+            { scale: isMobile ? 0.9 : SHRINK_SCALE, ease: directionalEase },
             0
           )
           .to(
             '.title-visual-invert',
             {
               opacity: 1,
-              ease: FADE_EASE,
+              ease: directionalEase,
             },
             finalVisualTweenPosition
           )
@@ -141,24 +170,26 @@ export default function AnimatedTitle() {
             '.title-visual-base',
             {
               opacity: 0,
-              ease: FADE_EASE,
+              ease: directionalEase,
             },
             '<'
           )
           .to(
-            leftVisualRef.current,
+            backgroundBlockRef.current,
             {
-              backgroundColor: INVERT_BG,
-              ease: FADE_EASE,
+              opacity: 1,
+              ease: directionalEase,
+            },
+            '<'
+          )
+          .to(
+            '.title-left-visual',
+            {
+              cursor: 'pointer',
+              ease: directionalEase,
             },
             '<'
           );
-        // .to([leftVisualRef.current, rightVisualRef.current], {
-        //   backgroundColor: INVERT_BG,
-        //   color: INVERT_TEXT,
-        //   ease: FADE_EASE,
-        //   duration: 0.12,
-        // });
 
         return tl;
       };
@@ -210,6 +241,24 @@ export default function AnimatedTitle() {
       }}
     >
       <span
+        ref={backgroundBlockRef}
+        className="title-background-block"
+        aria-hidden="true"
+        style={{
+          position: 'absolute',
+          left: '-16px',
+          width: 'calc(100% + 32px)',
+          top: '0',
+          height: '1em',
+          backgroundColor: 'rgba(0,0,0,0.05)',
+          opacity: 0,
+          pointerEvents: 'none',
+          backdropFilter: 'blur(10px)',
+          zIndex: 0,
+          borderRadius: '6px',
+        }}
+      />
+      <span
         className="title-full"
         aria-hidden="true"
         style={{
@@ -218,6 +267,7 @@ export default function AnimatedTitle() {
           display: 'inline-flex',
           alignItems: 'baseline',
           pointerEvents: 'none',
+          zIndex: 1,
         }}
       >
         <span className="title-full-left">Liam</span>
@@ -232,6 +282,7 @@ export default function AnimatedTitle() {
           position: 'relative',
           display: 'inline-flex',
           alignItems: 'baseline',
+          zIndex: 1,
         }}
       >
         <span
@@ -256,16 +307,9 @@ export default function AnimatedTitle() {
               color: 'inherit',
               display: 'inline-block',
               padding: '0.05em 0.25em',
-              backgroundColor: 'transparent',
               whiteSpace: 'pre',
             }}
           >
-            <span
-              className="title-visual-base"
-              style={{ display: 'inline-block' }}
-            >
-              L
-            </span>
             <span
               className="title-visual-invert"
               style={{
@@ -317,12 +361,6 @@ export default function AnimatedTitle() {
             }}
           >
             <span
-              className="title-visual-base"
-              style={{ display: 'inline-block' }}
-            >
-              P
-            </span>
-            <span
               className="title-visual-invert"
               style={{
                 position: 'absolute',
@@ -346,23 +384,11 @@ export default function AnimatedTitle() {
       </span>
       <style>
         {`
-          .title-left-visual {
-            cursor: default;
-            border-radius: 8px;
-          }
-
           @media (max-width: 768px) {
-            .title-left-visual {
-              border-radius: 6px;
+            .title-background-block {
+              top: -0.2em !important;
+              height: 1.4em !important;
             }
-          }
-
-          .title-left-visual.${LEFT_HOVER_ENABLED_CLASS} {
-            cursor: pointer;
-          }
-
-          .title-left-visual.${LEFT_HOVER_ENABLED_CLASS}:hover {
-            background-color: ${INVERT_BG_HOVER} !important;
           }
         `}
       </style>
