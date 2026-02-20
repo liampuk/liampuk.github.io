@@ -12,6 +12,7 @@ const SHRINK_SCALE = 2 / 3;
 const MOBILE_MEDIA_QUERY = '(max-width: 768px)';
 const LEFT_HOVER_ENABLED_CLASS = 'title-left-hover-enabled';
 const ANIMATION_COMPLETE_THRESHOLD = 0.999;
+const RESIZE_WIDTH_THRESHOLD = 2;
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -58,12 +59,28 @@ export default function AnimatedTitle() {
         const leftShift = targetX - leftCenterX;
         const rightShift = targetX - rightCenterX;
 
+        gsap.set('.title-full-left', { x: 0, opacity: 1, filter: 'none' });
+        gsap.set('.title-full-right', { x: 0, opacity: 1, filter: 'none' });
+        gsap.set('.title-segmented-char', { opacity: 0 });
+        gsap.set(leftRef.current, { x: 0 });
+        gsap.set(rightRef.current, { x: 0 });
+        gsap.set([leftVisualRef.current, rightVisualRef.current], { scale: 1 });
+        gsap.set('.title-visual-invert', { opacity: 0 });
+        gsap.set('.title-visual-base', { opacity: 1 });
+        gsap.set(leftVisualRef.current, { backgroundColor: 'transparent' });
+
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: document.documentElement,
             start: 'top top',
             end: '+=220',
-            scrub: true,
+            scrub: isMobile ? false : true,
+            toggleActions: isMobile ? 'play none none none' : undefined,
+            onLeaveBack: isMobile
+              ? (self) => {
+                  self.animation?.reverse();
+                }
+              : undefined,
             onUpdate: ({ progress }) => {
               leftVisualRef.current?.classList.toggle(
                 LEFT_HOVER_ENABLED_CLASS,
@@ -73,55 +90,78 @@ export default function AnimatedTitle() {
           },
         });
 
-        tl.to(
-          '.title-full-char',
-          { opacity: 0, duration: 0.05, ease: FADE_EASE },
-          0
-        )
-          .to(
-            '.title-segmented-char',
-            { opacity: 1, duration: 0.05, ease: FADE_EASE },
-            0
-          )
-          .to('.title-full-left', { x: leftShift, ease: MOVE_EASE }, 0)
-          .to(
-            '.title-full-left',
-            { opacity: 0, filter: 'blur(8px)', ease: FADE_EASE },
-            0
-          )
-          .to('.title-full-right', { x: rightShift, ease: MOVE_EASE }, 0)
-          .to(
-            '.title-full-right',
-            { opacity: 0, filter: 'blur(8px)', ease: FADE_EASE },
-            0
-          )
-          .to(leftRef.current, { x: leftShift, ease: MOVE_EASE }, 0)
-          .to(rightRef.current, { x: rightShift, ease: MOVE_EASE }, 0)
-          .to(
-            [leftVisualRef.current, rightVisualRef.current],
-            { scale: SHRINK_SCALE, ease: MOVE_EASE },
-            0
-          )
-          .to('.title-visual-invert', {
-            opacity: 1,
-            ease: FADE_EASE,
-          })
-          .to(
-            '.title-visual-base',
+        if (isMobile) {
+          tl.fromTo(
+            rootRef.current,
+            { scale: 1 },
             {
-              opacity: 0,
-              ease: FADE_EASE,
+              scale: SHRINK_SCALE,
+              duration: 0.35,
+              ease: 'power2.out',
+              transformOrigin: '50% 50%',
+              immediateRender: false,
             },
-            '<'
-          )
-          .to(
-            leftVisualRef.current,
-            {
-              backgroundColor: INVERT_BG,
-              ease: FADE_EASE,
-            },
-            '<'
+            0
           );
+        } else {
+          tl.to(
+            '.title-full-char',
+            { opacity: 0, duration: 0.05, ease: FADE_EASE },
+            0
+          )
+            .to(
+              '.title-segmented-char',
+              { opacity: 1, duration: 0.05, ease: FADE_EASE },
+              0
+            )
+            .to('.title-full-left', { x: leftShift, ease: MOVE_EASE }, 0)
+            .to(
+              '.title-full-left',
+              {
+                opacity: 0,
+                filter: 'blur(8px)',
+                ease: FADE_EASE,
+              },
+              0
+            )
+            .to('.title-full-right', { x: rightShift, ease: MOVE_EASE }, 0)
+            .to(
+              '.title-full-right',
+              {
+                opacity: 0,
+                filter: 'blur(8px)',
+                ease: FADE_EASE,
+              },
+              0
+            )
+            .to(leftRef.current, { x: leftShift, ease: MOVE_EASE }, 0)
+            .to(rightRef.current, { x: rightShift, ease: MOVE_EASE }, 0)
+            .to(
+              [leftVisualRef.current, rightVisualRef.current],
+              { scale: SHRINK_SCALE, ease: MOVE_EASE },
+              0
+            )
+            .to('.title-visual-invert', {
+              opacity: 1,
+              ease: FADE_EASE,
+            })
+            .to(
+              '.title-visual-base',
+              {
+                opacity: 0,
+                ease: FADE_EASE,
+              },
+              '<'
+            )
+            .to(
+              leftVisualRef.current,
+              {
+                backgroundColor: INVERT_BG,
+                ease: FADE_EASE,
+              },
+              '<'
+            );
+        }
         // .to([leftVisualRef.current, rightVisualRef.current], {
         //   backgroundColor: INVERT_BG,
         //   color: INVERT_TEXT,
@@ -133,6 +173,7 @@ export default function AnimatedTitle() {
       };
 
       let tl = buildTimeline();
+      let lastViewportWidth = window.innerWidth;
 
       const recalc = () => {
         tl?.kill();
@@ -140,12 +181,23 @@ export default function AnimatedTitle() {
         ScrollTrigger.refresh();
       };
 
-      window.addEventListener('resize', recalc);
+      const handleResize = () => {
+        // iOS Safari/Chrome can fire resize while scrolling due to browser chrome;
+        // ignore height-only changes to avoid scrubbing timeline breakage.
+        const nextWidth = window.innerWidth;
+        if (Math.abs(nextWidth - lastViewportWidth) < RESIZE_WIDTH_THRESHOLD) {
+          return;
+        }
+        lastViewportWidth = nextWidth;
+        recalc();
+      };
+
+      window.addEventListener('resize', handleResize);
       window.addEventListener('orientationchange', recalc);
       document.fonts.ready.then(recalc);
 
       return () => {
-        window.removeEventListener('resize', recalc);
+        window.removeEventListener('resize', handleResize);
         window.removeEventListener('orientationchange', recalc);
         leftVisualRef.current?.classList.remove(LEFT_HOVER_ENABLED_CLASS);
         tl?.kill();
