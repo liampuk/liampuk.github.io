@@ -92,7 +92,11 @@ export default function AnimatedTitle() {
           },
         });
 
-        tl.to('.title-full-char', { opacity: 0, duration: 0.05, ease: FADE_EASE }, 0)
+        tl.to(
+          '.title-full-char',
+          { opacity: 0, duration: 0.05, ease: FADE_EASE },
+          0
+        )
           .to(
             '.title-segmented-char',
             { opacity: 1, duration: 0.05, ease: FADE_EASE },
@@ -251,7 +255,6 @@ export default function AnimatedTitle() {
               transform: 'translate(-50%, -50%)',
               color: 'inherit',
               display: 'inline-block',
-              borderRadius: '8px',
               padding: '0.05em 0.25em',
               backgroundColor: 'transparent',
               whiteSpace: 'pre',
@@ -307,7 +310,6 @@ export default function AnimatedTitle() {
               transform: 'translate(-50%, -50%)',
               color: 'inherit',
               display: 'inline-block',
-              borderRadius: '4px',
               padding: '0.05em 0.25em',
               backgroundColor: 'transparent',
               whiteSpace: 'pre',
@@ -346,6 +348,13 @@ export default function AnimatedTitle() {
         {`
           .title-left-visual {
             cursor: default;
+            border-radius: 8px;
+          }
+
+          @media (max-width: 768px) {
+            .title-left-visual {
+              border-radius: 6px;
+            }
           }
 
           .title-left-visual.${LEFT_HOVER_ENABLED_CLASS} {

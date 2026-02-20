@@ -187,11 +187,15 @@ import AnimatedTitle from './AnimatedTitle';
     }
 
     .gradient-blur {
+      --blur-overscan: 40px;
       position: fixed;
       z-index: 5;
-      inset: 0 0 auto 0;
-      height: 220px;
+      inset: calc(-1 * var(--blur-overscan)) 0 auto 0;
+      height: calc(220px + var(--blur-overscan));
+      min-height: calc(220px + var(--blur-overscan) + env(safe-area-inset-top));
       pointer-events: none;
+      transform: translateZ(0);
+      will-change: height;
       background: linear-gradient(
         to bottom,
         rgba(
@@ -211,13 +215,25 @@ import AnimatedTitle from './AnimatedTitle';
           45%,
         rgba(var(--page-top-rgb, 248, 243, 234), 0) 100%
       );
+
+      @media (orientation: portrait) {
+        /*
+         * Over-cover the top blur region during iOS dynamic toolbar resize to
+         * avoid momentary sharp text seams while viewport height is changing.
+         */
+        height: max(
+          calc(220px + var(--blur-overscan)),
+          calc(18dvh + var(--blur-overscan) + env(safe-area-inset-top))
+        );
+      }
     }
 
     .gradient-blur > div,
     .gradient-blur::before,
     .gradient-blur::after {
       position: absolute;
-      inset: 0;
+      inset: 0 0 var(--blur-overscan) 0;
+      transform: translateY(var(--blur-overscan));
     }
 
     .gradient-blur::before {
