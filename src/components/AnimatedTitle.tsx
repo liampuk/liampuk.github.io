@@ -4,7 +4,8 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 const TITLE = 'Liam Piesley';
-const MOBILE_BREAKPOINT_PX = 768;
+const MOVE_EASE = 'power1.out';
+const FADE_EASE = 'power2.out';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -25,7 +26,7 @@ export default function AnimatedTitle() {
         const rightRect = rightRef.current.getBoundingClientRect();
 
         const targetX = rootRect.left + rootRect.width * (1 / 4);
-        const leftCenterX = leftRect.left + leftRect.width / 2;
+        const leftCenterX = leftRect.left + leftRect.width / 2 + 1;
         const rightCenterX = rightRect.left + rightRect.width / 2;
 
         const leftShift = targetX - leftCenterX;
@@ -42,20 +43,20 @@ export default function AnimatedTitle() {
 
         tl.to(
           '.title-full-char',
-          { opacity: 0, duration: 0.05, ease: 'none' },
+          { opacity: 0, duration: 0.05, ease: FADE_EASE },
           0
         )
           .to(
             '.title-segmented-char',
-            { opacity: 1, duration: 0.05, ease: 'none' },
+            { opacity: 1, duration: 0.05, ease: FADE_EASE },
             0
           )
-          .to('.title-full-left', { x: leftShift, ease: 'none' }, 0)
-          .to('.title-full-left', { opacity: 0, ease: 'power2.out' }, 0)
-          .to('.title-full-right', { x: rightShift, ease: 'none' }, 0)
-          .to('.title-full-right', { opacity: 0, ease: 'power2.out' }, 0)
-          .to(leftRef.current, { x: leftShift, ease: 'none' }, 0)
-          .to(rightRef.current, { x: rightShift, ease: 'none' }, 0);
+          .to('.title-full-left', { x: leftShift, ease: MOVE_EASE }, 0)
+          .to('.title-full-left', { opacity: 0, ease: FADE_EASE }, 0)
+          .to('.title-full-right', { x: rightShift, ease: MOVE_EASE }, 0)
+          .to('.title-full-right', { opacity: 0, ease: FADE_EASE }, 0)
+          .to(leftRef.current, { x: leftShift, ease: MOVE_EASE }, 0)
+          .to(rightRef.current, { x: rightShift, ease: MOVE_EASE }, 0);
 
         return tl;
       };
