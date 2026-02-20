@@ -13,6 +13,7 @@ const MOBILE_MEDIA_QUERY = '(max-width: 768px)';
 const LEFT_HOVER_ENABLED_CLASS = 'title-left-hover-enabled';
 const ANIMATION_COMPLETE_THRESHOLD = 0.999;
 const RESIZE_WIDTH_THRESHOLD = 2;
+const TRIGGER_START_OFFSET = 20;
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -58,6 +59,7 @@ export default function AnimatedTitle() {
 
         const leftShift = targetX - leftCenterX;
         const rightShift = targetX - rightCenterX;
+        const finalVisualTweenPosition = isMobile ? 0 : '>';
 
         gsap.set('.title-full-left', { x: 0, opacity: 1, filter: 'none' });
         gsap.set('.title-full-right', { x: 0, opacity: 1, filter: 'none' });
@@ -72,7 +74,7 @@ export default function AnimatedTitle() {
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: document.documentElement,
-            start: 'top top',
+            start: `top+=${TRIGGER_START_OFFSET} top`,
             end: '+=220',
             scrub: isMobile ? false : true,
             toggleActions: isMobile ? 'play none none none' : undefined,
@@ -123,10 +125,14 @@ export default function AnimatedTitle() {
             { scale: SHRINK_SCALE, ease: MOVE_EASE },
             0
           )
-          .to('.title-visual-invert', {
-            opacity: 1,
-            ease: FADE_EASE,
-          })
+          .to(
+            '.title-visual-invert',
+            {
+              opacity: 1,
+              ease: FADE_EASE,
+            },
+            finalVisualTweenPosition
+          )
           .to(
             '.title-visual-base',
             {
