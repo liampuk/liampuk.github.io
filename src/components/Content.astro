@@ -1,10 +1,11 @@
 ---
+import AnimatedTitle from './AnimatedTitle';
 
 ---
 
 <div id="content">
   <main>
-    <h1><span>✺</span>Liam Piesley</h1>
+    <h1><AnimatedTitle client:load /></h1>
     <p>
       Hey! I'm Liam, a software engineer working in London. I love to create
       beautiful and intuitive interfaces. If you like my work please get in
@@ -152,15 +153,24 @@
       font-weight: 500;
       font-family: 'Editorial Old', serif;
       font-variant-ligatures: discretionary-ligatures;
+      position: sticky;
+      top: 16px;
+      z-index: 10;
+      display: flex;
+      align-items: baseline;
+      width: max-content;
+      padding-right: 12px;
+      border-radius: 6px;
 
       @media (orientation: portrait) {
         font-size: 50px;
         padding-left: 0;
         text-align: center;
+        margin-inline: auto;
       }
     }
 
-    h1 span {
+    h1 .title-mark {
       font-size: 74px;
       margin-right: 8px;
 
