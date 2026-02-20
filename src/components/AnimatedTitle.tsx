@@ -24,7 +24,7 @@ export default function AnimatedTitle() {
         const leftRect = leftRef.current.getBoundingClientRect();
         const rightRect = rightRef.current.getBoundingClientRect();
 
-        const targetX = rootRect.left + rootRect.width * (1 / 3);
+        const targetX = rootRect.left + rootRect.width * (1 / 4);
         const leftCenterX = leftRect.left + leftRect.width / 2;
         const rightCenterX = rightRect.left + rightRect.width / 2;
 
@@ -50,7 +50,10 @@ export default function AnimatedTitle() {
             { opacity: 1, duration: 0.05, ease: 'none' },
             0
           )
-          .to('.title-full-middle', { opacity: 0, ease: 'none' }, 0)
+          .to('.title-full-left', { x: leftShift, ease: 'none' }, 0)
+          .to('.title-full-left', { opacity: 0, ease: 'power2.out' }, 0)
+          .to('.title-full-right', { x: rightShift, ease: 'none' }, 0)
+          .to('.title-full-right', { opacity: 0, ease: 'power2.out' }, 0)
           .to(leftRef.current, { x: leftShift, ease: 'none' }, 0)
           .to(rightRef.current, { x: rightShift, ease: 'none' }, 0);
 
@@ -101,25 +104,9 @@ export default function AnimatedTitle() {
           pointerEvents: 'none',
         }}
       >
-        <span
-          className="title-full-char"
-          style={{
-            display: 'inline-block',
-          }}
-        >
-          L
-        </span>
-        <span className="title-full-middle">iam</span>
+        <span className="title-full-left">Liam</span>
         <span className="title-full-middle">&nbsp;</span>
-        <span
-          className="title-full-char"
-          style={{
-            display: 'inline-block',
-          }}
-        >
-          P
-        </span>
-        <span className="title-full-middle">iesley</span>
+        <span className="title-full-right">Piesley</span>
       </span>
 
       <span
@@ -141,7 +128,10 @@ export default function AnimatedTitle() {
         >
           L
         </span>
-        <span className="title-segmented-middle" style={{ opacity: 0 }}>
+        <span
+          className="title-segmented-middle"
+          style={{ opacity: 0, marginLeft: '-0.08em' }}
+        >
           iam
         </span>
         <span className="title-segmented-middle" style={{ opacity: 0 }}>
