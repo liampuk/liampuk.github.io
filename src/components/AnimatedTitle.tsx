@@ -6,8 +6,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 const TITLE = 'Liam Piesley';
 const MOVE_EASE = 'power1.out';
 const FADE_EASE = 'power2.out';
-const INVERT_BG = '#222';
-const INVERT_TEXT = 'rgb(var(--page-top-rgb, 255, 249, 240))';
+const INVERT_BG = 'rgba(0,0,0,0.1)';
 const SHRINK_SCALE = 2 / 3;
 
 gsap.registerPlugin(ScrollTrigger);
@@ -36,7 +35,7 @@ export default function AnimatedTitle() {
         const leftRect = leftRef.current.getBoundingClientRect();
         const rightRect = rightRef.current.getBoundingClientRect();
 
-        const targetX = rootRect.left + rootRect.width * (1 / 4);
+        const targetX = rootRect.left + rootRect.width * (1 / 16);
         const leftCenterX = leftRect.left + leftRect.width / 2 + 1;
         const rightCenterX = rightRect.left + rightRect.width / 2;
 
@@ -188,7 +187,7 @@ export default function AnimatedTitle() {
               transform: 'translate(-50%, -50%)',
               color: 'inherit',
               display: 'inline-block',
-              borderRadius: '4px',
+              borderRadius: '8px',
               padding: '0.05em 0.25em',
               backgroundColor: 'transparent',
               whiteSpace: 'pre',
@@ -209,7 +208,6 @@ export default function AnimatedTitle() {
                 transform: 'translate(-50%, -50%)',
                 whiteSpace: 'pre',
                 opacity: 0,
-                color: INVERT_TEXT,
               }}
             >
               L
@@ -265,7 +263,6 @@ export default function AnimatedTitle() {
                 transform: 'translate(-50%, -50%)',
                 whiteSpace: 'pre',
                 opacity: 0,
-                color: INVERT_TEXT,
               }}
             >
               P
