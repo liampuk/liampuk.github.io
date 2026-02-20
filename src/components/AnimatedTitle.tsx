@@ -90,78 +90,59 @@ export default function AnimatedTitle() {
           },
         });
 
-        if (isMobile) {
-          tl.fromTo(
-            rootRef.current,
-            { scale: 1 },
-            {
-              scale: SHRINK_SCALE,
-              duration: 0.35,
-              ease: 'power2.out',
-              transformOrigin: '50% 50%',
-              immediateRender: false,
-            },
-            0
-          );
-        } else {
-          tl.to(
-            '.title-full-char',
-            { opacity: 0, duration: 0.05, ease: FADE_EASE },
+        tl.to('.title-full-char', { opacity: 0, duration: 0.05, ease: FADE_EASE }, 0)
+          .to(
+            '.title-segmented-char',
+            { opacity: 1, duration: 0.05, ease: FADE_EASE },
             0
           )
-            .to(
-              '.title-segmented-char',
-              { opacity: 1, duration: 0.05, ease: FADE_EASE },
-              0
-            )
-            .to('.title-full-left', { x: leftShift, ease: MOVE_EASE }, 0)
-            .to(
-              '.title-full-left',
-              {
-                opacity: 0,
-                filter: 'blur(8px)',
-                ease: FADE_EASE,
-              },
-              0
-            )
-            .to('.title-full-right', { x: rightShift, ease: MOVE_EASE }, 0)
-            .to(
-              '.title-full-right',
-              {
-                opacity: 0,
-                filter: 'blur(8px)',
-                ease: FADE_EASE,
-              },
-              0
-            )
-            .to(leftRef.current, { x: leftShift, ease: MOVE_EASE }, 0)
-            .to(rightRef.current, { x: rightShift, ease: MOVE_EASE }, 0)
-            .to(
-              [leftVisualRef.current, rightVisualRef.current],
-              { scale: SHRINK_SCALE, ease: MOVE_EASE },
-              0
-            )
-            .to('.title-visual-invert', {
-              opacity: 1,
+          .to('.title-full-left', { x: leftShift, ease: MOVE_EASE }, 0)
+          .to(
+            '.title-full-left',
+            {
+              opacity: 0,
+              filter: 'blur(8px)',
               ease: FADE_EASE,
-            })
-            .to(
-              '.title-visual-base',
-              {
-                opacity: 0,
-                ease: FADE_EASE,
-              },
-              '<'
-            )
-            .to(
-              leftVisualRef.current,
-              {
-                backgroundColor: INVERT_BG,
-                ease: FADE_EASE,
-              },
-              '<'
-            );
-        }
+            },
+            0
+          )
+          .to('.title-full-right', { x: rightShift, ease: MOVE_EASE }, 0)
+          .to(
+            '.title-full-right',
+            {
+              opacity: 0,
+              filter: 'blur(8px)',
+              ease: FADE_EASE,
+            },
+            0
+          )
+          .to(leftRef.current, { x: leftShift, ease: MOVE_EASE }, 0)
+          .to(rightRef.current, { x: rightShift, ease: MOVE_EASE }, 0)
+          .to(
+            [leftVisualRef.current, rightVisualRef.current],
+            { scale: SHRINK_SCALE, ease: MOVE_EASE },
+            0
+          )
+          .to('.title-visual-invert', {
+            opacity: 1,
+            ease: FADE_EASE,
+          })
+          .to(
+            '.title-visual-base',
+            {
+              opacity: 0,
+              ease: FADE_EASE,
+            },
+            '<'
+          )
+          .to(
+            leftVisualRef.current,
+            {
+              backgroundColor: INVERT_BG,
+              ease: FADE_EASE,
+            },
+            '<'
+          );
         // .to([leftVisualRef.current, rightVisualRef.current], {
         //   backgroundColor: INVERT_BG,
         //   color: INVERT_TEXT,
