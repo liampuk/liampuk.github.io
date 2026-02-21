@@ -167,7 +167,7 @@ export default function AnimatedTitle() {
             toggleActions: 'play none none none',
             onLeaveBack: (self) => {
               if (menuOpenRef.current) {
-                menuTimelineRef.current?.progress(0);
+                menuTimelineRef.current?.reverse();
                 menuOpenRef.current = false;
               }
               if (h1) unpinH1(h1);
@@ -185,7 +185,7 @@ export default function AnimatedTitle() {
                   : 'none';
               }
               if (!isComplete && menuOpenRef.current) {
-                menuTimelineRef.current?.progress(0);
+                menuTimelineRef.current?.reverse();
                 menuOpenRef.current = false;
               }
               if (h1) {
