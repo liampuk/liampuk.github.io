@@ -22,9 +22,12 @@ gsap.registerPlugin(ScrollTrigger);
 function pinH1(h1: HTMLElement) {
   if (h1.style.position === 'fixed') return;
   const rect = h1.getBoundingClientRect();
+  const computed = window.getComputedStyle(h1);
   const spacer = document.createElement('div');
   spacer.id = TITLE_SPACER_ID;
   spacer.style.height = `${rect.height}px`;
+  spacer.style.marginTop = computed.marginTop;
+  spacer.style.marginBottom = computed.marginBottom;
   h1.parentElement?.insertBefore(spacer, h1);
   h1.style.position = 'fixed';
   h1.style.top = `${rect.top}px`;
