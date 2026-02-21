@@ -11,8 +11,9 @@
   },
   "dependencies": {
     "@astrojs/react": "^4.4.2",
-    "astro": "^5.16.6",
     "@gsap/react": "^2.1.2",
+    "@lucide/astro": "^0.575.0",
+    "astro": "^5.16.6",
     "gsap": "^3.13.0"
   }
 }
