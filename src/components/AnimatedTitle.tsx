@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useCallback } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -15,8 +15,31 @@ const ANIMATION_COMPLETE_THRESHOLD = 0.8;
 const RESIZE_WIDTH_THRESHOLD = 2;
 const TRIGGER_START_OFFSET = 20;
 const CONTENT_HORIZONTAL_PADDING = 16;
+const TITLE_SPACER_ID = 'title-fixed-spacer';
 
 gsap.registerPlugin(ScrollTrigger);
+
+function pinH1(h1: HTMLElement) {
+  if (h1.style.position === 'fixed') return;
+  const rect = h1.getBoundingClientRect();
+  const spacer = document.createElement('div');
+  spacer.id = TITLE_SPACER_ID;
+  spacer.style.height = `${rect.height}px`;
+  h1.parentElement?.insertBefore(spacer, h1);
+  h1.style.position = 'fixed';
+  h1.style.top = `${rect.top}px`;
+  h1.style.left = `${rect.left}px`;
+  h1.style.margin = '0';
+}
+
+function unpinH1(h1: HTMLElement) {
+  if (h1.style.position !== 'fixed') return;
+  document.getElementById(TITLE_SPACER_ID)?.remove();
+  h1.style.position = '';
+  h1.style.top = '';
+  h1.style.left = '';
+  h1.style.margin = '';
+}
 
 export default function AnimatedTitle() {
   const rootRef = useRef<HTMLSpanElement>(null);
@@ -25,6 +48,11 @@ export default function AnimatedTitle() {
   const rightRef = useRef<HTMLSpanElement>(null);
   const leftVisualRef = useRef<HTMLSpanElement>(null);
   const rightVisualRef = useRef<HTMLSpanElement>(null);
+  const plusButtonRef = useRef<HTMLButtonElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const menuTimelineRef = useRef<gsap.core.Timeline | null>(null);
+  const menuOpenRef = useRef(false);
+
   const handleLeftVisualClick = () => {
     const isEnabled = leftVisualRef.current?.classList.contains(
       LEFT_HOVER_ENABLED_CLASS
@@ -35,6 +63,17 @@ export default function AnimatedTitle() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const handleToggleMenu = useCallback(() => {
+    if (!menuTimelineRef.current) return;
+    if (menuOpenRef.current) {
+      menuTimelineRef.current.reverse();
+      menuOpenRef.current = false;
+    } else {
+      menuTimelineRef.current.play();
+      menuOpenRef.current = true;
+    }
+  }, []);
+
   useGSAP(
     () => {
       const buildTimeline = () => {
@@ -44,12 +83,16 @@ export default function AnimatedTitle() {
           !leftRef.current ||
           !rightRef.current ||
           !leftVisualRef.current ||
-          !rightVisualRef.current
+          !rightVisualRef.current ||
+          !plusButtonRef.current ||
+          !menuRef.current
         ) {
           return null;
         }
 
         const isMobile = window.matchMedia(MOBILE_MEDIA_QUERY).matches;
+        const h1 = rootRef.current.closest('h1') as HTMLElement | null;
+        if (h1) unpinH1(h1);
 
         const rootRect = rootRef.current.getBoundingClientRect();
         const mainElement = rootRef.current.closest('main');
@@ -94,7 +137,24 @@ export default function AnimatedTitle() {
           left: backgroundLeft,
           width: backgroundWidth,
           opacity: 0,
+          height: isMobile ? '1.4em' : '1em',
+          top: isMobile ? '-0.2em' : '0',
         });
+        const bgLeftViewportX = rootRect.left + backgroundLeft;
+        const lpFromBlockLeft = targetX - bgLeftViewportX;
+        const plusIconSize = isMobile ? '0.4em' : '0.3em';
+        gsap.set(plusButtonRef.current, {
+          opacity: 0,
+          pointerEvents: 'none',
+          right: lpFromBlockLeft,
+          xPercent: 50,
+          top: isMobile ? '0.7em' : '0.5em',
+          yPercent: -50,
+        });
+        gsap.set(plusButtonRef.current.querySelector('svg'), {
+          attr: { width: plusIconSize, height: plusIconSize },
+        });
+        gsap.set(menuRef.current, { opacity: 0, y: -5 });
         gsap.set('.title-visual-invert', { opacity: 0 });
         gsap.set('.title-visual-base', { opacity: 1 });
 
@@ -106,13 +166,32 @@ export default function AnimatedTitle() {
             scrub: false,
             toggleActions: 'play none none none',
             onLeaveBack: (self) => {
+              if (menuOpenRef.current) {
+                menuTimelineRef.current?.reverse();
+                menuOpenRef.current = false;
+              }
+              if (h1) unpinH1(h1);
               self.animation?.reverse();
             },
             onUpdate: ({ progress }) => {
+              const isComplete = progress >= ANIMATION_COMPLETE_THRESHOLD;
               leftVisualRef.current?.classList.toggle(
                 LEFT_HOVER_ENABLED_CLASS,
-                progress >= ANIMATION_COMPLETE_THRESHOLD
+                isComplete
               );
+              if (plusButtonRef.current) {
+                plusButtonRef.current.style.pointerEvents = isComplete
+                  ? 'auto'
+                  : 'none';
+              }
+              if (!isComplete && menuOpenRef.current) {
+                menuTimelineRef.current?.reverse();
+                menuOpenRef.current = false;
+              }
+              if (h1) {
+                if (isComplete) pinH1(h1);
+                else unpinH1(h1);
+              }
             },
           },
         });
@@ -189,7 +268,41 @@ export default function AnimatedTitle() {
               ease: directionalEase,
             },
             '<'
+          )
+          .to(
+            plusButtonRef.current,
+            {
+              opacity: 1,
+              ease: directionalEase,
+            },
+            '<'
           );
+
+        const menuTl = gsap.timeline({ paused: true });
+        const expandedHeight = isMobile ? '3.7em' : '2.9em';
+        menuTl
+          .to(backgroundBlockRef.current, {
+            height: expandedHeight,
+            duration: 0.35,
+            ease: 'power2.out',
+          })
+          .to(
+            plusButtonRef.current!.querySelector('svg'),
+            { rotation: 45, duration: 0.25, ease: 'power2.out' },
+            0
+          )
+          .to(
+            menuRef.current,
+            {
+              opacity: 1,
+              y: 0,
+              pointerEvents: 'auto',
+              duration: 0.25,
+              ease: 'power2.out',
+            },
+            0.1
+          );
+        menuTimelineRef.current = menuTl;
 
         return tl;
       };
@@ -198,6 +311,11 @@ export default function AnimatedTitle() {
       let lastViewportWidth = window.innerWidth;
 
       const recalc = () => {
+        if (menuOpenRef.current) {
+          menuTimelineRef.current?.progress(0);
+          menuOpenRef.current = false;
+        }
+        menuTimelineRef.current?.kill();
         tl?.kill();
         tl = buildTimeline();
         ScrollTrigger.refresh();
@@ -222,6 +340,9 @@ export default function AnimatedTitle() {
         window.removeEventListener('resize', handleResize);
         window.removeEventListener('orientationchange', recalc);
         leftVisualRef.current?.classList.remove(LEFT_HOVER_ENABLED_CLASS);
+        const h1 = rootRef.current?.closest('h1') as HTMLElement | null;
+        if (h1) unpinH1(h1);
+        menuTimelineRef.current?.kill();
         tl?.kill();
       };
     },
@@ -243,7 +364,6 @@ export default function AnimatedTitle() {
       <span
         ref={backgroundBlockRef}
         className="title-background-block"
-        aria-hidden="true"
         style={{
           position: 'absolute',
           left: '-16px',
@@ -256,8 +376,107 @@ export default function AnimatedTitle() {
           backdropFilter: 'blur(10px)',
           zIndex: 0,
           borderRadius: '6px',
+          overflow: 'hidden',
         }}
-      />
+      >
+        <button
+          ref={plusButtonRef}
+          onClick={handleToggleMenu}
+          className="title-menu-button"
+          aria-label="Menu"
+          style={{
+            position: 'absolute',
+            right: 0,
+            top: '0',
+            height: '1em',
+            width: '1em',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            background: 'none',
+            border: 'none',
+            cursor: 'pointer',
+            pointerEvents: 'none',
+            opacity: 0,
+            padding: 0,
+            color: '#222',
+            borderRadius: '4px',
+            fontSize: 'inherit',
+          }}
+        >
+          <svg
+            width="0.3em"
+            height="0.3em"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <line x1="12" y1="5" x2="12" y2="19" />
+            <line x1="5" y1="12" x2="19" y2="12" />
+          </svg>
+        </button>
+        <div
+          ref={menuRef}
+          className="title-menu"
+          style={{
+            position: 'absolute',
+            top: '64px',
+            left: 0,
+            right: 0,
+            opacity: 0,
+            display: 'flex',
+            flexDirection: 'column',
+            padding: '8px 24px',
+            gap: '8px',
+            pointerEvents: 'none',
+          }}
+        >
+          <a
+            href="https://cal.com/liam-piesley-iof3ud"
+            target="_blank"
+            rel="noopener"
+            className="title-menu-item"
+          >
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+            </svg>
+            Book a call
+          </a>
+          <a
+            href="mailto:liampiesley@gmail.com"
+            target="_blank"
+            rel="noopener"
+            className="title-menu-item"
+          >
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <rect width="20" height="16" x="2" y="4" rx="2" />
+              <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+            </svg>
+            Send an email
+          </a>
+        </div>
+      </span>
       <span
         className="title-full"
         aria-hidden="true"
@@ -283,6 +502,7 @@ export default function AnimatedTitle() {
           display: 'inline-flex',
           alignItems: 'baseline',
           zIndex: 1,
+          pointerEvents: 'none',
         }}
       >
         <span
@@ -308,6 +528,7 @@ export default function AnimatedTitle() {
               display: 'inline-block',
               padding: '0.05em 0.25em',
               whiteSpace: 'pre',
+              pointerEvents: 'auto',
             }}
           >
             <span
@@ -384,11 +605,27 @@ export default function AnimatedTitle() {
       </span>
       <style>
         {`
-          @media (max-width: 768px) {
-            .title-background-block {
-              top: -0.2em !important;
-              height: 1.4em !important;
-            }
+          .title-menu-button:hover {
+            background-color: rgba(0,0,0,0.08);
+          }
+          .title-menu-item {
+            display: flex;
+            align-items: center;
+            gap: 0.4em;
+            padding: 16px;
+            border-radius: 4px;
+            text-decoration: none;
+            color: #222;
+            font-size: 14px;
+            font-family: Inter, Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif;
+            white-space: nowrap;
+            transition: background-color 0.15s ease;
+          }
+          .title-menu-item:hover {
+            background-color: rgba(0,0,0,0.08);
+          }
+          .title-menu-item:active {
+            background-color: rgba(0,0,0,0.12);
           }
         `}
       </style>
