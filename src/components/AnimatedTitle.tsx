@@ -15,8 +15,31 @@ const ANIMATION_COMPLETE_THRESHOLD = 0.8;
 const RESIZE_WIDTH_THRESHOLD = 2;
 const TRIGGER_START_OFFSET = 20;
 const CONTENT_HORIZONTAL_PADDING = 16;
+const TITLE_SPACER_ID = 'title-fixed-spacer';
 
 gsap.registerPlugin(ScrollTrigger);
+
+function pinH1(h1: HTMLElement) {
+  if (h1.style.position === 'fixed') return;
+  const rect = h1.getBoundingClientRect();
+  const spacer = document.createElement('div');
+  spacer.id = TITLE_SPACER_ID;
+  spacer.style.height = `${rect.height}px`;
+  h1.parentElement?.insertBefore(spacer, h1);
+  h1.style.position = 'fixed';
+  h1.style.top = `${rect.top}px`;
+  h1.style.left = `${rect.left}px`;
+  h1.style.margin = '0';
+}
+
+function unpinH1(h1: HTMLElement) {
+  if (h1.style.position !== 'fixed') return;
+  document.getElementById(TITLE_SPACER_ID)?.remove();
+  h1.style.position = '';
+  h1.style.top = '';
+  h1.style.left = '';
+  h1.style.margin = '';
+}
 
 export default function AnimatedTitle() {
   const rootRef = useRef<HTMLSpanElement>(null);
@@ -68,6 +91,8 @@ export default function AnimatedTitle() {
         }
 
         const isMobile = window.matchMedia(MOBILE_MEDIA_QUERY).matches;
+        const h1 = rootRef.current.closest('h1') as HTMLElement | null;
+        if (h1) unpinH1(h1);
 
         const rootRect = rootRef.current.getBoundingClientRect();
         const mainElement = rootRef.current.closest('main');
@@ -145,6 +170,7 @@ export default function AnimatedTitle() {
                 menuTimelineRef.current?.progress(0);
                 menuOpenRef.current = false;
               }
+              if (h1) unpinH1(h1);
               self.animation?.reverse();
             },
             onUpdate: ({ progress }) => {
@@ -161,6 +187,10 @@ export default function AnimatedTitle() {
               if (!isComplete && menuOpenRef.current) {
                 menuTimelineRef.current?.progress(0);
                 menuOpenRef.current = false;
+              }
+              if (h1) {
+                if (isComplete) pinH1(h1);
+                else unpinH1(h1);
               }
             },
           },
@@ -310,6 +340,8 @@ export default function AnimatedTitle() {
         window.removeEventListener('resize', handleResize);
         window.removeEventListener('orientationchange', recalc);
         leftVisualRef.current?.classList.remove(LEFT_HOVER_ENABLED_CLASS);
+        const h1 = rootRef.current?.closest('h1') as HTMLElement | null;
+        if (h1) unpinH1(h1);
         menuTimelineRef.current?.kill();
         tl?.kill();
       };
