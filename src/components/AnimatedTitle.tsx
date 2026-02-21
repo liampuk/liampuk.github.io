@@ -53,6 +53,7 @@ export default function AnimatedTitle() {
   const rightVisualRef = useRef<HTMLSpanElement>(null);
   const plusButtonRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
+  const overlayRef = useRef<HTMLDivElement>(null);
   const menuTimelineRef = useRef<gsap.core.Timeline | null>(null);
   const menuOpenRef = useRef(false);
 
@@ -77,6 +78,12 @@ export default function AnimatedTitle() {
     }
   }, []);
 
+  const handleCloseMenu = useCallback(() => {
+    if (!menuTimelineRef.current || !menuOpenRef.current) return;
+    menuTimelineRef.current.reverse();
+    menuOpenRef.current = false;
+  }, []);
+
   useGSAP(
     () => {
       const buildTimeline = () => {
@@ -88,7 +95,8 @@ export default function AnimatedTitle() {
           !leftVisualRef.current ||
           !rightVisualRef.current ||
           !plusButtonRef.current ||
-          !menuRef.current
+          !menuRef.current ||
+          !overlayRef.current
         ) {
           return null;
         }
@@ -158,6 +166,7 @@ export default function AnimatedTitle() {
           attr: { width: plusIconSize, height: plusIconSize },
         });
         gsap.set(menuRef.current, { opacity: 0, y: -5 });
+        gsap.set(overlayRef.current, { opacity: 0, pointerEvents: 'none' });
         gsap.set('.title-visual-invert', { opacity: 0 });
         gsap.set('.title-visual-base', { opacity: 1 });
 
@@ -304,6 +313,16 @@ export default function AnimatedTitle() {
               ease: 'power2.out',
             },
             0.1
+          )
+          .to(
+            overlayRef.current,
+            {
+              opacity: 1,
+              pointerEvents: 'auto',
+              duration: 0.25,
+              ease: 'power2.out',
+            },
+            0
           );
         menuTimelineRef.current = menuTl;
 
@@ -480,6 +499,17 @@ export default function AnimatedTitle() {
           </a>
         </div>
       </span>
+      <div
+        ref={overlayRef}
+        onClick={handleCloseMenu}
+        style={{
+          position: 'fixed',
+          inset: 0,
+          opacity: 0,
+          pointerEvents: 'none',
+          zIndex: -1,
+        }}
+      />
       <span
         className="title-full"
         aria-hidden="true"
