@@ -142,6 +142,7 @@ export const Window2 = () => {
 
   const lightX = MathUtils.lerp(startX, endX, scrollProgress);
   const lightY = MathUtils.lerp(startY, endY, scrollProgress);
+  const intensity = MathUtils.lerp(10, 1, scrollProgress);
   const shadowSettings =
     QUALITY_PRESET_VALUES[controls.qualityPreset as QualityPreset];
 
@@ -245,7 +246,7 @@ export const Window2 = () => {
           key={`sun-shadow-${shadowSettings.shadowMapSize}`}
           ref={lightRef}
           position={[lightX, lightY, controls.lightZ]}
-          intensity={5}
+          intensity={intensity}
           castShadow
           shadow-mapSize-width={shadowSettings.shadowMapSize}
           shadow-mapSize-height={shadowSettings.shadowMapSize}
