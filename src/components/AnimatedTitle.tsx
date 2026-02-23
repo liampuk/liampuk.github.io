@@ -6,12 +6,10 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 const TITLE = 'Liam Piesley';
 const FORWARD_EASE = 'power2.out';
 const REVERSE_EASE = 'power2.in';
-const INVERT_BG = 'rgba(0,0,0,0.1)';
-const INVERT_BG_HOVER = 'rgba(0,0,0,0.18)';
 const SHRINK_SCALE = 3 / 4;
 const MOBILE_MEDIA_QUERY = '(max-width: 768px)';
 const LEFT_HOVER_ENABLED_CLASS = 'title-left-hover-enabled';
-const ANIMATION_COMPLETE_THRESHOLD = 0.8;
+const ANIMATION_START_THRESHOLD = 0.01;
 const RESIZE_WIDTH_THRESHOLD = 2;
 const TRIGGER_START_OFFSET = 20;
 const CONTENT_HORIZONTAL_PADDING = 16;
@@ -186,7 +184,7 @@ export default function AnimatedTitle() {
               self.animation?.reverse();
             },
             onUpdate: ({ progress }) => {
-              const isComplete = progress >= ANIMATION_COMPLETE_THRESHOLD;
+              const isComplete = progress >= ANIMATION_START_THRESHOLD;
               leftVisualRef.current?.classList.toggle(
                 LEFT_HOVER_ENABLED_CLASS,
                 isComplete
@@ -201,7 +199,7 @@ export default function AnimatedTitle() {
                 menuOpenRef.current = false;
               }
               if (h1) {
-                if (isComplete) pinH1(h1);
+                if (progress > 0.9) pinH1(h1);
                 else unpinH1(h1);
               }
             },
@@ -291,7 +289,7 @@ export default function AnimatedTitle() {
           );
 
         const menuTl = gsap.timeline({ paused: true });
-        const expandedHeight = isMobile ? '3.7em' : '2.9em';
+        const expandedHeight = isMobile ? '3.9em' : '3.05em';
         menuTl
           .to(backgroundBlockRef.current, {
             height: expandedHeight,
@@ -375,56 +373,18 @@ export default function AnimatedTitle() {
     <span
       ref={rootRef}
       aria-label={TITLE}
-      style={{
-        position: 'relative',
-        display: 'inline-block',
-        whiteSpace: 'pre',
-        lineHeight: 1,
-        color: '#222',
-      }}
+      className="relative inline-block whitespace-pre leading-none text-[#222]"
     >
       <span
         ref={backgroundBlockRef}
-        className="title-background-block"
-        style={{
-          position: 'absolute',
-          left: '-16px',
-          width: 'calc(100% + 32px)',
-          top: '0',
-          height: '1em',
-          backgroundColor: 'rgba(0,0,0,0.05)',
-          opacity: 0,
-          pointerEvents: 'none',
-          backdropFilter: 'blur(10px)',
-          zIndex: 0,
-          borderRadius: '6px',
-          overflow: 'hidden',
-        }}
+        className="title-background-block absolute -left-4 w-[calc(100%+32px)] top-0 h-[1em] bg-black/5 opacity-0 pointer-events-none backdrop-blur-[10px] z-0 rounded-md overflow-hidden"
       >
         <button
           ref={plusButtonRef}
           onClick={handleToggleMenu}
-          className="title-menu-button"
+          className="title-menu-button absolute right-0 top-0 min-w-[0.75em] min-h-[0.75em] flex items-center justify-center border-none cursor-pointer pointer-events-none opacity-0 text-[#222] rounded bg-transparent transition-[background-color,transform] duration-200 ease-in-out hover:bg-black/10 active:bg-black/[0.14]"
           aria-label="Menu"
-          style={{
-            position: 'absolute',
-            right: 0,
-            top: '0',
-            height: '1em',
-            width: '1em',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            background: 'none',
-            border: 'none',
-            cursor: 'pointer',
-            pointerEvents: 'none',
-            opacity: 0,
-            padding: 0,
-            color: '#222',
-            borderRadius: '4px',
-            fontSize: 'inherit',
-          }}
+          style={{ fontSize: 'inherit' }}
         >
           <svg
             width="0.3em"
@@ -442,25 +402,17 @@ export default function AnimatedTitle() {
         </button>
         <div
           ref={menuRef}
-          className="title-menu"
-          style={{
-            position: 'absolute',
-            top: '64px',
-            left: 0,
-            right: 0,
-            opacity: 0,
-            display: 'flex',
-            flexDirection: 'column',
-            padding: '8px 24px',
-            gap: '8px',
-            pointerEvents: 'none',
-          }}
+          className="title-menu absolute top-16 left-0 right-0 opacity-0 flex flex-col px-6 py-2 gap-2 pointer-events-none"
         >
           <a
             href="https://cal.com/liam-piesley-iof3ud"
             target="_blank"
             rel="noopener"
-            className="title-menu-item"
+            className="title-menu-item flex items-center gap-[0.4em] p-4 rounded no-underline text-[#222] text-sm whitespace-nowrap transition-colors duration-150 ease-in-out hover:bg-black/8 active:bg-black/12"
+            style={{
+              fontFamily:
+                "Inter, Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif",
+            }}
           >
             <svg
               width="14"
@@ -480,7 +432,11 @@ export default function AnimatedTitle() {
             href="mailto:liampiesley@gmail.com"
             target="_blank"
             rel="noopener"
-            className="title-menu-item"
+            className="title-menu-item flex items-center gap-[0.4em] p-4 rounded no-underline text-[#222] text-sm whitespace-nowrap transition-colors duration-150 ease-in-out hover:bg-black/8 active:bg-black/12"
+            style={{
+              fontFamily:
+                "Inter, Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif",
+            }}
           >
             <svg
               width="14"
@@ -502,25 +458,11 @@ export default function AnimatedTitle() {
       <div
         ref={overlayRef}
         onClick={handleCloseMenu}
-        style={{
-          position: 'fixed',
-          inset: 0,
-          opacity: 0,
-          pointerEvents: 'none',
-          zIndex: -1,
-        }}
+        className="fixed inset-0 opacity-0 pointer-events-none z-[-1]"
       />
       <span
-        className="title-full"
+        className="title-full absolute inset-0 inline-flex items-baseline pointer-events-none z-1"
         aria-hidden="true"
-        style={{
-          position: 'absolute',
-          inset: 0,
-          display: 'inline-flex',
-          alignItems: 'baseline',
-          pointerEvents: 'none',
-          zIndex: 1,
-        }}
       >
         <span className="title-full-left">Liam</span>
         <span className="title-full-middle">&nbsp;</span>
@@ -528,140 +470,46 @@ export default function AnimatedTitle() {
       </span>
 
       <span
-        className="title-segmented"
+        className="title-segmented relative inline-flex items-baseline z-1 pointer-events-none"
         aria-hidden="true"
-        style={{
-          position: 'relative',
-          display: 'inline-flex',
-          alignItems: 'baseline',
-          zIndex: 1,
-          pointerEvents: 'none',
-        }}
       >
         <span
-          className="title-left title-segmented-char"
+          className="title-left title-segmented-char relative inline-block opacity-0"
           ref={leftRef}
-          style={{
-            position: 'relative',
-            display: 'inline-block',
-            opacity: 0,
-          }}
         >
-          <span style={{ opacity: 0 }}>L</span>
+          <span className="opacity-0">L</span>
           <span
             ref={leftVisualRef}
-            className="title-left-visual"
+            className="title-left-visual absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-inherit inline-block px-[0.25em] py-[0.05em] whitespace-pre pointer-events-auto"
             onClick={handleLeftVisualClick}
-            style={{
-              position: 'absolute',
-              left: '50%',
-              top: '50%',
-              transform: 'translate(-50%, -50%)',
-              color: 'inherit',
-              display: 'inline-block',
-              padding: '0.05em 0.25em',
-              whiteSpace: 'pre',
-              pointerEvents: 'auto',
-            }}
           >
-            <span
-              className="title-visual-invert"
-              style={{
-                position: 'absolute',
-                left: '50%',
-                top: '50%',
-                transform: 'translate(-50%, -50%)',
-                whiteSpace: 'pre',
-                opacity: 0,
-              }}
-            >
+            <span className="title-visual-invert absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 whitespace-pre opacity-0">
               L
             </span>
           </span>
         </span>
-        <span
-          className="title-segmented-middle"
-          style={{ opacity: 0, marginLeft: '-0.08em', pointerEvents: 'none' }}
-        >
+        <span className="title-segmented-middle opacity-0 -ml-[0.08em] pointer-events-none">
           iam
         </span>
-        <span className="title-segmented-middle" style={{ opacity: 0 }}>
-          &nbsp;
-        </span>
+        <span className="title-segmented-middle opacity-0">&nbsp;</span>
         <span
-          className="title-right title-segmented-char"
+          className="title-right title-segmented-char relative inline-block opacity-0 pointer-events-none"
           ref={rightRef}
-          style={{
-            position: 'relative',
-            display: 'inline-block',
-            opacity: 0,
-            pointerEvents: 'none',
-          }}
         >
-          <span style={{ opacity: 0 }}>P</span>
+          <span className="opacity-0">P</span>
           <span
             ref={rightVisualRef}
-            style={{
-              position: 'absolute',
-              left: '50%',
-              top: '50%',
-              transform: 'translate(-50%, -50%)',
-              color: 'inherit',
-              display: 'inline-block',
-              padding: '0.05em 0.25em',
-              backgroundColor: 'transparent',
-              whiteSpace: 'pre',
-              pointerEvents: 'none',
-            }}
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-inherit inline-block px-[0.25em] py-[0.05em] bg-transparent whitespace-pre pointer-events-none"
           >
-            <span
-              className="title-visual-invert"
-              style={{
-                position: 'absolute',
-                left: '50%',
-                top: '50%',
-                transform: 'translate(-50%, -50%)',
-                whiteSpace: 'pre',
-                opacity: 0,
-              }}
-            >
+            <span className="title-visual-invert absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 whitespace-pre opacity-0">
               P
             </span>
           </span>
         </span>
-        <span
-          className="title-segmented-middle"
-          style={{ opacity: 0, pointerEvents: 'none' }}
-        >
+        <span className="title-segmented-middle opacity-0 pointer-events-none">
           iesley
         </span>
       </span>
-      <style>
-        {`
-          .title-menu-button:hover {
-            background-color: rgba(0,0,0,0.08);
-          }
-          .title-menu-item {
-            display: flex;
-            align-items: center;
-            gap: 0.4em;
-            padding: 16px;
-            border-radius: 4px;
-            text-decoration: none;
-            color: #222;
-            font-size: 14px;
-            font-family: Inter, Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif;
-            white-space: nowrap;
-            transition: background-color 0.15s ease;
-          }
-          .title-menu-item:hover {
-            background-color: rgba(0,0,0,0.08);
-          }
-          .title-menu-item:active {
-            background-color: rgba(0,0,0,0.12);
-          }
-        `}
-      </style>
     </span>
   );
 }
