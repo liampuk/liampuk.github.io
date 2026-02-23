@@ -1,11 +1,13 @@
 ---
 import { Window } from './Window.tsx';
 import { Window2 } from './Window2.tsx';
+import { LevaControls } from './Controls.tsx';
 ---
 
 <div>
   <!-- <Window client:load /> -->
    <Window2 client:load />
+   <LevaControls client:only />
   <div id="grain"></div>
   <style>
     #grain {
