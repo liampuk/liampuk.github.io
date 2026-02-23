@@ -8,7 +8,6 @@ const FORWARD_EASE = 'power2.out';
 const REVERSE_EASE = 'power2.in';
 const SHRINK_SCALE = 3 / 4;
 const MOBILE_MEDIA_QUERY = '(max-width: 768px)';
-const LEFT_HOVER_ENABLED_CLASS = 'title-left-hover-enabled';
 const ANIMATION_START_THRESHOLD = 0.01;
 const RESIZE_WIDTH_THRESHOLD = 2;
 const TRIGGER_START_OFFSET = 20;
@@ -54,14 +53,10 @@ export default function AnimatedTitle() {
   const overlayRef = useRef<HTMLDivElement>(null);
   const menuTimelineRef = useRef<gsap.core.Timeline | null>(null);
   const menuOpenRef = useRef(false);
+  const leftHoverEnabledRef = useRef(false);
 
   const handleLeftVisualClick = () => {
-    const isEnabled = leftVisualRef.current?.classList.contains(
-      LEFT_HOVER_ENABLED_CLASS
-    );
-    if (!isEnabled) {
-      return;
-    }
+    if (!leftHoverEnabledRef.current) return;
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -185,15 +180,7 @@ export default function AnimatedTitle() {
             },
             onUpdate: ({ progress }) => {
               const isComplete = progress >= ANIMATION_START_THRESHOLD;
-              leftVisualRef.current?.classList.toggle(
-                LEFT_HOVER_ENABLED_CLASS,
-                isComplete
-              );
-              if (plusButtonRef.current) {
-                plusButtonRef.current.style.pointerEvents = isComplete
-                  ? 'auto'
-                  : 'none';
-              }
+              leftHoverEnabledRef.current = isComplete;
               if (!isComplete && menuOpenRef.current) {
                 menuTimelineRef.current?.reverse();
                 menuOpenRef.current = false;
@@ -288,6 +275,19 @@ export default function AnimatedTitle() {
             '<'
           );
 
+        tl.eventCallback('onComplete', () => {
+          leftHoverEnabledRef.current = true;
+          if (plusButtonRef.current) {
+            gsap.set(plusButtonRef.current, { pointerEvents: 'auto' });
+          }
+        });
+        tl.eventCallback('onReverseComplete', () => {
+          leftHoverEnabledRef.current = false;
+          if (plusButtonRef.current) {
+            gsap.set(plusButtonRef.current, { pointerEvents: 'none' });
+          }
+        });
+
         const menuTl = gsap.timeline({ paused: true });
         const expandedHeight = isMobile ? '3.9em' : '3.05em';
         menuTl
@@ -359,7 +359,10 @@ export default function AnimatedTitle() {
       return () => {
         window.removeEventListener('resize', handleResize);
         window.removeEventListener('orientationchange', recalc);
-        leftVisualRef.current?.classList.remove(LEFT_HOVER_ENABLED_CLASS);
+        leftHoverEnabledRef.current = false;
+        if (plusButtonRef.current) {
+          gsap.set(plusButtonRef.current, { pointerEvents: 'none' });
+        }
         const h1 = rootRef.current?.closest('h1') as HTMLElement | null;
         if (h1) unpinH1(h1);
         menuTimelineRef.current?.kill();
