@@ -2,6 +2,7 @@ import { useRef, useCallback } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Phone, Mail } from 'lucide-react';
 
 const TITLE = 'Liam Piesley';
 const FORWARD_EASE = 'power2.out';
@@ -135,7 +136,7 @@ export default function AnimatedTitle() {
         gsap.set(rightRef.current, { x: 0 });
         gsap.set([leftVisualRef.current, rightVisualRef.current], { scale: 1 });
         gsap.set([leftVisualRef.current, rightVisualRef.current], {
-          color: 'inherit',
+          // color: 'inherit',
         });
         gsap.set(backgroundBlockRef.current, {
           left: backgroundLeft,
@@ -289,16 +290,18 @@ export default function AnimatedTitle() {
         });
 
         const menuTl = gsap.timeline({ paused: true });
+        const menuDirectionalEase = (progress: number) =>
+          menuTl.reversed() ? reverseEase(progress) : forwardEase(progress);
         const expandedHeight = isMobile ? '3.9em' : '3.05em';
         menuTl
           .to(backgroundBlockRef.current, {
             height: expandedHeight,
             duration: 0.35,
-            ease: 'power2.out',
+            ease: menuDirectionalEase,
           })
           .to(
             plusButtonRef.current!.querySelector('svg'),
-            { rotation: 45, duration: 0.25, ease: 'power2.out' },
+            { rotation: 45, duration: 0.25, ease: menuDirectionalEase },
             0
           )
           .to(
@@ -308,7 +311,7 @@ export default function AnimatedTitle() {
               y: 0,
               pointerEvents: 'auto',
               duration: 0.25,
-              ease: 'power2.out',
+              ease: menuDirectionalEase,
             },
             0.1
           )
@@ -318,7 +321,7 @@ export default function AnimatedTitle() {
               opacity: 1,
               pointerEvents: 'auto',
               duration: 0.25,
-              ease: 'power2.out',
+              ease: menuDirectionalEase,
             },
             0
           );
@@ -411,49 +414,26 @@ export default function AnimatedTitle() {
             href="https://cal.com/liam-piesley-iof3ud"
             target="_blank"
             rel="noopener"
-            className="title-menu-item flex items-center gap-[0.4em] p-4 rounded no-underline text-[#222] text-sm whitespace-nowrap transition-colors duration-150 ease-in-out hover:bg-black/8 active:bg-black/12"
+            className="title-menu-item flex items-center gap-[0.8em] p-4 rounded no-underline text-[#222] text-sm whitespace-nowrap transition-colors duration-150 ease-in-out hover:bg-black/8 active:bg-black/12"
             style={{
               fontFamily:
                 "Inter, Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif",
             }}
           >
-            <svg
-              width="14"
-              height="14"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-            </svg>
+            <Phone size={16} />
             Book a call
           </a>
           <a
             href="mailto:liampiesley@gmail.com"
             target="_blank"
             rel="noopener"
-            className="title-menu-item flex items-center gap-[0.4em] p-4 rounded no-underline text-[#222] text-sm whitespace-nowrap transition-colors duration-150 ease-in-out hover:bg-black/8 active:bg-black/12"
+            className="title-menu-item flex items-center gap-[0.8em] p-4 rounded no-underline text-[#222] text-sm whitespace-nowrap transition-colors duration-150 ease-in-out hover:bg-black/8 active:bg-black/12"
             style={{
               fontFamily:
                 "Inter, Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif",
             }}
           >
-            <svg
-              width="14"
-              height="14"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <rect width="20" height="16" x="2" y="4" rx="2" />
-              <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-            </svg>
+            <Mail size={16} />
             Send an email
           </a>
         </div>
@@ -473,7 +453,7 @@ export default function AnimatedTitle() {
       </span>
 
       <span
-        className="title-segmented relative inline-flex items-baseline z-1 pointer-events-none"
+        className="title-segmented relative inline-flex items-baseline z-1 pointer-events-none hover:opacity-80 transition-opacity"
         aria-hidden="true"
       >
         <span
@@ -483,7 +463,7 @@ export default function AnimatedTitle() {
           <span className="opacity-0">L</span>
           <span
             ref={leftVisualRef}
-            className="title-left-visual absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-inherit inline-block px-[0.25em] py-[0.05em] whitespace-pre pointer-events-auto"
+            className="title-left-visual absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 inline-block px-[0.25em] py-[0.05em] whitespace-pre pointer-events-auto"
             onClick={handleLeftVisualClick}
           >
             <span className="title-visual-invert absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 whitespace-pre opacity-0">
@@ -502,7 +482,7 @@ export default function AnimatedTitle() {
           <span className="opacity-0">P</span>
           <span
             ref={rightVisualRef}
-            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-inherit inline-block px-[0.25em] py-[0.05em] bg-transparent whitespace-pre pointer-events-none"
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 inline-block px-[0.25em] py-[0.05em] bg-transparent whitespace-pre pointer-events-none"
           >
             <span className="title-visual-invert absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 whitespace-pre opacity-0">
               P

@@ -16,6 +16,7 @@
     "@tailwindcss/vite": "^4.2.1",
     "astro": "^5.16.6",
     "gsap": "^3.13.0",
+    "lucide-react": "^0.575.0",
     "tailwindcss": "^4.2.1"
   }
 }
