@@ -7,7 +7,7 @@ import { LevaControls } from './Controls.tsx';
 <div>
   <!-- <Window client:load /> -->
    <Window2 client:load />
-   <LevaControls client:only />
+   {import.meta.env.DEV && <LevaControls client:only />}
   <div id="grain"></div>
   <style>
     #grain {
