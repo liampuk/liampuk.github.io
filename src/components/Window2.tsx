@@ -1,4 +1,4 @@
-import { SoftShadows } from '@react-three/drei';
+import { SoftShadows, useGLTF } from '@react-three/drei';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { useControls } from 'leva';
 import { useEffect, useMemo, useRef, useState } from 'react';
@@ -8,6 +8,7 @@ import {
   CameraHelper,
   DoubleSide,
   MathUtils,
+  Mesh,
   PCFSoftShadowMap,
   Path,
   Shape,
@@ -37,9 +38,9 @@ const QUALITY_PRESET_VALUES = {
 } as const;
 type QualityPreset = keyof typeof QUALITY_PRESET_VALUES;
 const STABLE_SHADOW_FRUSTUM = {
-  camSize: 36,
+  camSize: 46,
   near: 0.1,
-  far: 180,
+  far: 280,
 } as const;
 
 const ShadowCameraDebug = ({
@@ -82,32 +83,126 @@ const ShadowCameraDebug = ({
   return null;
 };
 
+const Tree = ({
+  position,
+  castShadow,
+  scale = 1,
+  windAmplitude = 0.08,
+  windFrequency = 2.5,
+  windPhaseScale = 0.5,
+}: {
+  position: [number, number, number];
+  castShadow?: boolean;
+  scale?: number;
+  windAmplitude?: number;
+  windFrequency?: number;
+  windPhaseScale?: number;
+}) => {
+  const { scene } = useGLTF('/tree_small.glb');
+  const originalPositionsRef = useRef<Map<Mesh, Float32Array>>(new Map());
+
+  const clonedScene = useMemo(() => {
+    const clone = scene.clone();
+    originalPositionsRef.current.clear();
+    clone.traverse((child) => {
+      if ('isMesh' in child && (child as Mesh).isMesh) {
+        const mesh = child as Mesh;
+        mesh.castShadow = !!castShadow;
+        const materials = Array.isArray(mesh.material)
+          ? mesh.material
+          : [mesh.material];
+        materials.forEach((mat) => {
+          mat.transparent = true;
+          mat.opacity = 0;
+        });
+        const posAttr = mesh.geometry.getAttribute('position');
+        if (posAttr) {
+          originalPositionsRef.current.set(
+            mesh,
+            new Float32Array(posAttr.array)
+          );
+        }
+      }
+    });
+    return clone;
+  }, [scene, castShadow]);
+
+  useFrame((_, delta) => {
+    const time = performance.now() * 0.001;
+    clonedScene.traverse((child) => {
+      if ('isMesh' in child && (child as Mesh).isMesh) {
+        const mesh = child as Mesh;
+        const originalPos = originalPositionsRef.current.get(mesh);
+        if (!originalPos) return;
+        const posAttr = mesh.geometry.getAttribute('position');
+        if (!posAttr) return;
+        const positions = posAttr.array as Float32Array;
+        for (let i = 0; i < positions.length; i += 3) {
+          const y = originalPos[i + 1];
+          const sway =
+            Math.sin(time * windFrequency + y * windPhaseScale) * windAmplitude;
+          const swayZ =
+            Math.sin(time * windFrequency * 0.7 + y * windPhaseScale * 1.2) *
+            windAmplitude *
+            0.6;
+          positions[i] = originalPos[i] + sway;
+          positions[i + 1] = originalPos[i + 1];
+          positions[i + 2] = originalPos[i + 2] + swayZ;
+        }
+        posAttr.needsUpdate = true;
+        mesh.geometry.computeVertexNormals();
+      }
+    });
+  });
+
+  return (
+    <primitive
+      object={clonedScene}
+      position={position}
+      scale={[scale, scale, scale]}
+    />
+  );
+};
+
 export const Window2 = () => {
   const lightRef = useRef<DirectionalLight>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
 
   const controls = useControls({
     qualityPreset: {
-      value: 'Balanced',
+      value: 'Sharp',
       options: ['Sharp', 'Balanced', 'Soft'],
     },
     lightStart: {
-      value: { x: -78.5, y: 9.5 },
+      value: { x: -205, y: 10 },
       joystick: 'invertY',
       step: 1,
     },
     lightEnd: {
-      value: { x: -2.5, y: 52.75 },
+      value: { x: 91, y: 148 },
       joystick: 'invertY',
       step: 1,
     },
-    lightZ: { value: 24.5, min: -60, max: 60, step: 0.25 },
+    lightZ: { value: 174.5, min: -60, max: 200, step: 0.25 },
     showWindow: { value: false },
     window: { value: { x: 0, y: 1, z: 3 }, step: 0.05 },
     planeRotateY: { value: -0.15, min: -Math.PI, max: Math.PI, step: 0.005 },
     frameSize: { value: 50, min: 1, max: 100, step: 0.1 },
     holeSize: { value: 6, min: 0.1, max: 10, step: 0.1 },
     barThickness: { value: 0.3, min: 0.05, max: 4, step: 0.05 },
+  });
+
+  const treeControls = useControls('Tree', {
+    treeX: { value: 2.03, min: -100, max: 100, step: 0.01 },
+    treeY: { value: -20.81, min: -100, max: 100, step: 0.01 },
+    treeZ: { value: 21.84, min: -100, max: 100, step: 0.01 },
+    scale: { value: 1, min: 0.1, max: 5, step: 0.1 },
+  });
+
+  const windControls = useControls('Tree Wind', {
+    windAmplitude: { value: 0.08, min: 0, max: 0.5, step: 0.01 },
+    windFrequency: { value: 2.5, min: 0.1, max: 10, step: 0.1 },
+    windPhaseScale: { value: 0.5, min: 0, max: 2, step: 0.05 },
   });
 
   useEffect(() => {
@@ -270,6 +365,18 @@ export const Window2 = () => {
           <boxGeometry args={[1, 1, 1]} />
           <meshStandardMaterial color="red" side={DoubleSide} />
         </mesh> */}
+        <Tree
+          position={[
+            treeControls.treeX,
+            treeControls.treeY,
+            treeControls.treeZ,
+          ]}
+          castShadow
+          scale={treeControls.scale}
+          windAmplitude={windControls.windAmplitude}
+          windFrequency={windControls.windFrequency}
+          windPhaseScale={windControls.windPhaseScale}
+        />
         <mesh
           geometry={geometry}
           castShadow
