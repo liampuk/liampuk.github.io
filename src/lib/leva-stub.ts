@@ -14,10 +14,27 @@ function extractDefaults(
   return result;
 }
 
-export function useControls(schema: Record<string, unknown>) {
+function getSchema(
+  schemaOrName: Record<string, unknown> | string,
+  schema?: Record<string, unknown>
+): Record<string, unknown> {
+  if (typeof schemaOrName === 'string') {
+    if (schema === undefined) {
+      return {};
+    }
+    return schema;
+  }
+  return schemaOrName;
+}
+
+export function useControls(
+  schemaOrName: Record<string, unknown> | string,
+  schema?: Record<string, unknown>
+) {
+  const resolvedSchema = getSchema(schemaOrName, schema);
   const ref = useRef<Record<string, unknown> | null>(null);
   if (ref.current === null) {
-    ref.current = extractDefaults(schema);
+    ref.current = extractDefaults(resolvedSchema);
   }
   return ref.current;
 }

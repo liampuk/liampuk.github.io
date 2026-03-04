@@ -1,7 +1,8 @@
 import { SoftShadows, useGLTF } from '@react-three/drei';
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import { Canvas, useFrame } from '@react-three/fiber';
+import gsap from 'gsap';
 import { useControls } from 'leva';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import {
   BackSide,
   DoubleSide,
@@ -182,9 +183,34 @@ const Tree = ({
   );
 };
 
+// Notify parent once the Canvas has rendered a few frames (avoids 3D "pop" on fade-in)
+function NotifySceneReady({ onReady }: { onReady: () => void }) {
+  const frameCount = useRef(0);
+  const notified = useRef(false);
+  useFrame(() => {
+    if (notified.current) return;
+    frameCount.current += 1;
+    if (frameCount.current >= 2) {
+      notified.current = true;
+      onReady();
+    }
+  });
+  return null;
+}
+
 export const Window2 = () => {
+  const wrapperRef = useRef<HTMLDivElement>(null);
   const lightRef = useRef<DirectionalLight>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [sceneReady, setSceneReady] = useState(false);
+
+  useLayoutEffect(() => {
+    if (!sceneReady) return;
+    const el = wrapperRef.current;
+    if (!el) return;
+    gsap.set(el, { opacity: 0 });
+    gsap.to(el, { opacity: 1, duration: 1, ease: 'power1.out' });
+  }, [sceneReady]);
 
   const controls = useControls({
     qualityPreset: {
@@ -202,10 +228,10 @@ export const Window2 = () => {
   });
 
   const lightControls = useControls('Light', {
-    lightX: { value: 23, min: -300, max: 300, step: 1 },
+    lightX: { value: 25, min: -300, max: 300, step: 1 },
     lightY: { value: 48, min: -300, max: 300, step: 1 },
     lightZStart: { value: 174.5, min: -60, max: 200, step: 0.25 },
-    lightZEnd: { value: 50, min: -60, max: 200, step: 0.25 },
+    lightZEnd: { value: 35, min: -60, max: 200, step: 0.25 },
   });
 
   const treeControls = useControls('Tree', {
@@ -216,7 +242,7 @@ export const Window2 = () => {
   });
 
   const windControls = useControls('Tree Wind', {
-    windAmplitude: { value: 1.2, min: 0, max: 2, step: 0.01 },
+    windAmplitude: { value: 0.18, min: 0, max: 2, step: 0.01 },
     windFrequency: { value: 1.8, min: 0.1, max: 10, step: 0.1 },
     windPhaseScale: { value: 0.5, min: 0, max: 2, step: 0.05 },
     windRandomness: {
@@ -337,18 +363,14 @@ export const Window2 = () => {
 
   return (
     <div
-      style={{
-        width: '100vw',
-        height: '100vh',
-        position: 'fixed',
-        top: 0,
-        mixBlendMode: 'screen',
-      }}
+      ref={wrapperRef}
+      className="w-full h-full fixed top-0 mix-blend-screen opacity-0"
     >
       <Canvas
         shadows={{ type: PCFSoftShadowMap }}
         camera={{ position: [0, 0, 12] }}
       >
+        <NotifySceneReady onReady={() => setSceneReady(true)} />
         <SoftShadows />
         <directionalLight
           key={`sun-shadow-${shadowSettings.shadowMapSize}`}
