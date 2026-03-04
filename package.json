@@ -17,6 +17,12 @@
     "astro": "^5.16.6",
     "gsap": "^3.13.0",
     "lucide-react": "^0.575.0",
-    "tailwindcss": "^4.2.1"
+    "tailwindcss": "^4.2.1",
+    "@react-three/drei": "^10.7.7",
+    "@react-three/fiber": "^9.5.0",
+    "three": "^0.172.0"
+  },
+  "devDependencies": {
+    "leva": "^0.10.1"
   }
 }
