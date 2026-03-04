@@ -2,10 +2,8 @@ import { SoftShadows, useGLTF } from '@react-three/drei';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { useControls } from 'leva';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import type { RefObject } from 'react';
 import {
   BackSide,
-  CameraHelper,
   DoubleSide,
   MathUtils,
   Mesh,
@@ -43,45 +41,17 @@ const STABLE_SHADOW_FRUSTUM = {
   far: 280,
 } as const;
 
-const ShadowCameraDebug = ({
-  lightRef,
-  enabled,
-}: {
-  lightRef: RefObject<DirectionalLight | null>;
-  enabled: boolean;
-}) => {
-  const { scene } = useThree();
-  const helperRef = useRef<CameraHelper | null>(null);
+// Hash vertex position to a 0–1 value for per-vertex phase variation (no extra deps)
+function vertexPhase(x: number, y: number, z: number): number {
+  const u = Math.sin(x * 12.9898 + y * 78.233 + z * 45.164) * 43758.5453;
+  return u - Math.floor(u);
+}
 
-  useEffect(() => {
-    const light = lightRef.current;
-    if (!enabled || !light) {
-      if (helperRef.current) {
-        scene.remove(helperRef.current);
-        helperRef.current.dispose();
-        helperRef.current = null;
-      }
-      return;
-    }
-
-    const helper = new CameraHelper(light.shadow.camera);
-    helperRef.current = helper;
-    scene.add(helper);
-
-    return () => {
-      scene.remove(helper);
-      helper.dispose();
-      if (helperRef.current === helper) helperRef.current = null;
-    };
-  }, [enabled, lightRef, scene]);
-
-  useFrame(() => {
-    if (!enabled || !helperRef.current) return;
-    helperRef.current.update();
-  });
-
-  return null;
-};
+// Smooth ramp: 0 for x<=a, 1 for x>=b, smooth in between
+function smoothstep(a: number, b: number, x: number): number {
+  const t = Math.max(0, Math.min(1, (x - a) / (b - a)));
+  return t * t * (3 - 2 * t);
+}
 
 const Tree = ({
   position,
@@ -90,6 +60,7 @@ const Tree = ({
   windAmplitude = 0.08,
   windFrequency = 2.5,
   windPhaseScale = 0.5,
+  windRandomness = 0.4,
 }: {
   position: [number, number, number];
   castShadow?: boolean;
@@ -97,13 +68,22 @@ const Tree = ({
   windAmplitude?: number;
   windFrequency?: number;
   windPhaseScale?: number;
+  windRandomness?: number;
 }) => {
-  const { scene } = useGLTF('/tree_small.glb');
+  const { scene } = useGLTF('/tree_small-opt.glb');
   const originalPositionsRef = useRef<Map<Mesh, Float32Array>>(new Map());
+  const windBoundsRef = useRef<{
+    minY: number;
+    maxY: number;
+    maxRadius: number;
+  } | null>(null);
 
   const clonedScene = useMemo(() => {
     const clone = scene.clone();
     originalPositionsRef.current.clear();
+    let minY = Infinity;
+    let maxY = -Infinity;
+    let maxRadius = 0;
     clone.traverse((child) => {
       if ('isMesh' in child && (child as Mesh).isMesh) {
         const mesh = child as Mesh;
@@ -117,18 +97,30 @@ const Tree = ({
         });
         const posAttr = mesh.geometry.getAttribute('position');
         if (posAttr) {
-          originalPositionsRef.current.set(
-            mesh,
-            new Float32Array(posAttr.array)
-          );
+          const arr = posAttr.array as Float32Array;
+          originalPositionsRef.current.set(mesh, new Float32Array(arr));
+          for (let i = 0; i < arr.length; i += 3) {
+            const x = arr[i];
+            const y = arr[i + 1];
+            const z = arr[i + 2];
+            minY = Math.min(minY, y);
+            maxY = Math.max(maxY, y);
+            const r = Math.sqrt(x * x + z * z);
+            maxRadius = Math.max(maxRadius, r);
+          }
         }
       }
     });
+    windBoundsRef.current =
+      maxY > minY && maxRadius > 0 ? { minY, maxY, maxRadius } : null;
     return clone;
   }, [scene, castShadow]);
 
   useFrame((_, delta) => {
     const time = performance.now() * 0.001;
+    const T = time * windFrequency;
+    const phaseNoise = windRandomness * Math.PI * 2;
+    const bounds = windBoundsRef.current;
     clonedScene.traverse((child) => {
       if ('isMesh' in child && (child as Mesh).isMesh) {
         const mesh = child as Mesh;
@@ -137,15 +129,41 @@ const Tree = ({
         const posAttr = mesh.geometry.getAttribute('position');
         if (!posAttr) return;
         const positions = posAttr.array as Float32Array;
+        const { minY, maxY, maxRadius } = bounds ?? {
+          minY: 0,
+          maxY: 1,
+          maxRadius: 1,
+        };
+        const yRange = maxY - minY;
         for (let i = 0; i < positions.length; i += 3) {
+          const x = originalPos[i];
           const y = originalPos[i + 1];
-          const sway =
-            Math.sin(time * windFrequency + y * windPhaseScale) * windAmplitude;
-          const swayZ =
-            Math.sin(time * windFrequency * 0.7 + y * windPhaseScale * 1.2) *
+          const z = originalPos[i + 2];
+          // More wind at top (above bottom half) and at extremities (branch/leaf tips)
+          const heightNorm = yRange > 0 ? (y - minY) / yRange : 0;
+          const heightFactor = smoothstep(0.45, 0.7, heightNorm); // ramp from ~bottom half into top
+          const radius = Math.sqrt(x * x + z * z);
+          const extremityFactor =
+            maxRadius > 0 ? Math.min(1, radius / maxRadius) : 0;
+          const windScale = heightFactor * (0.4 + 0.6 * extremityFactor);
+          const vPhase = vertexPhase(x, y, z) * phaseNoise;
+          const py = y * windPhaseScale;
+          // Multiple incommensurate waves so motion isn't a single visible sine
+          const swayX =
             windAmplitude *
-            0.6;
-          positions[i] = originalPos[i] + sway;
+            windScale *
+            (0.45 * Math.sin(T + py + vPhase) +
+              0.3 * Math.sin(T * 1.73 + py * 0.87 + 1 + vPhase * 0.7) +
+              0.15 * Math.sin(T * 2.41 + py * 1.13 + 2 + vPhase * 0.5) +
+              0.1 * Math.sin(T * 0.61 + py * 0.6 + vPhase * 1.2));
+          const swayZ =
+            windAmplitude *
+            0.6 *
+            windScale *
+            (0.5 * Math.sin(T * 0.7 + py * 1.2 + 0.5 + vPhase) +
+              0.35 * Math.sin(T * 1.31 + py * 0.9 + 1.3 + vPhase * 0.8) +
+              0.15 * Math.sin(T * 1.97 + py * 1.4 + 2.1 + vPhase * 0.4));
+          positions[i] = originalPos[i] + swayX;
           positions[i + 1] = originalPos[i + 1];
           positions[i + 2] = originalPos[i + 2] + swayZ;
         }
@@ -173,36 +191,40 @@ export const Window2 = () => {
       value: 'Sharp',
       options: ['Sharp', 'Balanced', 'Soft'],
     },
-    lightStart: {
-      value: { x: -205, y: 10 },
-      joystick: 'invertY',
-      step: 1,
-    },
-    lightEnd: {
-      value: { x: 91, y: 148 },
-      joystick: 'invertY',
-      step: 1,
-    },
-    lightZ: { value: 174.5, min: -60, max: 200, step: 0.25 },
     showWindow: { value: false },
-    window: { value: { x: 0, y: 1, z: 3 }, step: 0.05 },
-    planeRotateY: { value: -0.15, min: -Math.PI, max: Math.PI, step: 0.005 },
+    windowX: { value: 6, min: -20, max: 20, step: 0.05 },
+    windowY: { value: 1, min: -20, max: 20, step: 0.05 },
+    windowZ: { value: 3, min: -20, max: 20, step: 0.05 },
+    planeRotateY: { value: -0.16, min: -Math.PI, max: Math.PI, step: 0.005 },
     frameSize: { value: 50, min: 1, max: 100, step: 0.1 },
-    holeSize: { value: 6, min: 0.1, max: 10, step: 0.1 },
-    barThickness: { value: 0.3, min: 0.05, max: 4, step: 0.05 },
+    holeSize: { value: 5.3, min: 0.1, max: 10, step: 0.1 },
+    barThickness: { value: 0.25, min: 0.05, max: 4, step: 0.05 },
+  });
+
+  const lightControls = useControls('Light', {
+    lightX: { value: 23, min: -300, max: 300, step: 1 },
+    lightY: { value: 48, min: -300, max: 300, step: 1 },
+    lightZStart: { value: 174.5, min: -60, max: 200, step: 0.25 },
+    lightZEnd: { value: 50, min: -60, max: 200, step: 0.25 },
   });
 
   const treeControls = useControls('Tree', {
-    treeX: { value: 2.03, min: -100, max: 100, step: 0.01 },
-    treeY: { value: -20.81, min: -100, max: 100, step: 0.01 },
-    treeZ: { value: 21.84, min: -100, max: 100, step: 0.01 },
-    scale: { value: 1, min: 0.1, max: 5, step: 0.1 },
+    treeX: { value: 10.79, min: -100, max: 100, step: 0.01 },
+    treeY: { value: -9.24, min: -100, max: 100, step: 0.01 },
+    treeZ: { value: 13.06, min: -100, max: 100, step: 0.01 },
+    scale: { value: 0.58, min: 0.1, max: 2, step: 0.01 },
   });
 
   const windControls = useControls('Tree Wind', {
-    windAmplitude: { value: 0.08, min: 0, max: 0.5, step: 0.01 },
-    windFrequency: { value: 2.5, min: 0.1, max: 10, step: 0.1 },
+    windAmplitude: { value: 1.2, min: 0, max: 2, step: 0.01 },
+    windFrequency: { value: 1.8, min: 0.1, max: 10, step: 0.1 },
     windPhaseScale: { value: 0.5, min: 0, max: 2, step: 0.05 },
+    windRandomness: {
+      value: 0.4,
+      min: 0,
+      max: 1,
+      step: 0.05,
+    },
   });
 
   useEffect(() => {
@@ -223,21 +245,12 @@ export const Window2 = () => {
     };
   }, []);
 
-  console.log(controls.lightStart, controls.lightEnd);
-
-  // Leva vector2d can return [x, y] or { x, y }; support both.
-  const start = controls.lightStart as
-    | { x: number; y: number }
-    | [number, number];
-  const end = controls.lightEnd as { x: number; y: number } | [number, number];
-  const startX = Array.isArray(start) ? start[0] : start.x;
-  const startY = Array.isArray(start) ? start[1] : start.y;
-  const endX = Array.isArray(end) ? end[0] : end.x;
-  const endY = Array.isArray(end) ? end[1] : end.y;
-
-  const lightX = MathUtils.lerp(startX, endX, scrollProgress);
-  const lightY = MathUtils.lerp(startY, endY, scrollProgress);
-  const intensity = MathUtils.lerp(10, 1, scrollProgress);
+  const lightZ = MathUtils.lerp(
+    lightControls.lightZStart as number,
+    lightControls.lightZEnd as number,
+    scrollProgress
+  );
+  const intensity = MathUtils.lerp(10, 0.9, scrollProgress);
   const shadowSettings =
     QUALITY_PRESET_VALUES[controls.qualityPreset as QualityPreset];
 
@@ -265,7 +278,7 @@ export const Window2 = () => {
     const size = controls.frameSize;
     const holeSize = controls.holeSize;
     const barThickness = controls.barThickness;
-    const widthMod = 1.5;
+    const widthMod = 1.3;
     const halfWindowWidth = holeSize * widthMod;
     const halfWindowHeight = holeSize;
     const halfBar = Math.min(
@@ -340,7 +353,11 @@ export const Window2 = () => {
         <directionalLight
           key={`sun-shadow-${shadowSettings.shadowMapSize}`}
           ref={lightRef}
-          position={[lightX, lightY, controls.lightZ]}
+          position={[
+            lightControls.lightX as number,
+            lightControls.lightY as number,
+            lightZ,
+          ]}
           intensity={intensity}
           castShadow
           shadow-mapSize-width={shadowSettings.shadowMapSize}
@@ -358,13 +375,6 @@ export const Window2 = () => {
           <planeGeometry args={[50, 50]} />
           <meshStandardMaterial color="white" />
         </mesh>
-        {/* <mesh
-          position={[controls.windowX, controls.windowY, controls.windowZ]}
-          castShadow
-        >
-          <boxGeometry args={[1, 1, 1]} />
-          <meshStandardMaterial color="red" side={DoubleSide} />
-        </mesh> */}
         <Tree
           position={[
             treeControls.treeX,
@@ -376,11 +386,16 @@ export const Window2 = () => {
           windAmplitude={windControls.windAmplitude}
           windFrequency={windControls.windFrequency}
           windPhaseScale={windControls.windPhaseScale}
+          windRandomness={windControls.windRandomness}
         />
         <mesh
           geometry={geometry}
           castShadow
-          position={[controls.window.x, controls.window.y, controls.window.z]}
+          position={[
+            controls.windowX as number,
+            controls.windowY as number,
+            controls.windowZ as number,
+          ]}
         >
           <meshStandardMaterial
             side={controls.showWindow ? DoubleSide : BackSide}
