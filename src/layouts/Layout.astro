@@ -34,6 +34,13 @@ import '../styles/global.css';
     />
   </head>
   <body>
+    <!-- Lock initial viewport height before any content so layout doesn’t shift when browser chrome hides -->
+    <script is:inline>
+      (function () {
+        var h = typeof window !== 'undefined' && (window.visualViewport ? window.visualViewport.height : window.innerHeight);
+        if (h > 0) document.documentElement.style.setProperty('--initial-viewport-height', h + 'px');
+      })();
+    </script>
     <slot />
   </body>
 </html>

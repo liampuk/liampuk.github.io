@@ -3,6 +3,9 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import gsap from 'gsap';
 import { useControls } from 'leva';
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { useIsMobile } from '../hooks/general';
+
+type WindowVariant = 'fixed' | 'inline';
 import {
   BackSide,
   DoubleSide,
@@ -198,11 +201,21 @@ function NotifySceneReady({ onReady }: { onReady: () => void }) {
   return null;
 }
 
-export const Window = () => {
+type WindowProps = { variant?: WindowVariant };
+
+export const Window = ({ variant }: WindowProps) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const lightRef = useRef<DirectionalLight>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [sceneReady, setSceneReady] = useState(false);
+  const isMobile = useIsMobile();
+  // When variant is set, use it; otherwise treat undefined as mobile so we never flash desktop layout
+  const useMobileLayout =
+    variant === 'inline'
+      ? true
+      : variant === 'fixed'
+      ? false
+      : isMobile !== false;
 
   useLayoutEffect(() => {
     if (!sceneReady) return;
@@ -218,12 +231,17 @@ export const Window = () => {
       options: ['Sharp', 'Balanced', 'Soft'],
     },
     showWindow: { value: false },
-    windowX: { value: 6, min: -20, max: 20, step: 0.05 },
+    windowX: { value: useMobileLayout ? 0 : 6, min: -20, max: 20, step: 0.05 },
     windowY: { value: 1, min: -20, max: 20, step: 0.05 },
     windowZ: { value: 3, min: -20, max: 20, step: 0.05 },
     planeRotateY: { value: -0.16, min: -Math.PI, max: Math.PI, step: 0.005 },
     frameSize: { value: 50, min: 1, max: 100, step: 0.1 },
-    holeSize: { value: 5.3, min: 0.1, max: 10, step: 0.1 },
+    holeSize: {
+      value: useMobileLayout ? 6 : 5.3,
+      min: 0.1,
+      max: 10,
+      step: 0.1,
+    },
     barThickness: { value: 0.25, min: 0.05, max: 4, step: 0.05 },
   });
 
@@ -254,6 +272,7 @@ export const Window = () => {
   });
 
   useEffect(() => {
+    if (useMobileLayout) return; // no scroll-driven animation on mobile
     const updateScrollProgress = () => {
       const scrollTop = window.scrollY || document.documentElement.scrollTop;
       const maxScroll = Math.max(
@@ -269,14 +288,15 @@ export const Window = () => {
     return () => {
       window.removeEventListener('scroll', updateScrollProgress);
     };
-  }, []);
+  }, [useMobileLayout]);
 
+  const effectiveScrollProgress = useMobileLayout ? 0 : scrollProgress;
   const lightZ = MathUtils.lerp(
     lightControls.lightZStart as number,
     lightControls.lightZEnd as number,
-    scrollProgress
+    effectiveScrollProgress
   );
-  const intensity = MathUtils.lerp(10, 0.9, scrollProgress);
+  const intensity = MathUtils.lerp(10, 0.9, effectiveScrollProgress);
   const shadowSettings =
     QUALITY_PRESET_VALUES[controls.qualityPreset as QualityPreset];
 
@@ -361,14 +381,15 @@ export const Window = () => {
     return new ShapeGeometry(shape);
   }, [controls.frameSize, controls.holeSize, controls.barThickness]);
 
-  return (
-    <div
-      ref={wrapperRef}
-      className="w-full h-full fixed top-0 mix-blend-screen opacity-0"
-    >
+  const windowContent = (
+    <>
       <Canvas
         shadows={{ type: PCFSoftShadowMap }}
         camera={{ position: [0, 0, 12] }}
+        gl={{ alpha: true }}
+        onCreated={({ gl }) => {
+          gl.setClearColor(0x000000, 0);
+        }}
       >
         <NotifySceneReady onReady={() => setSceneReady(true)} />
         <SoftShadows />
@@ -399,7 +420,7 @@ export const Window = () => {
         </mesh>
         <Tree
           position={[
-            treeControls.treeX,
+            useMobileLayout ? 5 : (treeControls.treeX as number),
             treeControls.treeY,
             treeControls.treeZ,
           ]}
@@ -425,6 +446,16 @@ export const Window = () => {
           />
         </mesh>
       </Canvas>
+    </>
+  );
+
+  const wrapperClassName = useMobileLayout
+    ? 'window-mobile mix-blend-screen opacity-0'
+    : 'w-full h-full fixed top-0 mix-blend-screen opacity-0';
+
+  return (
+    <div ref={wrapperRef} className={wrapperClassName}>
+      {windowContent}
     </div>
   );
 };

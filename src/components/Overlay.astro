@@ -4,10 +4,21 @@ import { LevaControls } from './Controls.tsx';
 ---
 
 <div>
-   <Window client:load />
+   <div class="window-desktop-only">
+     <Window client:load variant="fixed" />
+   </div>
    {import.meta.env.DEV && <LevaControls client:only />}
   <div id="grain"></div>
   <style>
+    .window-desktop-only {
+      display: block;
+    }
+    @media (max-width: 768px) {
+      .window-desktop-only {
+        display: none;
+      }
+    }
+
     #grain {
       z-index: 999;
       animation: 2s steps(2) 0s infinite normal none running noise;
