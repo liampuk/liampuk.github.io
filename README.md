@@ -1,6 +1,8 @@
-## liamp.uk
+## Portfolio
 
 My portfolio, [liamp.uk](http://liamp.uk)
+
+![Screenshot 2026-03-05 at 19 12 01](https://github.com/user-attachments/assets/3591aff6-20df-4882-98a2-b7a6598b24ec)
 
 ## Running
 
