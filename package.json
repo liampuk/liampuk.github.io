@@ -13,14 +13,15 @@
     "@astrojs/react": "^4.4.2",
     "@gsap/react": "^2.1.2",
     "@lucide/astro": "^0.575.0",
+    "@react-three/drei": "^10.7.7",
+    "@react-three/fiber": "^9.5.0",
     "@tailwindcss/vite": "^4.2.1",
     "astro": "^5.16.6",
     "gsap": "^3.13.0",
     "lucide-react": "^0.575.0",
     "tailwindcss": "^4.2.1",
-    "@react-three/drei": "^10.7.7",
-    "@react-three/fiber": "^9.5.0",
-    "three": "^0.172.0"
+    "three": "^0.172.0",
+    "web-haptics": "^0.0.6"
   },
   "devDependencies": {
     "leva": "^0.10.1"

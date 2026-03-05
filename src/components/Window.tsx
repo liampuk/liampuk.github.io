@@ -3,7 +3,6 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import gsap from 'gsap';
 import { useControls } from 'leva';
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { useIsMobile } from '../hooks/general';
 
 type WindowVariant = 'fixed' | 'inline';
 import {
@@ -208,14 +207,7 @@ export const Window = ({ variant }: WindowProps) => {
   const lightRef = useRef<DirectionalLight>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [sceneReady, setSceneReady] = useState(false);
-  const isMobile = useIsMobile();
-  // When variant is set, use it; otherwise treat undefined as mobile so we never flash desktop layout
-  const useMobileLayout =
-    variant === 'inline'
-      ? true
-      : variant === 'fixed'
-      ? false
-      : isMobile !== false;
+  const useMobileLayout = variant === 'inline';
 
   useLayoutEffect(() => {
     if (!sceneReady) return;
@@ -227,7 +219,7 @@ export const Window = ({ variant }: WindowProps) => {
 
   const controls = useControls({
     qualityPreset: {
-      value: 'Sharp',
+      value: useMobileLayout ? 'Balanced' : 'Sharp',
       options: ['Sharp', 'Balanced', 'Soft'],
     },
     showWindow: { value: false },
@@ -237,7 +229,7 @@ export const Window = ({ variant }: WindowProps) => {
     planeRotateY: { value: -0.16, min: -Math.PI, max: Math.PI, step: 0.005 },
     frameSize: { value: 50, min: 1, max: 100, step: 0.1 },
     holeSize: {
-      value: useMobileLayout ? 6 : 5.3,
+      value: useMobileLayout ? 6.4 : 5.3,
       min: 0.1,
       max: 10,
       step: 0.1,
