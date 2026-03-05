@@ -18,13 +18,13 @@ import { Window } from './Window.tsx';
       </div>
     </h1>
     <p class="intro-text">
-      Hey! I'm Liam, a software engineer working in London. I love to create
+      Hey! I'm Liam, a software engineer based in London. I love to create
       beautiful and intuitive interfaces. If you like my work please get in
       touch!
     </p>
 
     <div class="window-mobile-slot" aria-hidden="true">
-      <Window client:load variant="inline" />
+      <Window client:media="(max-width: 768px)" variant="inline" />
     </div>
 
     <section id="buttons">
@@ -160,7 +160,7 @@ import { Window } from './Window.tsx';
       padding-bottom: 192px;
 
       @media (orientation: portrait) {
-        padding: 42px;
+        padding: 36px;
       }
     }
 
@@ -184,6 +184,7 @@ import { Window } from './Window.tsx';
       isolation: isolate;
 
       @media (orientation: portrait) {
+        margin-top: 24px;
         top: 24px;
         font-size: 50px;
         padding-left: 0;
@@ -209,12 +210,13 @@ import { Window } from './Window.tsx';
     .intro-text {
       @media (orientation: portrait) {
         /* margin-top: 64px; */
+        text-align: justify;
       }
     }
 
     .window-mobile-slot {
       display: none;
-      height: 50vh;
+      height: 40vh;
       min-height: 280px;
       width: 100%;
       position: relative;
@@ -227,7 +229,7 @@ import { Window } from './Window.tsx';
         left: 50%;
         margin-left: -50vw;
         /* Lock to initial viewport height (set in Layout) so slot and content below don’t shift when browser chrome hides */
-        height: calc(var(--initial-viewport-height, 100vh) * 0.5);
+        height: calc(var(--initial-viewport-height, 100vh) * 0.45);
         min-height: min(280px, calc(var(--initial-viewport-height, 100vh) * 0.5));
       }
     }

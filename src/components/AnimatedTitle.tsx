@@ -3,6 +3,7 @@ import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Phone, Mail } from 'lucide-react';
+import { useWebHaptics } from 'web-haptics/react';
 
 const TITLE = 'Liam Piesley';
 const FORWARD_EASE = 'power2.out';
@@ -56,12 +57,16 @@ export default function AnimatedTitle() {
   const menuOpenRef = useRef(false);
   const leftHoverEnabledRef = useRef(false);
 
+  const { trigger } = useWebHaptics();
+
   const handleLeftVisualClick = () => {
+    trigger({ pattern: [{ duration: 100 }] });
     if (!leftHoverEnabledRef.current) return;
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleToggleMenu = useCallback(() => {
+    trigger({ pattern: [{ duration: 100 }] });
     if (!menuTimelineRef.current) return;
     if (menuOpenRef.current) {
       menuTimelineRef.current.reverse();
