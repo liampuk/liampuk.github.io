@@ -219,7 +219,7 @@ export const Window = ({ variant }: WindowProps) => {
 
   const controls = useControls({
     qualityPreset: {
-      value: useMobileLayout ? 'Balanced' : 'Sharp',
+      value: useMobileLayout ? 'Balanced' : 'Balanced',
       options: ['Sharp', 'Balanced', 'Soft'],
     },
     showWindow: { value: false },

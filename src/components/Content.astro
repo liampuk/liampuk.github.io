@@ -2,20 +2,15 @@
 import { Mail, Phone } from '@lucide/astro';
 import AnimatedTitle from './AnimatedTitle';
 import { Window } from './Window.tsx';
+import { Toggle } from './Toggle.tsx';
+import Arrow from './Arrow.astro';
+import Feed from './Feed.astro';
 ---
 
-<div id="content">
+<div id="content" data-view="about">
   <main>
     <h1>
       <span class="title-text"><AnimatedTitle client:load /></span>
-      <div class="gradient-blur" aria-hidden="true">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
     </h1>
     <p class="intro-text">
       Hey! I'm Liam, a software engineer based in London. I love to create
@@ -27,115 +22,134 @@ import { Window } from './Window.tsx';
       <Window client:media="(max-width: 768px)" variant="inline" />
     </div>
 
-    <section id="buttons">
-      <a
-        href="https://cal.com/liam-piesley-iof3ud"
-        target="_blank"
-        rel="noopener"><Phone class="icon" />Call</a
-      >
-      <a href="mailto:liampiesley@gmail.com" target="_blank" rel="noopener"
-        ><Mail class="icon" />Email</a
-      >
+    <section id="toggle">
+      <Toggle client:load />
     </section>
-    <section id="software">
-      <h2>Software Sidequests</h2>
-      <ul>
-        <li>
-          <a href="https://liamp.uk/gallery-quest">Gallery Quest</a> → Art Nouveau
-          card collecting game, exploring HDR and complex CSS animations.
-        </li>
-        <li>
-          <a href="https://liamp.uk/timescale">Geologic Timescale</a> → Building a
-          more intuitive way to explore Earth's history.
-        </li>
-        <li>
-          <a href="https://liamp.uk/chess">Chess Board</a> → A chess app that can
-          be played like a real board by placing the phone between two players.
-        </li>
-        <li>
-          <a href="https://liamp.uk/minikeys">Minikeys</a> → A tiny Javascript Library
-          that plays the piano.
-        </li>
-        <li>
-          <a href="https://liamp.uk/aero">Aero</a> → An HDR view from an aeroplane
-          window.
-        </li>
-        <li>
-          <a href="https://liamp.uk/2048">2048</a> → A clone of the popular 2048 game.
-        </li>
-      </ul>
+
+    <section id="about-view" class="view">
+      <section id="software">
+        <h2>Software Sidequests</h2>
+        <ul>
+          <li>
+            <a href="https://liamp.uk/gallery-quest">Gallery Quest</a>
+            <Arrow class="arrow-inline" /> Art Nouveau card collecting game, exploring HDR and complex CSS
+            animations.
+          </li>
+          <li>
+            <a href="https://liamp.uk/timescale">Geologic Timescale</a>
+            <Arrow class="arrow-inline" /> Building a more intuitive way to explore Earth's history.
+          </li>
+          <li>
+            <a href="https://liamp.uk/chess">Chess Board</a>
+            <Arrow class="arrow-inline" /> A chess app that can be played like a real board by placing the
+            phone between two players.
+          </li>
+          <li>
+            <a href="https://liamp.uk/minikeys">Minikeys</a>
+            <Arrow class="arrow-inline" /> A tiny Javascript Library that plays the piano.
+          </li>
+          <li>
+            <a href="https://liamp.uk/aero">Aero</a> <Arrow class="arrow-inline" /> An HDR view from an
+            aeroplane window.
+          </li>
+          <li>
+            <a href="https://liamp.uk/2048">2048</a>
+            <Arrow class="arrow-inline" /> A clone of the popular 2048 game.
+          </li>
+        </ul>
+      </section>
+
+      <section id="hardware">
+        <h2>Hardware Doodads</h2>
+        <ul>
+          <li>
+            <a href="https://liamp.uk/lockin">Locked In</a>
+            <Arrow class="arrow-inline" /> A hardware switch for disabling social media.
+          </li>
+          <li>
+            <a href="https://github.com/liampuk/esp-2048">2048 Gamepad</a>
+            <Arrow class="arrow-inline" /> A handheld 2048 game based on an esp32. (Work in progress)
+          </li>
+          <li>
+            <a href="https://github.com/liampuk/cpu-emu">TTL CPU</a>
+            <Arrow class="arrow-inline" /> Designing and building a CPU from scratch with TTL chips. (Work in
+            progress)
+          </li>
+        </ul>
+      </section>
+
+      <section id="garden">
+        <h2>Website Garden</h2>
+        <p>
+          Over the years I've grown a collection of well designed websites. From
+          unique experiences full of eye catching animation to simple intuitive
+          layouts, find some inspiration here:
+        </p>
+        <ul>
+          <li>
+            <a href="https://webgarden.liamp.uk">Explore the Garden</a>
+          </li>
+        </ul>
+      </section>
+
+      <section id="blog">
+        <h2>Blog</h2>
+        <p>
+          I've recently started writing about programming and other things, read
+          some articles here:
+        </p>
+        <ul>
+          <li>
+            Latest article <Arrow class="arrow-inline" />
+            <a href="">Minolta Weathermatic Review</a>
+            <Arrow class="arrow-inline" /> coming soon
+          </li>
+        </ul>
+      </section>
+
+      <section id="about">
+        <h2>About Me</h2>
+        <p>
+          I started my career at Nissan in Newcastle while working on my
+          computer science degree. After a summer internship at Amazon I moved
+          down to London and joined Marshmallow, which I helped grow from a 60
+          person startup to a 500+ employee unicorn. I'm currently building a
+          video editor for the web at Blackbird Video.
+        </p>
+        <ul>
+          <li>
+            See more projects on
+            <a href="https://github.com/liampuk" target="_blank">GitHub</a>
+          </li>
+          <li>
+            Connect on
+            <a href="https://www.linkedin.com/in/liampuk/" target="_blank"
+              >Linkedin</a
+            >
+          </li>
+          <li>
+            Find my
+            <a href="https://liamp.uk/liam-piesley-cv.pdf" target="_blank"
+              >full CV here</a
+            >
+          </li>
+        </ul>
+      </section>
+
+      <section id="buttons">
+        <a
+          href="https://cal.com/liam-piesley-iof3ud"
+          target="_blank"
+          rel="noopener"><span>Book a call</span><Phone class="icon" /></a
+        >
+        <a href="mailto:liampiesley@gmail.com" target="_blank" rel="noopener"
+          ><span>Send an email</span><Mail class="icon" /></a
+        >
+      </section>
     </section>
-    <section id="hardware">
-      <h2>Hardware Doodads</h2>
-      <ul>
-        <li>
-          <a href="https://liamp.uk/lockin">Locked In</a>
-          → A hardware switch for disabling social media.
-        </li>
-        <li>
-          <a href="https://github.com/liampuk/esp-2048">2048 Gamepad</a>
-          → A handheld 2048 game based on an esp32. (Work in progress)
-        </li>
-        <li>
-          <a href="https://github.com/liampuk/cpu-emu">TTL CPU</a>
-          → Designing and building a CPU from scratch with TTL chips. (Work in progress)
-        </li>
-      </ul>
-    </section>
-    <section id="garden">
-      <h2>Website Garden</h2>
-      <p>
-        Over the years I've grown a collection of well designed websites. From
-        unique experiences full of eye catching animation to simple intuitive
-        layouts, find some inspiration here:
-      </p>
-      <ul>
-        <li>
-          <a href="https://webgarden.liamp.uk">Explore the Garden</a>
-        </li>
-      </ul>
-    </section>
-    <section id="blog">
-      <h2>Blog</h2>
-      <p>
-        I've recently started writing about programming and other things, read
-        some articles here:
-      </p>
-      <ul>
-        <li>
-          Latest article →
-          <a href="">Minolta Weathermatic Review</a>
-          → coming soon
-        </li>
-      </ul>
-    </section>
-    <section id="about">
-      <h2>About Me</h2>
-      <p>
-        I started my career at Nissan in Newcastle while working on my computer
-        science degree. After a summer internship at Amazon I moved down to
-        London and joined Marshmallow, which I helped grow from a 60 person
-        startup to a 500+ employee unicorn. I'm currently building a video
-        editor for the web at Blackbird Video.
-      </p>
-      <ul>
-        <li>
-          See more projects on
-          <a href="https://github.com/liampuk" target="_blank">GitHub</a>
-        </li>
-        <li>
-          Connect on
-          <a href="https://www.linkedin.com/in/liampuk/" target="_blank"
-            >Linkedin</a
-          >
-        </li>
-        <li>
-          Find my
-          <a href="https://liamp.uk/liam-piesley-cv.pdf" target="_blank"
-            >full CV here</a
-          >
-        </li>
-      </ul>
+
+    <section id="feed-view" class="view">
+      <Feed />
     </section>
   </main>
 
@@ -209,7 +223,7 @@ import { Window } from './Window.tsx';
 
     .intro-text {
       @media (orientation: portrait) {
-        /* margin-top: 64px; */
+        margin-top: 28px;
         text-align: justify;
       }
     }
@@ -245,57 +259,61 @@ import { Window } from './Window.tsx';
       text-align: justify;
     }
 
+    #toggle {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 36px;
+
+      @media (orientation: portrait) {
+        margin-top: 24px;
+      }
+    }
+
     #buttons {
-      background-color: rgba(0, 0, 0, 0.05);
-      padding: 4px;
-      border-radius: 4px;
       width: fit-content;
       margin-inline: auto;
       display: flex;
-      gap: 4px;
+      gap: 48px;
       justify-content: center;
       align-items: center;
-      margin-bottom: 32px;
+      margin-top: 64px;
 
       @media (orientation: portrait) {
         justify-content: space-between;
         padding: 4px;
+        /* flex-direction: column; */
+        gap: 32px;
+        margin-bottom: 64px;
       }
     }
 
     #buttons a {
       border: none;
       display: flex;
-      gap: 0.45em;
+      flex-direction: column;
+      gap: 0.5em;
       align-items: center;
       justify-content: center;
       line-height: 1;
       font-size: inherit;
       color: #222;
       text-decoration: none;
-      padding: 12px 14px;
-      border-radius: 4px;
-
-      * {
-        transform-origin: center;
-        transition: all 0.3s ease;
-      }
+      padding: 12px;
+      border-radius: 14px;
+      background-color: rgba(0,0,0,0.08);
+      transition: transform 0.3s cubic-bezier(.5,2,.5,.8);
+      width: 140px;
 
       &:hover {
-        background-color: rgba(0, 0, 0, 0.08);
+        background-color: rgba(0, 0, 0, 0.12);
         cursor: pointer;
-
-        * {
-          transform: scale(1.05);
-        }
+        transform: scale(1.05);
       }
 
       &:active {
-        background-color: rgba(0, 0, 0, 0.12);
-
-        * {
-          transform: scale(1.025);
-        }
+        background-color: rgba(0, 0, 0, 0.15);
+        transform: scale(1.1);
       }
 
       @media (orientation: portrait) {
@@ -304,11 +322,15 @@ import { Window } from './Window.tsx';
       }
     }
 
+    #buttons a span {
+      font-size: inherit;
+    }
+
     #buttons a :global(.icon) {
-      width: 1em;
-      height: 1em;
-      min-width: 1em;
-      min-height: 1em;
+      width: 1.2em;
+      height: 1.2em;
+      min-width: 1.2em;
+      min-height: 1.2em;
       display: block;
     }
 
@@ -317,7 +339,7 @@ import { Window } from './Window.tsx';
     }
 
     section {
-      margin-top: 32px;
+      margin-top: 48px;
     }
 
     h2 {
@@ -337,10 +359,17 @@ import { Window } from './Window.tsx';
       list-style: none;
       margin-left: 0;
       padding-left: 0;
+      margin-top: 12px;
     }
 
     li {
       line-height: 1.7em;
+      margin-bottom: 2px;
+
+      @media (orientation: portrait) {
+        line-height: 1.6em;
+        margin-bottom: 4px;
+      }
     }
 
     li:before {
@@ -351,13 +380,18 @@ import { Window } from './Window.tsx';
       text-decoration: none;
       color: #222;
       background-color: rgba(0, 0, 0, 0.08);
-      padding: 1px 4px;
-      border-radius: 2px;
+      padding: 0 8px;
+      border-radius: 14px;
       margin-right: 1px;
       cursor: pointer;
+      display: inline-block;
+      height: 22px;
+      line-height: 22px;
+      transition: transform 0.3s cubic-bezier(.5,2,.5,.8);
 
       &:hover {
         background-color: rgba(0, 0, 0, 0.12);
+        transform: scale(1.05);
       }
     }
 
@@ -379,6 +413,52 @@ import { Window } from './Window.tsx';
 
     #about li:before {
       content: '✶';
+    }
+
+    .view {
+      transition:
+        opacity 200ms ease-out,
+        transform 200ms ease-out;
+    }
+
+    #content[data-view='about'] #about-view {
+      opacity: 1;
+      transform: translateX(0);
+      pointer-events: auto;
+      overflow: visible;
+      visibility: visible;
+    }
+
+    #content[data-view='about'] #feed-view {
+      opacity: 0;
+      transform: translateX(8px);
+      pointer-events: none;
+      height: 0;
+      min-height: 0;
+      overflow: hidden;
+      margin: 0;
+      padding: 0;
+      visibility: hidden;
+    }
+
+    #content[data-view='feed'] #about-view {
+      opacity: 0;
+      transform: translateX(-8px);
+      pointer-events: none;
+      height: 0;
+      min-height: 0;
+      overflow: hidden;
+      margin: 0;
+      padding: 0;
+      visibility: hidden;
+    }
+
+    #content[data-view='feed'] #feed-view {
+      opacity: 1;
+      transform: translateX(0);
+      pointer-events: auto;
+      overflow: visible;
+      visibility: visible;
     }
   </style>
 </div>

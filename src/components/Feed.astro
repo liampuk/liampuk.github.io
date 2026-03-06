@@ -1,0 +1,171 @@
+---
+const feedItems = [
+  {
+    type: 'video',
+    title: 'Gallery Quest',
+    date: '2025',
+    mp4: '/gallery-quest.mp4',
+    link: 'https://liamp.uk/gallery-quest',
+  },
+  {
+    type: 'video',
+    title: 'Aero',
+    date: '2026',
+    mp4: '/aero.mp4',
+    link: 'https://liamp.uk/aero',
+  },
+  {
+    type: 'video',
+    title: 'Geologic Timescale',
+    date: '2024',
+    mp4: '/timescale.mp4',
+    link: 'https://liamp.uk/timescale',
+  },
+  {
+    type: 'image',
+    title: '2048 Gamepad',
+    date: '2025',
+    src: '/2048-gamepad.jpg',
+    alt: '2048 Gamepad',
+    link: 'https://github.com/liampuk/esp-2048',
+  },
+  {
+    type: 'image',
+    title: 'Minikeys',
+    date: '2020 - 2025',
+    src: '/minikeys.jpg',
+    alt: 'Minikeys',
+    link: 'https://liamp.uk/minikeys',
+  },
+  {
+    type: 'video',
+    title: 'Website Garden',
+    date: '2026',
+    mp4: '/webgarden.mp4',
+    link: 'https://webgarden.liamp.uk',
+  },
+  {
+    type: 'image',
+    title: 'Locked In',
+    date: '2026',
+    src: '/lockedin.jpg',
+    alt: 'Locked In',
+    link: 'https://liamp.uk/lockin',
+  },
+  {
+    type: 'image',
+    title: '2048',
+    date: '2020',
+    src: '/2048.jpg',
+    alt: '2048',
+    link: 'https://liamp.uk/2048',
+  },
+];
+---
+
+<section id="feed">
+  <div class="feed-grid">
+    {feedItems.map((item) => {
+      const mediaAlt = item.alt ?? item.title;
+      return (
+        <a href={item.link} target="_blank" rel="noopener">
+      <article class="feed-item">
+        <div class="feed-meta">
+          <h3><span>{item.title}</span><span>{item.date}</span></h3>
+        </div>
+        <div class="feed-media">
+          {item.type === 'video' ? (
+            <video autoplay loop muted playsinline>
+              {/* {item.webm && <source src={item.webm} type="video/webm" />} */}
+              <source src={item.mp4} type="video/mp4" />
+            </video>
+          ) : item.src ? (
+            <img src={item.src} alt={mediaAlt} />
+          ) : (
+            <div class="feed-image-placeholder" aria-hidden="true" />
+          )}
+        </div>
+      </article>
+    </a>
+      );
+    })}
+  </div>
+</section>
+
+<style>
+  #feed {
+    margin-top: 48px;
+  }
+
+  .feed-grid {
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    gap: 16px;
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .feed-item {
+    border-radius: 20px;
+    overflow: hidden;
+    background: rgba(0,0,0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.3s cubic-bezier(.5,2,.5,.8);
+
+    &:hover {
+      transform: scale(1.04);
+    }
+  }
+
+  .feed-media {
+    display: block;
+    overflow: hidden;
+    /* background: rgba(0,0,0,0.05); */
+  }
+
+  .feed-media :global(video),
+  .feed-media :global(img) {
+    width: 100%;
+    height: auto;
+    display: block;
+    vertical-align: middle;
+  }
+
+  .feed-media .feed-image-placeholder {
+    aspect-ratio: 4 / 3;
+    width: 100%;
+    min-height: 200px;
+    background: radial-gradient(circle at top left, #ffd6a5, transparent 55%),
+      radial-gradient(circle at bottom right, #b5e2ff, transparent 55%),
+      linear-gradient(135deg, #fef7f2, #f6f7fb);
+  }
+
+  .feed-meta {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 8px 16px;
+    background: rgba(255,255,255,0.8);
+    transform: translateY(-100%);
+    transition: transform 0.25s ease-out 0.5s;
+  }
+
+  .feed-item:hover .feed-meta {
+    transform: translateY(0);
+    transition: transform 0.25s ease-out 0s;
+  }
+
+  .feed-meta h3 {
+    margin: 0;
+    font-size: 14px;
+    color: inherit;
+    display: flex;
+    justify-content: space-between;
+  }
+</style>
+
