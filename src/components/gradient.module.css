@@ -15,5 +15,6 @@
 
     @media (orientation: portrait) {
         background: none;
+        display: none;
     }
 }

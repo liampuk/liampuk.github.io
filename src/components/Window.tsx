@@ -457,8 +457,8 @@ export const Window = ({ variant }: WindowProps) => {
     : 'w-full h-full fixed top-0 mix-blend-screen opacity-0';
 
   const placeholderClassName = useMobileLayout
-    ? 'window-mobile mix-blend-screen object-cover pointer-events-none'
-    : 'w-[800px] h-[800px] fixed top-0 right-[50px] mix-blend-screen object-cover pointer-events-none';
+    ? 'window-mobile mix-blend-screen object-cover pointer-events-none blur-sm'
+    : 'w-[62vw] h-full fixed top-[-3vh] right-[3vw] mix-blend-screen object-contain pointer-events-none blur-md';
 
   return (
     <>
