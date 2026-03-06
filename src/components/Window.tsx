@@ -204,6 +204,7 @@ type WindowProps = { variant?: WindowVariant };
 
 export const Window = ({ variant }: WindowProps) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
+  const placeholderRef = useRef<HTMLImageElement>(null);
   const lightRef = useRef<DirectionalLight>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [sceneReady, setSceneReady] = useState(false);
@@ -215,6 +216,16 @@ export const Window = ({ variant }: WindowProps) => {
     if (!el) return;
     gsap.set(el, { opacity: 0 });
     gsap.to(el, { opacity: 1, duration: 1, ease: 'power1.out' });
+
+    const placeholder = placeholderRef.current;
+    if (placeholder) {
+      gsap.to(placeholder, {
+        opacity: 0,
+        duration: 1,
+        ease: 'power1.out',
+        onComplete: () => placeholder.remove(),
+      });
+    }
   }, [sceneReady]);
 
   const controls = useControls({
@@ -445,9 +456,21 @@ export const Window = ({ variant }: WindowProps) => {
     ? 'window-mobile mix-blend-screen opacity-0'
     : 'w-full h-full fixed top-0 mix-blend-screen opacity-0';
 
+  const placeholderClassName = useMobileLayout
+    ? 'window-mobile mix-blend-screen object-cover pointer-events-none'
+    : 'w-[800px] h-[800px] fixed top-0 right-[50px] mix-blend-screen object-cover pointer-events-none';
+
   return (
-    <div ref={wrapperRef} className={wrapperClassName}>
-      {windowContent}
-    </div>
+    <>
+      <img
+        ref={placeholderRef}
+        src="/placeholder.jpg"
+        alt=""
+        className={placeholderClassName}
+      />
+      <div ref={wrapperRef} className={wrapperClassName}>
+        {windowContent}
+      </div>
+    </>
   );
 };
