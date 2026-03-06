@@ -374,12 +374,12 @@ export default function AnimatedTitle() {
     >
       <span
         ref={backgroundBlockRef}
-        className="title-background-block absolute -left-4 w-[calc(100%+32px)] top-0 h-[1em] bg-black/5 opacity-0 pointer-events-none backdrop-blur-[10px] z-0 rounded-md overflow-hidden"
+        className="title-background-block absolute -left-4 w-[calc(100%+32px)] top-0 h-[1em] bg-black/5 opacity-0 pointer-events-none backdrop-blur-[10px] z-0 rounded-[14px] overflow-hidden"
       >
         <button
           ref={plusButtonRef}
           onClick={handleToggleMenu}
-          className="title-menu-button absolute right-0 top-0 min-w-[0.75em] min-h-[0.75em] flex items-center justify-center border-none cursor-pointer pointer-events-none opacity-0 text-[#222] rounded bg-transparent transition-[background-color,transform] duration-200 ease-in-out hover:bg-black/10 active:bg-black/[0.14]"
+          className="title-menu-button absolute right-0 top-0 min-w-[0.75em] min-h-[0.75em] flex items-center justify-center border-none cursor-pointer pointer-events-none opacity-0 text-[#222] rounded-[14px] bg-transparent transition-[background-color,transform] duration-200 ease-in-out hover:bg-black/10 active:bg-black/[0.14]"
           aria-label="Menu"
           style={{ fontSize: 'inherit' }}
         >
@@ -405,7 +405,7 @@ export default function AnimatedTitle() {
             href="https://cal.com/liam-piesley-iof3ud"
             target="_blank"
             rel="noopener"
-            className="title-menu-item flex items-center gap-[0.8em] p-4 rounded no-underline text-[#222] text-sm whitespace-nowrap transition-colors duration-150 ease-in-out hover:bg-black/8 active:bg-black/12"
+            className="title-menu-item flex items-center gap-[0.8em] p-4 rounded-[14px] no-underline text-[#222] text-sm whitespace-nowrap transition-colors duration-150 ease-in-out hover:bg-black/8 active:bg-black/12"
             style={{
               fontFamily:
                 "Inter, Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif",
@@ -418,7 +418,7 @@ export default function AnimatedTitle() {
             href="mailto:liampiesley@gmail.com"
             target="_blank"
             rel="noopener"
-            className="title-menu-item flex items-center gap-[0.8em] p-4 rounded no-underline text-[#222] text-sm whitespace-nowrap transition-colors duration-150 ease-in-out hover:bg-black/8 active:bg-black/12"
+            className="title-menu-item flex items-center gap-[0.8em] p-4 rounded-[14px] no-underline text-[#222] text-sm whitespace-nowrap transition-colors duration-150 ease-in-out hover:bg-black/8 active:bg-black/12"
             style={{
               fontFamily:
                 "Inter, Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif",
