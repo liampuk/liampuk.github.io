@@ -127,22 +127,27 @@ const feedItems = [
   .feed-item {
     border-radius: 20px;
     overflow: hidden;
-    background: rgba(0,0,0, 0.05);
     border: 1px solid rgba(0, 0, 0, 0.1);
     position: relative;
     cursor: pointer;
     transition: transform 0.3s cubic-bezier(.5,2,.5,.8);
     min-height: 200px;
+    background: rgba(0,0,0,0.05);
+    animation: feed-media-skeleton 2s ease-in-out infinite;
 
     &:hover {
       transform: scale(1.04);
     }
   }
 
+  @keyframes feed-media-skeleton {
+    0%, 100% { background-color: rgba(0,0,0,0.05); }
+    50% { background-color: rgba(0,0,0,0.15); }
+  }
+
   .feed-media {
     display: block;
     overflow: hidden;
-    /* background: rgba(0,0,0,0.05); */
   }
 
   .feed-media :global(video),
