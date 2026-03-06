@@ -5,7 +5,7 @@ import { LevaControls } from './Controls.tsx';
 
 <div>
    <div class="window-desktop-only">
-     <Window client:load variant="fixed" />
+     <Window client:media="(min-width: 769px)" variant="fixed" />
    </div>
    {import.meta.env.DEV && <LevaControls client:only />}
   <div id="grain"></div>
