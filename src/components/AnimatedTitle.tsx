@@ -167,7 +167,6 @@ export default function AnimatedTitle() {
         gsap.set(menuRef.current, { opacity: 0, y: -5 });
         gsap.set(overlayRef.current, { opacity: 0, pointerEvents: 'none' });
         gsap.set('.title-visual-invert', { opacity: 0 });
-        gsap.set('.title-visual-base', { opacity: 1 });
 
         const tl = gsap.timeline({
           scrollTrigger: {
@@ -204,15 +203,10 @@ export default function AnimatedTitle() {
           tl.reversed() ? reverseEase(progress) : forwardEase(progress);
 
         tl.to(
-          '.title-full-char',
-          { opacity: 0, duration: 0.05, ease: directionalEase },
+          '.title-segmented-char',
+          { opacity: 1, duration: 0.05, ease: directionalEase },
           0
         )
-          .to(
-            '.title-segmented-char',
-            { opacity: 1, duration: 0.05, ease: directionalEase },
-            0
-          )
           .to('.title-full-left', { x: leftShift, ease: directionalEase }, 0)
           .to(
             '.title-full-left',
@@ -247,14 +241,6 @@ export default function AnimatedTitle() {
               ease: directionalEase,
             },
             finalVisualTweenPosition
-          )
-          .to(
-            '.title-visual-base',
-            {
-              opacity: 0,
-              ease: directionalEase,
-            },
-            '<'
           )
           .to(
             backgroundBlockRef.current,

@@ -14,9 +14,12 @@ Window animation rendered with three.js and drei, and configured in development 
 
 ## TODO
 
-- [ ] Add feed view
-- [ ] Move call/email buttons to footer
-- [ ] Add animation for call/email buttons
+- [x] Add feed view
+- [x] Add feed toggle
+- [x] Animate between feed/about
+- [x] Move call/email buttons to footer
+- [x] Add animation for call/email buttons
 - [ ] Add footer visual element (l system plant?)
-- [ ] Replace unicode characters with svgs
-- [ ] Fix small layout issues
+- [x] Replace unicode characters with svgs
+- [x] Fix small layout issues
+- [ ] Add falling leaves on scroll
