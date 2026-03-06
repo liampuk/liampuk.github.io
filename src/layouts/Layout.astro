@@ -32,6 +32,8 @@ import '../styles/global.css';
       type="font/woff2"
       crossorigin
     />
+    <!-- Prioritise Window 3D asset so it loads before Feed media -->
+    <link rel="preload" href="/tree_small-opt.glb" as="fetch" crossorigin />
   </head>
   <body>
     <!-- Lock initial viewport height before any content so layout doesn’t shift when browser chrome hides -->
