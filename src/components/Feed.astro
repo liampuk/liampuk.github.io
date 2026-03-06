@@ -75,12 +75,11 @@ const feedItems = [
         </div>
         <div class="feed-media">
           {item.type === 'video' ? (
-            <video autoplay loop muted playsinline>
-              {/* {item.webm && <source src={item.webm} type="video/webm" />} */}
+            <video loop muted playsinline preload="none" data-src={item.mp4}>
               <source src={item.mp4} type="video/mp4" />
             </video>
           ) : item.src ? (
-            <img src={item.src} alt={mediaAlt} />
+            <img src={item.src} alt={mediaAlt} loading="lazy" decoding="async" />
           ) : (
             <div class="feed-image-placeholder" aria-hidden="true" />
           )}
@@ -91,6 +90,24 @@ const feedItems = [
     })}
   </div>
 </section>
+
+<script>
+  const observer = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        const video = entry.target as HTMLVideoElement;
+        if (entry.isIntersecting) {
+          if (video.preload === 'none') video.preload = 'auto';
+          video.play().catch(() => {});
+        } else {
+          video.pause();
+        }
+      }
+    },
+    { rootMargin: '200px' }
+  );
+  document.querySelectorAll('#feed video[data-src]').forEach((v) => observer.observe(v));
+</script>
 
 <style>
   #feed {
@@ -115,6 +132,7 @@ const feedItems = [
     position: relative;
     cursor: pointer;
     transition: transform 0.3s cubic-bezier(.5,2,.5,.8);
+    min-height: 200px;
 
     &:hover {
       transform: scale(1.04);
