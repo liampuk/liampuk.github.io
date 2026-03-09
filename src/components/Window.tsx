@@ -10,12 +10,17 @@ import {
   DoubleSide,
   MathUtils,
   Mesh,
+  MeshDepthMaterial,
+  MeshDistanceMaterial,
   PCFSoftShadowMap,
   Path,
+  RGBADepthPacking,
   Shape,
   ShapeGeometry,
 } from 'three';
 import type { DirectionalLight } from 'three';
+import { FallingLeaves, type FallingLeavesHandle } from './FallingLeaves';
+import { useWebHaptics } from 'web-haptics/react';
 
 const WINDOW_PANE_COLUMNS = 5;
 const WINDOW_PANE_ROWS = 3;
@@ -39,9 +44,9 @@ const QUALITY_PRESET_VALUES = {
 } as const;
 type QualityPreset = keyof typeof QUALITY_PRESET_VALUES;
 const STABLE_SHADOW_FRUSTUM = {
-  camSize: 46,
+  camSize: 23,
   near: 0.1,
-  far: 280,
+  far: 200,
 } as const;
 
 // Hash vertex position to a 0–1 value for per-vertex phase variation (no extra deps)
@@ -74,16 +79,18 @@ const Tree = ({
   windRandomness?: number;
 }) => {
   const { scene } = useGLTF('/tree_small-opt.glb');
-  const originalPositionsRef = useRef<Map<Mesh, Float32Array>>(new Map());
   const windBoundsRef = useRef<{
     minY: number;
     maxY: number;
     maxRadius: number;
   } | null>(null);
+  const windMaterialsRef = useRef<any[]>([]);
+  const windMeshesRef = useRef<Mesh[]>([]);
 
   const clonedScene = useMemo(() => {
     const clone = scene.clone();
-    originalPositionsRef.current.clear();
+    windMaterialsRef.current = [];
+    windMeshesRef.current = [];
     let minY = Infinity;
     let maxY = -Infinity;
     let maxRadius = 0;
@@ -91,6 +98,8 @@ const Tree = ({
       if ('isMesh' in child && (child as Mesh).isMesh) {
         const mesh = child as Mesh;
         mesh.castShadow = !!castShadow;
+        windMeshesRef.current.push(mesh);
+
         const materials = Array.isArray(mesh.material)
           ? mesh.material
           : [mesh.material];
@@ -98,10 +107,10 @@ const Tree = ({
           mat.transparent = true;
           mat.opacity = 0;
         });
+
         const posAttr = mesh.geometry.getAttribute('position');
         if (posAttr) {
           const arr = posAttr.array as Float32Array;
-          originalPositionsRef.current.set(mesh, new Float32Array(arr));
           for (let i = 0; i < arr.length; i += 3) {
             const x = arr[i];
             const y = arr[i + 1];
@@ -116,63 +125,137 @@ const Tree = ({
     });
     windBoundsRef.current =
       maxY > minY && maxRadius > 0 ? { minY, maxY, maxRadius } : null;
-    return clone;
-  }, [scene, castShadow]);
 
-  useFrame((_, delta) => {
-    const time = performance.now() * 0.001;
-    const T = time * windFrequency;
-    const phaseNoise = windRandomness * Math.PI * 2;
-    const bounds = windBoundsRef.current;
-    clonedScene.traverse((child) => {
-      if ('isMesh' in child && (child as Mesh).isMesh) {
-        const mesh = child as Mesh;
-        const originalPos = originalPositionsRef.current.get(mesh);
-        if (!originalPos) return;
-        const posAttr = mesh.geometry.getAttribute('position');
-        if (!posAttr) return;
-        const positions = posAttr.array as Float32Array;
-        const { minY, maxY, maxRadius } = bounds ?? {
-          minY: 0,
-          maxY: 1,
-          maxRadius: 1,
+    const bounds = windBoundsRef.current ?? {
+      minY: 0,
+      maxY: 1,
+      maxRadius: 1,
+    };
+
+    const patchMaterial = (mat: any) => {
+      if (!mat || mat.userData?.windPatched) return;
+      mat.userData = mat.userData || {};
+      mat.userData.windPatched = true;
+      mat.onBeforeCompile = (shader: any) => {
+        shader.uniforms.uTime = { value: 0 };
+        shader.uniforms.uWindAmplitude = { value: windAmplitude };
+        shader.uniforms.uWindFrequency = { value: windFrequency };
+        shader.uniforms.uWindPhaseScale = { value: windPhaseScale };
+        shader.uniforms.uWindRandomness = { value: windRandomness };
+        shader.uniforms.uMinY = { value: bounds.minY };
+        shader.uniforms.uMaxY = { value: bounds.maxY };
+        shader.uniforms.uMaxRadius = { value: bounds.maxRadius };
+
+        mat.userData.windUniforms = {
+          uTime: shader.uniforms.uTime,
+          uWindAmplitude: shader.uniforms.uWindAmplitude,
+          uWindFrequency: shader.uniforms.uWindFrequency,
+          uWindPhaseScale: shader.uniforms.uWindPhaseScale,
+          uWindRandomness: shader.uniforms.uWindRandomness,
         };
-        const yRange = maxY - minY;
-        for (let i = 0; i < positions.length; i += 3) {
-          const x = originalPos[i];
-          const y = originalPos[i + 1];
-          const z = originalPos[i + 2];
-          // More wind at top (above bottom half) and at extremities (branch/leaf tips)
-          const heightNorm = yRange > 0 ? (y - minY) / yRange : 0;
-          const heightFactor = smoothstep(0.45, 0.7, heightNorm); // ramp from ~bottom half into top
-          const radius = Math.sqrt(x * x + z * z);
-          const extremityFactor =
-            maxRadius > 0 ? Math.min(1, radius / maxRadius) : 0;
-          const windScale = heightFactor * (0.4 + 0.6 * extremityFactor);
-          const vPhase = vertexPhase(x, y, z) * phaseNoise;
-          const py = y * windPhaseScale;
-          // Multiple incommensurate waves so motion isn't a single visible sine
-          const swayX =
-            windAmplitude *
-            windScale *
-            (0.45 * Math.sin(T + py + vPhase) +
-              0.3 * Math.sin(T * 1.73 + py * 0.87 + 1 + vPhase * 0.7) +
-              0.15 * Math.sin(T * 2.41 + py * 1.13 + 2 + vPhase * 0.5) +
-              0.1 * Math.sin(T * 0.61 + py * 0.6 + vPhase * 1.2));
-          const swayZ =
-            windAmplitude *
-            0.6 *
-            windScale *
-            (0.5 * Math.sin(T * 0.7 + py * 1.2 + 0.5 + vPhase) +
-              0.35 * Math.sin(T * 1.31 + py * 0.9 + 1.3 + vPhase * 0.8) +
-              0.15 * Math.sin(T * 1.97 + py * 1.4 + 2.1 + vPhase * 0.4));
-          positions[i] = originalPos[i] + swayX;
-          positions[i + 1] = originalPos[i + 1];
-          positions[i + 2] = originalPos[i + 2] + swayZ;
-        }
-        posAttr.needsUpdate = true;
-        mesh.geometry.computeVertexNormals();
+
+        shader.vertexShader = shader.vertexShader
+          .replace(
+            '#include <common>',
+            `
+            #include <common>
+            uniform float uTime;
+            uniform float uWindAmplitude;
+            uniform float uWindFrequency;
+            uniform float uWindPhaseScale;
+            uniform float uWindRandomness;
+            uniform float uMinY;
+            uniform float uMaxY;
+            uniform float uMaxRadius;
+
+            float vertexPhase(vec3 p) {
+              float u = sin(p.x * 12.9898 + p.y * 78.233 + p.z * 45.164) * 43758.5453;
+              return fract(u);
+            }
+          `
+          )
+          .replace(
+            '#include <begin_vertex>',
+            `
+            #include <begin_vertex>
+
+            float yRange = uMaxY - uMinY;
+            float heightNorm = yRange > 0.0 ? (transformed.y - uMinY) / yRange : 0.0;
+            float heightFactor = smoothstep(0.45, 0.7, heightNorm);
+            float radius = length(transformed.xz);
+            float extremityFactor = uMaxRadius > 0.0 ? min(1.0, radius / uMaxRadius) : 0.0;
+            float windScale = heightFactor * (0.4 + 0.6 * extremityFactor);
+
+            float phaseNoise = uWindRandomness * 6.2831853;
+            float vPhase = vertexPhase(transformed) * phaseNoise;
+            float py = transformed.y * uWindPhaseScale;
+            float T = uTime * uWindFrequency;
+
+            float swayX =
+              uWindAmplitude *
+              windScale *
+              (0.45 * sin(T + py + vPhase) +
+                0.3 * sin(T * 1.73 + py * 0.87 + 1.0 + vPhase * 0.7) +
+                0.15 * sin(T * 2.41 + py * 1.13 + 2.0 + vPhase * 0.5) +
+                0.1 * sin(T * 0.61 + py * 0.6 + vPhase * 1.2));
+
+            float swayZ =
+              uWindAmplitude *
+              0.6 *
+              windScale *
+              (0.5 * sin(T * 0.7 + py * 1.2 + 0.5 + vPhase) +
+                0.35 * sin(T * 1.31 + py * 0.9 + 1.3 + vPhase * 0.8) +
+                0.15 * sin(T * 1.97 + py * 1.4 + 2.1 + vPhase * 0.4));
+
+            transformed.x += swayX;
+            transformed.z += swayZ;
+          `
+          );
+      };
+
+      windMaterialsRef.current.push(mat);
+      mat.needsUpdate = true;
+    };
+
+    windMeshesRef.current.forEach((mesh) => {
+      const baseMaterials = Array.isArray(mesh.material)
+        ? mesh.material
+        : [mesh.material];
+      baseMaterials.forEach((mat) => patchMaterial(mat));
+
+      if (!mesh.customDepthMaterial) {
+        mesh.customDepthMaterial = new MeshDepthMaterial({
+          depthPacking: RGBADepthPacking,
+        });
       }
+      patchMaterial(mesh.customDepthMaterial);
+
+      if (!mesh.customDistanceMaterial) {
+        mesh.customDistanceMaterial = new MeshDistanceMaterial();
+      }
+      patchMaterial(mesh.customDistanceMaterial);
+    });
+
+    return clone;
+  }, [
+    scene,
+    castShadow,
+    windAmplitude,
+    windFrequency,
+    windPhaseScale,
+    windRandomness,
+  ]);
+
+  useFrame(() => {
+    const time = performance.now() * 0.001;
+    windMaterialsRef.current.forEach((mat: any) => {
+      const uniforms = mat.userData?.windUniforms;
+      if (!uniforms) return;
+      uniforms.uTime.value = time;
+      uniforms.uWindAmplitude.value = windAmplitude;
+      uniforms.uWindFrequency.value = windFrequency;
+      uniforms.uWindPhaseScale.value = windPhaseScale;
+      uniforms.uWindRandomness.value = windRandomness;
     });
   });
 
@@ -206,9 +289,23 @@ export const Window = ({ variant }: WindowProps) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const placeholderRef = useRef<HTMLImageElement>(null);
   const lightRef = useRef<DirectionalLight>(null);
+  const leavesRef = useRef<FallingLeavesHandle | null>(null);
+  const lastScrollYRef = useRef<number | null>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [sceneReady, setSceneReady] = useState(false);
   const useMobileLayout = variant === 'inline';
+
+  const { trigger } = useWebHaptics();
+
+  const handleSpawnLeavesClick = () => {
+    leavesRef.current?.spawnLeaves(20);
+    trigger([
+      { duration: 40, intensity: 0.7 },
+      { delay: 40, duration: 40, intensity: 0.7 },
+      { delay: 40, duration: 40, intensity: 0.9 },
+      { delay: 40, duration: 50, intensity: 0.6 },
+    ]);
+  };
 
   useLayoutEffect(() => {
     if (!sceneReady) return;
@@ -230,7 +327,7 @@ export const Window = ({ variant }: WindowProps) => {
 
   const controls = useControls({
     qualityPreset: {
-      value: useMobileLayout ? 'Balanced' : 'Balanced',
+      value: useMobileLayout ? 'Soft' : 'Soft',
       options: ['Sharp', 'Balanced', 'Soft'],
     },
     showWindow: { value: false },
@@ -255,12 +352,39 @@ export const Window = ({ variant }: WindowProps) => {
     lightZEnd: { value: 35, min: -60, max: 200, step: 0.25 },
   });
 
+  const shadowFrustumControls = useControls('Shadow Frustum', {
+    camSize: {
+      value: STABLE_SHADOW_FRUSTUM.camSize,
+      min: 1,
+      max: 200,
+      step: 1,
+    },
+    near: {
+      value: STABLE_SHADOW_FRUSTUM.near,
+      min: 0.01,
+      max: 10,
+      step: 0.01,
+    },
+    far: {
+      value: STABLE_SHADOW_FRUSTUM.far,
+      min: 10,
+      max: 400,
+      step: 1,
+    },
+  });
+
   const treeControls = useControls('Tree', {
     treeX: { value: 10.79, min: -100, max: 100, step: 0.01 },
     treeY: { value: -9.24, min: -100, max: 100, step: 0.01 },
     treeZ: { value: 13.06, min: -100, max: 100, step: 0.01 },
     scale: { value: 0.58, min: 0.1, max: 2, step: 0.01 },
   });
+
+  // const sphereControls = useControls('Sphere', {
+  //   sphereX: { value: 0, min: -50, max: 50, step: 0.1 },
+  //   sphereY: { value: 1, min: -50, max: 50, step: 0.1 },
+  //   sphereZ: { value: 5, min: -50, max: 50, step: 0.1 },
+  // });
 
   const windControls = useControls('Tree Wind', {
     windAmplitude: { value: 0.18, min: 0, max: 2, step: 0.01 },
@@ -283,6 +407,16 @@ export const Window = ({ variant }: WindowProps) => {
         1
       );
       setScrollProgress(MathUtils.clamp(scrollTop / maxScroll, 0, 1));
+      if (lastScrollYRef.current === null) {
+        lastScrollYRef.current = scrollTop;
+        return;
+      }
+      const delta = Math.abs(scrollTop - lastScrollYRef.current);
+      if (delta >= 20) {
+        const count = 1;
+        leavesRef.current?.spawnLeaves(count);
+        lastScrollYRef.current = scrollTop;
+      }
     };
 
     updateScrollProgress();
@@ -320,6 +454,9 @@ export const Window = ({ variant }: WindowProps) => {
     shadowSettings.shadowMapSize,
     shadowSettings.shadowBias,
     shadowSettings.shadowNormalBias,
+    shadowFrustumControls.camSize,
+    shadowFrustumControls.near,
+    shadowFrustumControls.far,
   ]);
 
   const geometry = useMemo(() => {
@@ -388,14 +525,21 @@ export const Window = ({ variant }: WindowProps) => {
     <>
       <Canvas
         shadows={{ type: PCFSoftShadowMap }}
+        dpr={[1, 1]}
         camera={{ position: [0, 0, 12] }}
         gl={{ alpha: true }}
         onCreated={({ gl }) => {
           gl.setClearColor(0x000000, 0);
         }}
       >
-        <NotifySceneReady onReady={() => setSceneReady(true)} />
+        <NotifySceneReady
+          onReady={() => {
+            setSceneReady(true);
+            leavesRef.current?.spawnLeaves(20);
+          }}
+        />
         <SoftShadows />
+        <FallingLeaves ref={leavesRef} />
         <directionalLight
           key={`sun-shadow-${shadowSettings.shadowMapSize}`}
           ref={lightRef}
@@ -408,12 +552,12 @@ export const Window = ({ variant }: WindowProps) => {
           castShadow
           shadow-mapSize-width={shadowSettings.shadowMapSize}
           shadow-mapSize-height={shadowSettings.shadowMapSize}
-          shadow-camera-left={-STABLE_SHADOW_FRUSTUM.camSize}
-          shadow-camera-right={STABLE_SHADOW_FRUSTUM.camSize}
-          shadow-camera-top={STABLE_SHADOW_FRUSTUM.camSize}
-          shadow-camera-bottom={-STABLE_SHADOW_FRUSTUM.camSize}
-          shadow-camera-near={STABLE_SHADOW_FRUSTUM.near}
-          shadow-camera-far={STABLE_SHADOW_FRUSTUM.far}
+          shadow-camera-left={-shadowFrustumControls.camSize}
+          shadow-camera-right={shadowFrustumControls.camSize}
+          shadow-camera-top={shadowFrustumControls.camSize}
+          shadow-camera-bottom={-shadowFrustumControls.camSize}
+          shadow-camera-near={shadowFrustumControls.near}
+          shadow-camera-far={shadowFrustumControls.far}
           shadow-bias={shadowSettings.shadowBias}
           shadow-normalBias={shadowSettings.shadowNormalBias}
         />
@@ -434,6 +578,17 @@ export const Window = ({ variant }: WindowProps) => {
           windPhaseScale={windControls.windPhaseScale}
           windRandomness={windControls.windRandomness}
         />
+        {/* <mesh
+          castShadow
+          position={[
+            sphereControls.sphereX as number,
+            sphereControls.sphereY as number,
+            sphereControls.sphereZ as number,
+          ]}
+        >
+          <sphereGeometry args={[0.5, 32, 32]} />
+          <meshStandardMaterial color="hotpink" />
+        </mesh> */}
         <mesh
           geometry={geometry}
           castShadow
@@ -458,7 +613,7 @@ export const Window = ({ variant }: WindowProps) => {
 
   const placeholderClassName = useMobileLayout
     ? 'window-mobile mix-blend-screen object-cover pointer-events-none blur-sm'
-    : 'w-[62vw] h-full fixed top-[-3vh] right-[3vw] mix-blend-screen object-contain pointer-events-none blur-md';
+    : 'w-[64vw] h-full fixed top-[-3vh] right-[-1vw] mix-blend-screen object-contain pointer-events-none blur-md';
 
   return (
     <>
@@ -468,7 +623,11 @@ export const Window = ({ variant }: WindowProps) => {
         alt=""
         className={placeholderClassName}
       />
-      <div ref={wrapperRef} className={wrapperClassName}>
+      <div
+        ref={wrapperRef}
+        className={wrapperClassName}
+        onClick={handleSpawnLeavesClick}
+      >
         {windowContent}
       </div>
     </>

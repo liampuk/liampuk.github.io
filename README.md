@@ -22,4 +22,4 @@ Window animation rendered with three.js and drei, and configured in development 
 - [ ] Add footer visual element (l system plant?)
 - [x] Replace unicode characters with svgs
 - [x] Fix small layout issues
-- [ ] Add falling leaves on scroll
+- [x] Add falling leaves on scroll
