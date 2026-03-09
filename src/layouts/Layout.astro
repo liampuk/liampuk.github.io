@@ -12,7 +12,13 @@ import '../styles/global.css';
       name="description"
       content="Hi! I'm Liam Piesley, a software engineer in London."
     />
-    <meta property="og:image:url" content="https://liamp.uk/res/banner.jpg" />
+    <meta property="og:image" content="https://liamp.uk/ogimage.jpg" />
+    <meta property="og:url" content="https://liamp.uk/" />
+    <meta property="og:title" content="Liam Piesley" />
+    <meta property="og:description" content="Hi! I'm Liam Piesley, a software engineer in London." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
     <title>Liam Piesley.</title>
     <link
       rel="apple-touch-icon"
@@ -32,7 +38,6 @@ import '../styles/global.css';
       type="font/woff2"
       crossorigin
     />
-    <!-- Prioritise Window 3D asset so it loads before Feed media -->
     <link rel="preload" href="/tree_small-opt.glb" as="fetch" crossorigin />
   </head>
   <body>
@@ -44,6 +49,7 @@ import '../styles/global.css';
       })();
     </script>
     <slot />
+    <script is:inline data-goatcounter="https://liamp.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
   </body>
 </html>
 
