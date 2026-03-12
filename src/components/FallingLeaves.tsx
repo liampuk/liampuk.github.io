@@ -67,10 +67,10 @@ export const FallingLeaves = forwardRef<FallingLeavesHandle>((_, ref) => {
                     id,
                     origin: [
                       MathUtils.randFloat(xMin, 20),
-                      MathUtils.randFloat(3, 9),
+                      MathUtils.randFloat(5, 9),
                       MathUtils.randFloat(15, 25),
                     ],
-                    radius: MathUtils.randFloat(0.2, 0.4),
+                    radius: MathUtils.randFloat(0.2, 0.3),
                     fallSpeed: MathUtils.randFloat(2, 5),
                     swayAmpX: MathUtils.randFloat(1, 2),
                     swayAmpZ: MathUtils.randFloat(1, 2),

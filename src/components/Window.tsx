@@ -44,7 +44,7 @@ const QUALITY_PRESET_VALUES = {
 } as const;
 type QualityPreset = keyof typeof QUALITY_PRESET_VALUES;
 const STABLE_SHADOW_FRUSTUM = {
-  camSize: 23,
+  camSize: 25,
   near: 0.1,
   far: 200,
 } as const;
@@ -412,8 +412,8 @@ export const Window = ({ variant }: WindowProps) => {
         return;
       }
       const delta = Math.abs(scrollTop - lastScrollYRef.current);
-      if (delta >= 20) {
-        const count = 1;
+      if (delta >= 16) {
+        const count = 2;
         leavesRef.current?.spawnLeaves(count);
         lastScrollYRef.current = scrollTop;
       }
